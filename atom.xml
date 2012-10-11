@@ -4,7 +4,7 @@
   <title><![CDATA[creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.com/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.com/"/>
-  <updated>2012-10-12T07:45:40+08:00</updated>
+  <updated>2012-10-12T07:47:39+08:00</updated>
   <id>http://creativepsyco.github.com/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,5 +12,14 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Zombie Ninjas Attack: A survivor's retrospective]]></title>
+    <link href="http://creativepsyco.github.com/blog/2012/10/12/zombie-ninjas-attack-a-survivors-retrospective/"/>
+    <updated>2012-10-12T07:46:00+08:00</updated>
+    <id>http://creativepsyco.github.com/blog/2012/10/12/zombie-ninjas-attack-a-survivors-retrospective</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
 </feed>
