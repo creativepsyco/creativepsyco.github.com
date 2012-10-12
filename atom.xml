@@ -4,14 +4,31 @@
   <title><![CDATA[creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.com/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.com/"/>
-  <updated>2012-10-12T08:00:53+08:00</updated>
+  <updated>2012-10-12T08:22:00+08:00</updated>
   <id>http://creativepsyco.github.com/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Mohit Kanwal]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[hello world]]></title>
+    <link href="http://creativepsyco.github.com/blog/2012/10/12/hello-world/"/>
+    <updated>2012-10-12T08:11:00+08:00</updated>
+    <id>http://creativepsyco.github.com/blog/2012/10/12/hello-world</id>
+    <content type="html"><![CDATA[<p><em>Every post starts with a Hello World. Every code you write starts with Hello World.</em></p>
+
+<p><em>Then perhaps this should also.</em></p>
+
+<p>I have moved my blog to Github now with the intention of using more and more of Git and ruby for use in my daily life. I can&#8217;t comment how much I am going to miss in this or how much I am going to gain, it is just a start and hopefully a start of something really new and tidy.</p>
+
+<p>I am using Jekyll to power up the blog. It looks awesome and from the amount of configs needed to get it running I must it does not have that much of a turnaround time. Let&#8217;s see how far I go with this.</p>
+
+<p>&#8211;mohit</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Zombie Ninjas Attack: A survivor's retrospective]]></title>
