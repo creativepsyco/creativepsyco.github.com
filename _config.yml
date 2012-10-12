@@ -5,9 +5,9 @@
 url: http://creativepsyco.github.com
 title: creativepsyco's Blog
 subtitle: Trolling you digitally
-author: Your Name
+author: Mohit Kanwal
 simple_search: http://google.com/search
-description:
+description: A Blog of all things digital
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -72,7 +72,7 @@ twitter_show_follower_count: false
 twitter_tweet_button: true
 
 # Google +1
-google_plus_one: false
+google_plus_one: true
 google_plus_one_size: medium
 
 # Google Plus Profile
@@ -89,7 +89,7 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name:
+disqus_short_name: 
 disqus_show_comment_count: false
 
 # Google Analytics
