@@ -4,7 +4,7 @@
   <title><![CDATA[creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.com/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.com/"/>
-  <updated>2012-10-12T11:08:33+08:00</updated>
+  <updated>2012-10-12T11:10:20+08:00</updated>
   <id>http://creativepsyco.github.com/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CS3235]]></title>
+    <link href="http://creativepsyco.github.com/blog/2012/10/12/cs3235/"/>
+    <updated>2012-10-12T11:07:00+08:00</updated>
+    <id>http://creativepsyco.github.com/blog/2012/10/12/cs3235</id>
+    <content type="html"><![CDATA[<p>Hi -</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[hello world]]></title>
@@ -36,24 +45,6 @@
     <updated>2012-10-12T07:46:00+08:00</updated>
     <id>http://creativepsyco.github.com/blog/2012/10/12/zombie-ninjas-attack-a-survivors-retrospective</id>
     <content type="html"><![CDATA[
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Cs3235]]></title>
-    <link href="http://creativepsyco.github.com/blog/2012/10/12/cs3235/"/>
-    <updated>2012-10-12T00:00:00+08:00</updated>
-    <id>http://creativepsyco.github.com/blog/2012/10/12/cs3235</id>
-    <content type="html"><![CDATA[<hr />
-
-<p>layout: post
-title: &#8220;CS3235&#8221;
-date: 2012-10-12 11:07
-comments: true</p>
-
-<h2>categories: </h2>
-
-<p>Hi -</p>
 ]]></content>
   </entry>
   
