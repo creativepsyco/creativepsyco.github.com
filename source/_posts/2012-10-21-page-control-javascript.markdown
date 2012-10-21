@@ -9,6 +9,8 @@ The Problem
 -----------
 Sometimes having different pages of content causes us to think about loading them in a page like fashion. Thus there needs to be a *mediator* that can take care of the loading based on a few configuration variables.
 
+<!--more-->
+
 The Solution
 ------------
 Below is my attempt at making a page controller in javascript based a few config variables.
