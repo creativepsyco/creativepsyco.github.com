@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Javascript | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.com/"/>
-  <updated>2012-10-22T00:03:59+08:00</updated>
+  <updated>2012-10-22T01:01:19+08:00</updated>
   <id>http://creativepsyco.github.com/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -21,6 +21,9 @@
     <content type="html"><![CDATA[<h2>The Problem</h2>
 
 <p>Sometimes having different pages of content causes us to think about loading them in a page like fashion. Thus there needs to be a <em>mediator</em> that can take care of the loading based on a few configuration variables.</p>
+
+<!--more-->
+
 
 <h2>The Solution</h2>
 

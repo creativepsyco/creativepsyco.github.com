@@ -9,7 +9,7 @@
   <meta name="author" content="Mohit Kanwal">
 
   
-  <meta name="description" content="The Problem Sometimes having different pages of content causes us to think about loading them in a page like fashion. Thus there needs to be a &hellip;">
+  <meta name="description" content="The Problem Sometimes we find ourselves wanting to be able to host a webserver to test out some HTML or javascript functionality. For example when &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +71,72 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc/">Node JS Script to Run a Web Server for Backbone Etc</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-22T00:18:00+08:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>The Problem</h2>
+
+<p>Sometimes we find ourselves wanting to be able to host a webserver to test out some HTML or javascript functionality. For example when Cross Origin Resource Policy (CORS) does not allow running of scripts from outside the domain of the webserver.</p>
+
+<h2>The Solution</h2>
+
+<p>The solution is a simple piece of node js script living in the directory. Surprisingly it is way way small</p>
+
+<figure class='code'><figcaption><span>Sample NodeJS Script to run server</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">connect</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;connect&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">connect</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span>
+</span><span class='line'>    <span class="nx">connect</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">)</span>
+</span><span class='line'><span class="p">).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8080</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This would start listening for a request on port 8080 and then serve the files from the current directory.</p>
+
+<p>In order to use you must put the code in a file called <em>server.js</em></p>
+
+<p>And Also must install <code>connect</code> module via</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  npm install connect
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#8211;mohit</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/10/21/page-control-javascript/">Page Control Javascript</a></h1>
     
     
@@ -98,14 +164,12 @@
 
 <p>Sometimes having different pages of content causes us to think about loading them in a page like fashion. Thus there needs to be a <em>mediator</em> that can take care of the loading based on a few configuration variables.</p>
 
-<h2>The Solution</h2>
-
-<p>Below is my attempt at making a page controller in javascript based a few config variables.</p>
-
-<script src="https://gist.github.com/3868297.js"> </script>
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/10/21/page-control-javascript/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -141,12 +205,12 @@
 
   <div class="entry-content"><p>One of the things that new app developers do especially mobile ones, is that they give a step like flow to their users to enter data in a much more streamlined process by breaking it down into a number of steps and then load each one at a different time.</p>
 
-<h2>A Solution</h2>
-
-<script src="https://gist.github.com/3927260.js?file=WizardBackbone.js"></script>
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/10/21/doing-a-wizard-like-flow-in-backbone-dot-js-and-jquery-mobile/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -282,6 +346,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc/">Node JS Script to run a web server for Backbone etc</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/10/21/page-control-javascript/">Page Control Javascript</a>
       </li>
     
@@ -295,10 +363,6 @@
     
       <li class="post">
         <a href="/blog/2012/10/12/hello-world/">hello world</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/12/zombie-ninjas-attack-a-survivors-retrospective/">Zombie Ninjas Attack: A survivor&#8217;s retrospective</a>
       </li>
     
   </ul>

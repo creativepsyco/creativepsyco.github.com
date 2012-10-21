@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>super-awesome - creativepsyco's Blog</title>
+  <title>Node JS Script to run a web server for Backbone etc - creativepsyco's Blog</title>
   <meta name="author" content="Mohit Kanwal">
 
   
-  <meta name="description" content="Super-awesome Oct 12th, 2012 This is a sample page Oct 12th, 2012 Tweet Recent Posts Node JS Script to run a web server for Backbone etc Page &hellip;">
+  <meta name="description" content="The Problem Sometimes we find ourselves wanting to be able to host a webserver to test out some HTML or javascript functionality. For example when &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://creativepsyco.github.com/super-awesome/">
+  <link rel="canonical" href="http://creativepsyco.github.com/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -64,32 +64,15 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Super-awesome</h1>
-    <p class="meta">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-12T07:49:00+08:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time></p>
-  </header>
-  
-  <p>This is a sample page</p>
-
-  
-    <footer>
+    
+      <h1 class="entry-title">Node JS Script to Run a Web Server for Backbone Etc</h1>
+    
+    
       <p class="meta">
         
-        
 
 
 
@@ -101,13 +84,81 @@
   
 
 
-<time datetime="2012-10-12T07:49:00+08:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time>
+<time datetime="2012-10-22T00:18:00+08:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2012</time>
         
       </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>The Problem</h2>
+
+<p>Sometimes we find ourselves wanting to be able to host a webserver to test out some HTML or javascript functionality. For example when Cross Origin Resource Policy (CORS) does not allow running of scripts from outside the domain of the webserver.</p>
+
+<h2>The Solution</h2>
+
+<p>The solution is a simple piece of node js script living in the directory. Surprisingly it is way way small</p>
+
+<figure class='code'><figcaption><span>Sample NodeJS Script to run server</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">connect</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;connect&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">connect</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span>
+</span><span class='line'>    <span class="nx">connect</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">)</span>
+</span><span class='line'><span class="p">).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8080</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This would start listening for a request on port 8080 and then serve the files from the current directory.</p>
+
+<p>In order to use you must put the code in a file called <em>server.js</em></p>
+
+<p>And Also must install <code>connect</code> module via</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  npm install connect
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#8211;mohit</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
       
-        <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://creativepsyco.github.com/super-awesome/index.html" data-via="mohitkanwal" data-counturl="http://creativepsyco.github.com/super-awesome/index.html" >Tweet</a>
+
+<span class="byline author vcard">Posted by <span class="fn">Mohit Kanwal</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-22T00:18:00+08:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/backbone/'>Backbone</a>, <a class='category' href='/blog/categories/nodejs/'>NodeJS</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://creativepsyco.github.com/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc/" data-via="mohitkanwal" data-counturl="http://creativepsyco.github.com/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -115,9 +166,14 @@
   
 </div>
 
+    
+    <p class="meta">
       
-    </footer>
-  
+        <a class="basic-alignment left" href="/blog/2012/10/21/page-control-javascript/" title="Previous Post: Page Control Javascript">&laquo; Page Control Javascript</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>
