@@ -4,7 +4,7 @@
   <title><![CDATA[creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.com/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.com/"/>
-  <updated>2012-10-12T11:10:20+08:00</updated>
+  <updated>2012-10-21T23:32:12+08:00</updated>
   <id>http://creativepsyco.github.com/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -12,6 +12,20 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Doing a Wizard Like Flow in Backbone.js and Jquery Mobile]]></title>
+    <link href="http://creativepsyco.github.com/blog/2012/10/21/doing-a-wizard-like-flow-in-backbone-dot-js-and-jquery-mobile/"/>
+    <updated>2012-10-21T23:26:00+08:00</updated>
+    <id>http://creativepsyco.github.com/blog/2012/10/21/doing-a-wizard-like-flow-in-backbone-dot-js-and-jquery-mobile</id>
+    <content type="html"><![CDATA[<p>One of the things that new app developers do especially mobile ones, is that they give a step like flow to their users to enter data in a much more streamlined process by breaking it down into a number of steps and then load each one at a different time.</p>
+
+<h2>A Solution</h2>
+
+<script src="https://gist.github.com/3927260.js?file=WizardBackbone.js"></script>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[CS3235]]></title>
@@ -35,7 +49,8 @@
 
 <p>I am using Jekyll to power up the blog. It looks awesome and from the amount of configs needed to get it running I must it does not have that much of a turnaround time. Let&#8217;s see how far I go with this.</p>
 
-<p>&#8211;mohit</p>
+<p>And what&#8217;s more this
+&#8211;mohit</p>
 ]]></content>
   </entry>
   
