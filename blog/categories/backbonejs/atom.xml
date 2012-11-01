@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: BackboneJS | creativepsyco's Blog]]></title>
+  <link href="http://creativepsyco.github.com/blog/categories/backbonejs/atom.xml" rel="self"/>
+  <link href="http://creativepsyco.github.com/"/>
+  <updated>2012-11-01T17:57:31+08:00</updated>
+  <id>http://creativepsyco.github.com/</id>
+  <author>
+    <name><![CDATA[Mohit Kanwal]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Solving Cross Origin Resource Sharing policies Sinatra and BackboneJS]]></title>
+    <link href="http://creativepsyco.github.com/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs/"/>
+    <updated>2012-10-22T22:57:00+08:00</updated>
+    <id>http://creativepsyco.github.com/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs</id>
+    <content type="html"><![CDATA[<p>Admit it. There are so many times you wish that the localhost-ed version of the application that you are developing in BacboneJS just works. But it doesn't. And there is only one reason why it doesn't work.</p>
+
+<h2>Cross Origin Resource Sharing</h2>
+
+<p>Yeah, the big culprit is CORS. And here is how you circumvent it. This snippet assumes you are using Sinatra for deploying your Rails API.</p>
+
+<h2>The Solution</h2>
+
+<p>``` ruby
+options '/*' do
+  response["Access-Control-Allow-Headers"] = "origin, x-requested-with, content-type"
+end
+````</p>
+
+<p>This snippet will add a header to the response that will allow cross-origin javascript coming specifically from localhost to be able to call the server and get a response.</p>
+]]></content>
+  </entry>
+  
+</feed>
