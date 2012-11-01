@@ -18,7 +18,7 @@ The Solution
 options '/*' do
   response["Access-Control-Allow-Headers"] = "origin, x-requested-with, content-type"
 end
-````
+```
 
 
 This snippet will add a header to the response that will allow cross-origin javascript coming specifically from localhost to be able to call the server and get a response.

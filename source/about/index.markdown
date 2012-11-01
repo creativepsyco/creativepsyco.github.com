@@ -2,8 +2,8 @@
 layout: page
 title: "about"
 date: 2012-07-24 03:16
-comments: false
+comments: true
 sharing: false
 footer: false
 ---
-Sample!
+Hi there, I am Mohit. 
