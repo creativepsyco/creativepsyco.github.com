@@ -1,10 +1,9 @@
 ---
 layout: page
 title: "about"
-date: 2012-10-12 07:43
-comments: true
-sharing: true
-footer: true
+date: 2012-07-24 03:16
+comments: false
+sharing: false
+footer: false
 ---
-
-Hi there, I am Mohit Kanwal.-
+Sample!

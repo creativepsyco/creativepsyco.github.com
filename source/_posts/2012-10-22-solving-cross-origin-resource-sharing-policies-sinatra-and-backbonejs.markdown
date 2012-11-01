@@ -14,7 +14,7 @@ Yeah, the big culprit is CORS. And here is how you circumvent it. This snippet a
 
 The Solution
 ------------
-```` ruby
+``` ruby
 options '/*' do
   response["Access-Control-Allow-Headers"] = "origin, x-requested-with, content-type"
 end
