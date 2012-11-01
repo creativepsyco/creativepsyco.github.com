@@ -9,7 +9,7 @@
   <meta name="author" content="Mohit Kanwal">
 
   
-  <meta name="description" content="Admit it. There are so many times you wish that the localhost-ed version of the application that you are developing in BacboneJS just works. But it &hellip;">
+  <meta name="description" content="Most of the stuff is still under production, more details later Don&#8217;t know why but these days I am hooked to Javascript. Perhaps that&#8217;s &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -64,6 +64,117 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/11/02/new-technologies-galore/">New Technologies Galore</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-02T01:12:00+08:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2012</time>
+        
+         | <a href="/blog/2012/11/02/new-technologies-galore/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>Most of the stuff is still under production, more details later</em></p>
+
+<p>Don&#8217;t know why but these days I am hooked to Javascript. Perhaps that&#8217;s coz I write way too much Javascript these days or maybe the world is really moving to the client side of things. Now I don&#8217;t want to go into the details of the holy war of server side vs client side of things. However, I do find that client side stuff is very exciting not to mention that completely open.</p>
+
+<p>For client side development I am using a host of technologies to work my way around. These are BackboneJS, ExpressJS, NodeJS and Redis.</p>
+
+<h2>Food For Thought</h2>
+
+<p>Now you would be wondering how come so many *JS appended libraries. Man! if I had known myself I would tell but really don&#8217;t know what is up with the JS convention anyways.</p>
+
+<h2>NodeJS</h2>
+
+<p>To me nodejs seems pretty darn powerful when it comes to serving requests. With it&#8217;s event driven framework to go around I am sure it&#8217;s the language of the server in the times to come. Although I would like to step back and think that Javascript is not really a <code>language</code> but more like a <code>scripting language</code> but I guess the perceptions will change over time. To start a simple node js server all you need is to install <a href="http://nodejs.org/">Node</a> first. My favorite for doing this is <a href="http://mxcl.github.com/homebrew/">Homebrew</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install node
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here is a sample <code>server.js</code> file which acts as a Node web server.</p>
+
+<figure class='code'><figcaption><span>server.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">});</span>
+</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;Hello World\n&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">1337</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server running at http://127.0.0.1:1337/&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To run this all you need to do is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>node server.js
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And voila goto <code>localhost:1337</code> and be greeted by a HTML page response. Cool isn&#8217;t it?</p>
+
+<h2>ExpressJS</h2>
+
+<p>Now we dive into a framework for creating web applications with Node. Why? Coz Frameworks rock and there is a clear well defined design strategy at work which frankly most of us would take a lot of time to devise. So why don&#8217;t we use the community&#8217;s advice and just do it!</p>
+
+<p><a href="http://expressjs.com/">ExpressJS</a> makes the creation of web apps with Node such a breeze.</p>
+
+<p>First you would need to install express. For this we would make use of the Node Package manager (NPM)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>npm install -g express
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This would put a bunch of stuff in the directory of our node app. ExpressJS comes with a cool generator (aka rails style) and one can make use of it to create the next scaffold.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>express --sessions --css stylus --ejs myapp
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So go ahead and start modifying code. Yay! Follow the guide at the <a href="http://expressjs.com/guide.html">ExpressJS Docs</a></p>
+
+<h2>BackboneJS</h2>
+
+<p>Server side Javascript is fine but what about client side javascript. For this we have <a href="http://backbonejs.org/">BackboneJS</a>, a client-side MVP (most people call it MVC or MV*) framework which organizes your code into awesome folders called <code>models</code>, <code>views</code> and <code>templates</code>. Find out more about it at the official website.</p>
+
+<h2>Redis</h2>
+
+<p>And lastly for persistence, I am looking at <a href="http://try.redis-db.com/">Redis</a>. I am still looking at it. So i will update this once I have more information about it.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -521,6 +632,10 @@ bullshit?</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/11/02/new-technologies-galore/">New Technologies Galore</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs/">Solving Cross Origin Resource Sharing policies Sinatra and BackboneJS</a>
       </li>
     
@@ -534,10 +649,6 @@ bullshit?</p></blockquote>
     
       <li class="post">
         <a href="/blog/2012/10/21/doing-a-wizard-like-flow-in-backbone-dot-js-and-jquery-mobile/">Doing a Wizard Like Flow in Backbone.js and Jquery Mobile</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/12/cs3235/">CS3235</a>
       </li>
     
   </ul>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: NodeJS | creativepsyco's Blog]]></title>
-  <link href="http://creativepsyco.github.com/blog/categories/nodejs/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Redis | creativepsyco's Blog]]></title>
+  <link href="http://creativepsyco.github.com/blog/categories/redis/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.com/"/>
   <updated>2012-11-02T01:48:25+08:00</updated>
   <id>http://creativepsyco.github.com/</id>
@@ -81,42 +81,6 @@ $ express --sessions --css stylus --ejs myapp
 <h2>Redis</h2>
 
 <p>And lastly for persistence, I am looking at <a href="http://try.redis-db.com/">Redis</a>. I am still looking at it. So i will update this once I have more information about it.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Node JS Script to run a web server for Backbone etc]]></title>
-    <link href="http://creativepsyco.github.com/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc/"/>
-    <updated>2012-10-22T00:18:00+08:00</updated>
-    <id>http://creativepsyco.github.com/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc</id>
-    <content type="html"><![CDATA[<h2>The Problem</h2>
-
-<p>Sometimes we find ourselves wanting to be able to host a webserver to test out some HTML or javascript functionality. For example when Cross Origin Resource Policy (CORS) does not allow running of scripts from outside the domain of the webserver.</p>
-
-<h2>The Solution</h2>
-
-<p>The solution is a simple piece of node js script living in the directory. Surprisingly it is way way small</p>
-
-<p>``` javascript Sample NodeJS Script to run server
-var connect = require('connect');
-connect.createServer(</p>
-
-<pre><code>connect.static(__dirname)
-</code></pre>
-
-<p>).listen(8080);
-```</p>
-
-<p>This would start listening for a request on port 8080 and then serve the files from the current directory.</p>
-
-<p>In order to use you must put the code in a file called <em>server.js</em></p>
-
-<p>And Also must install <code>connect</code> module via
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>  npm install connect
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>--mohit</p>
 ]]></content>
   </entry>
   
