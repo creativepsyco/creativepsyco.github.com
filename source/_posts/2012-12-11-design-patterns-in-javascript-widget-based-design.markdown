@@ -9,6 +9,9 @@ categories: [Design Patterns, Javascript]
 
 The current semester I had a course involving hefty use of Design Patterns. The course CS3213-Software Design revolved in using design patterns and applying them to the world of software in extreme detail, which I never in my dreams would have imagined.
 
+
+This is just great.
+
 ## The Course
 
 /// TODO:
