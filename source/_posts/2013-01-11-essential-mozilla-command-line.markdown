@@ -90,3 +90,8 @@ bash$ hg diff > ~/my_first_patch.diff
 bash$ hg revert .
 ```
 
+For more information refer to [Mozilla Documentation on Build][ref1]
+
+[ref1]: https://developer.mozilla.org/en-US/docs/Developer_Guide/Build_Instructions
+
+
