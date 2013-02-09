@@ -8,7 +8,7 @@ categories: ["Python", "Django"]
 In my current Final Year Project (FYP) for my undergraduate degree I needed to spawn processes and be able to store their state in the memory so that they can be started/re-started or stopped. I had previously gone about doing the same kind of operation in Java with a Singleton `ProcessManager` Class so I was pretty sure that such a pattern would exist in Python as well. Turns out, it is a [bad practice][link1] to do so. 
 
 Anyways, I could not figure out a better way to do this, so I stuck with Singletons. Moreover it got me the job done.
-
+<!--more-->
 Here is how the final product looks like:
 {% gist 4744901 %}
 
