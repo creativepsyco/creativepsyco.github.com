@@ -10,7 +10,7 @@ In my current Final Year Project (FYP) for my undergraduate degree I needed to s
 Anyways, I could not figure out a better way to do this, so I stuck with Singletons. Moreover it got me the job done.
 
 Here is how the final product looks like:
-<script src="https://gist.github.com/creativepsyco/4744901.js"></script>
+{% gist 4744901 %}
 
 Cheers
 mohit
