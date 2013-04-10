@@ -1,0 +1,498 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Django Fun - creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="Here&#8217;s how to install python on your web server :) Log in using SSH access This process may change from different kind of hosts to different &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://creativepsyco.github.io/blog/2013/01/24/django-fun">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">\m/</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">creativepsyco's Blog</a></h1>
+  
+    <h2>Trolling you digitally</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:creativepsyco.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/portfolio">Portfolio</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Django Fun</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-24T22:29:00+08:00" pubdate data-updated="true">Jan 24<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Here&#8217;s how to install python on your web server :)</p>
+
+<h3>Log in using SSH access</h3>
+
+<p>This process may change from different kind of hosts to different machines so find out first.</p>
+
+<h3>Install Python 2.7.2</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir ~/python
+</span><span class='line'>cd ~/python
+</span><span class='line'>wget http://www.python.org/ftp/python/2.7.2/Python-2.7.2.tgz
+</span><span class='line'>tar zxfv Python-2.7.2.tgz
+</span><span class='line'>rm -rf Python-2.7.2.tgz
+</span><span class='line'>find ~/python -type d | xargs chmod 0755
+</span><span class='line'>cd Python-2.7.2
+</span><span class='line'>./configure --prefix=$HOME/python
+</span><span class='line'>make
+</span><span class='line'>make install
+</span><span class='line'>cd ..
+</span><span class='line'>rm -rf Python-2.7.2</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Modify ~/.bashrc</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>vim ~/.bashrc # Press i and enter the following:
+</span><span class='line'>export PATH=$HOME/python/bin:$PATH # press &lt;escape&gt;:wq&lt;enter&gt;
+</span><span class='line'>source ~/.bashrc # Whenever you want to work using Python 2.7 in the
+</span><span class='line'>                 # console you will need to enter this</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Test your Python install</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>python -V # This should output "Python 2.7.2"</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install setuptools</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget http://pypi.python.org/packages/source/s/setuptools/setuptools-0.6c11.tar.gz
+</span><span class='line'>tar xzvf setuptools-0.6c11.tar.gz
+</span><span class='line'>rm setuptools-0.6c11.tar.gz
+</span><span class='line'>cd setuptools-0.6c11
+</span><span class='line'>python setup.py install
+</span><span class='line'>cd ..
+</span><span class='line'>rm -rf setuptools-0.6c11</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install pip</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget http://pypi.python.org/packages/source/p/pip/pip-1.2.1.tar.gz
+</span><span class='line'>tar xzvf pip-1.2.1.tar.gz
+</span><span class='line'>rm pip-1.2.1.tar.gz
+</span><span class='line'>cd pip-1.2.1
+</span><span class='line'>python setup.py install
+</span><span class='line'>cd ..
+</span><span class='line'>rm -rf pip-1.2.1</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install Django, flup and MySQL Python Module</h3>
+
+<p>Now that pip is installed this is easy part.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip install Django
+</span><span class='line'>pip install flup
+</span><span class='line'>pip install MySQL-python</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Create .htaccess</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/public_html/mysite # where mysite is the root folder of your site
+</span><span class='line'>vim .htaccess # Press i then enter the following:
+</span><span class='line'>AddHandler fcgid-script .fcgi
+</span><span class='line'>RewriteEngine On
+</span><span class='line'>RewriteCond %{REQUEST_FILENAME} !-f
+</span><span class='line'>RewriteRule ^(.*)$ mysite.fcgi/$1 [QSA,L] # Press wq</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Configure Your Website</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir ~/django-projects
+</span><span class='line'>cd ~/django-projects
+</span><span class='line'>django-admin.py startproject myproject # I use the same name as mysite
+</span><span class='line'>                                       # without any periods
+</span><span class='line'>cd ~/public_html/mysite
+</span><span class='line'>vim mysite.fcgi # Press i then enter the following:
+</span><span class='line'>#!/homeX/your_username/python/bin/python
+</span><span class='line'>import sys, os
+</span><span class='line'>
+</span><span class='line'># Where /home/your_username is the path to your home directory
+</span><span class='line'>sys.path.insert(0, "/home/your_username/python")
+</span><span class='line'>sys.path.insert(13, "/home/your_username/django-projects/myproject")
+</span><span class='line'>
+</span><span class='line'>os.environ['DJANGO_SETTINGS_MODULE'] = 'myproject.settings'
+</span><span class='line'>from django.core.servers.fastcgi import runfastcgi
+</span><span class='line'>runfastcgi(method="threaded", daemonize="false") # Press &lt;escape&gt;wq&lt;enter&gt;
+</span><span class='line'>chmod 0755 mysite.fcgi</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h3>Test your configuration</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>python mysite.fcgi
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'># Fix any errors and run the command again. When you have an HTML page
+</span><span class='line'># returned your Django install is complete. You should be able to go to your
+</span><span class='line'># sites URL and view the Django welcome page.</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>That’s everything</p>
+
+<p>Now you can get to work and create some real Django pages.</p>
+
+<h3>A Few Tips</h3>
+
+<p>Remember to install every python and django package using pip – that way they will be available to your django app.
+Keep in mind that every Django command like syncdb, collectstatic  etc. should be run using the correct version of Python. This means using source ~/.bashrc every time you log into your SSH client e.g.
+source ~/.bashrc
+python manage.py syncdb
+python manage.py shell
+etc.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mohit Kanwal</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-24T22:29:00+08:00" pubdate data-updated="true">Jan 24<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>Python</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://creativepsyco.github.io/blog/2013/01/24/django-fun/" data-via="mohitkanwal" data-counturl="http://creativepsyco.github.io/blog/2013/01/24/django-fun/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/11/essential-mozilla-command-line/" title="Previous Post: Essential Mozilla Command Line">&laquo; Essential Mozilla Command Line</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/01/27/django-and-travis/" title="Next Post: Django and Travis">Django and Travis &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/10/deploying-rails-on-nginx-and-thin/">Deploying Rails on Nginx and thin</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/09/singleton-in-python/">Singleton in Python</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/django-dynamic-forms/">Django Dynamic Forms</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/27/django-and-travis/">Django and Travis</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/24/django-fun/">Django Fun</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/creativepsyco">@creativepsyco</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'creativepsyco',
+            count: 6,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Mohit Kanwal -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://creativepsyco.github.io/blog/2013/01/24/django-fun/';
+        var disqus_url = 'http://creativepsyco.github.io/blog/2013/01/24/django-fun/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

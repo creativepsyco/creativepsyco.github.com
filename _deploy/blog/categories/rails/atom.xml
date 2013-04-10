@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Rails | creativepsyco's Blog]]></title>
+  <link href="http://creativepsyco.github.io/blog/categories/rails/atom.xml" rel="self"/>
+  <link href="http://creativepsyco.github.io/"/>
+  <updated>2013-04-10T16:19:28+08:00</updated>
+  <id>http://creativepsyco.github.io/</id>
+  <author>
+    <name><![CDATA[Mohit Kanwal]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Deploying Rails on Nginx and thin]]></title>
+    <link href="http://creativepsyco.github.io/blog/2013/04/10/deploying-rails-on-nginx-and-thin/"/>
+    <updated>2013-04-10T15:17:00+08:00</updated>
+    <id>http://creativepsyco.github.io/blog/2013/04/10/deploying-rails-on-nginx-and-thin</id>
+    <content type="html"><![CDATA[<p>I have been busy lately doing my Final Year Project which comprises of building a web based service for processing analysis jobs on patient data.</p>
+
+<p>I have developed the web service API using <a href="http://rubyonrails.org/">Rails</a> with MySQL being the backend database.</p>
+
+<p>For deployment purposes I had no idea which of the web servers to run as such I naturally googled online and found people talking about <a href="https://github.com/capistrano/capistrano">Capistrano</a>, a great way to have deployment scripts being run on the server.</p>
+
+<p>I needed something simple, I had seen the advantages of using SVN and [Nginx][ngix] as a means to deploy by SSH-ing to the server. This keeps things simple and lends us as much control as we need. So I explored.</p>
+
+<p>Here are instructions to setup a fresh copy of Ubuntu Precise Pangolin with the necessary goodies:</p>
+
+<h3>RVM</h3>
+
+<p>I highly recommend RVM to manage rubies and gems</p>
+
+<ul>
+<li>Install the pre-reqs
+<code>bash
+sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion pkg-config
+curl -L https://get.rvm.io | bash -s stable
+exec $SHELL
+rvm install 1.9.3 --default
+ruby -v
+</code></li>
+<li>Don't require rdoc and ri when installing gems:
+<code>bash
+echo "gem: --no-ri --no-rdoc" &gt; ~/.gemrc
+</code></li>
+<li>install the latest Rails (3.2.11):
+<code>bash
+gem i bundler rails
+</code></li>
+</ul>
+
+
+<h3>Thin</h3>
+
+<p>Thin is a ruby server much like the default WebRIck that comes along packaged with the default version of rails.</p>
+
+<ul>
+<li>Install thin and make it have some sensible defaults</li>
+</ul>
+
+
+<p><code>bash
+gem install thin
+thin install
+/usr/sbin/update-rc.d -f thin defaults # this updates the service to automatically start at login
+</code></p>
+
+<ul>
+<li><p>Now assuming we have a rails app inisde the folder structure <code>/var/www/myapp.example.com</code> we now start the deployment process:</p></li>
+<li><p>Create a configuration</p></li>
+</ul>
+
+
+<p><code>bash
+thin config -C /etc/thin/myapp.example.com -c /var/www/myapp.example.com --servers 3 -e development # or: -e production for caching, etc
+</code></p>
+
+<h3>Nginx</h3>
+
+<p>Nginx is a Web Server and has better performance than Apache.</p>
+
+<ul>
+<li>Install Nginx</li>
+</ul>
+
+
+<p><code>bash
+sudo apt-get install nginx
+</code></p>
+
+<ul>
+<li>Create a vHost. To do this, edit <code>/etc/nginx/sites-available/myapp.example.com</code></li>
+</ul>
+
+
+<p>This is a sample Nginx configuration for <code>myapp</code></p>
+
+<p>```nginx</p>
+
+<pre><code>upstream myapp {
+  server 127.0.0.1:3000;
+  server 127.0.0.1:3001;
+  server 127.0.0.1:3002;
+}
+server {
+  listen   80;
+  server_name .example.com;
+
+  access_log /var/www/myapp.example.com/log/access.log;
+  error_log  /var/www/myapp.example.com/log/error.log;
+  root     /var/www/myapp.example.com;
+  index    index.html;
+
+  location / {
+    proxy_set_header  X-Real-IP  $remote_addr;
+    proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header  Host $http_host;
+    proxy_redirect  off;
+    try_files /system/maintenance.html $uri $uri/index.html $uri.html @ruby;
+  }
+
+  location @ruby {
+    proxy_pass http://myapp;
+  }
+}
+</code></pre>
+
+<p>```
+And make it enabled as well:</p>
+
+<p><code>bash
+ln -nfs /etc/nginx/sites-available/myapp.example.com /etc/nginx/sites-enabled/myapp.example.com
+</code></p>
+
+<h3>Switch the app Live</h3>
+
+<ul>
+<li>Restart the different daemons
+<code>bash
+/etc/init.d/thin restart
+/etc/init.d/nginx reload
+/etc/init.d/nginx restart
+</code></li>
+</ul>
+
+
+<p>Now go visit <code>http://myapp</code> and it should show you the Rails page that you are supposed to see. Easy right?</p>
+]]></content>
+  </entry>
+  
+</feed>

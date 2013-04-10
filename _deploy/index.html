@@ -1,0 +1,1268 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="I have been busy lately doing my Final Year Project which comprises of building a web based service for processing analysis jobs on patient data. I &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://creativepsyco.github.io">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">\m/</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">creativepsyco's Blog</a></h1>
+  
+    <h2>Trolling you digitally</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:creativepsyco.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/portfolio">Portfolio</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/10/deploying-rails-on-nginx-and-thin/">Deploying Rails on Nginx and Thin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-10T15:17:00+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/04/10/deploying-rails-on-nginx-and-thin/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have been busy lately doing my Final Year Project which comprises of building a web based service for processing analysis jobs on patient data.</p>
+
+<p>I have developed the web service API using <a href="http://rubyonrails.org/">Rails</a> with MySQL being the backend database.</p>
+
+<p>For deployment purposes I had no idea which of the web servers to run as such I naturally googled online and found people talking about <a href="https://github.com/capistrano/capistrano">Capistrano</a>, a great way to have deployment scripts being run on the server.</p>
+
+<p>I needed something simple, I had seen the advantages of using SVN and [Nginx][ngix] as a means to deploy by SSH-ing to the server. This keeps things simple and lends us as much control as we need. So I explored.</p>
+
+<p>Here are instructions to setup a fresh copy of Ubuntu Precise Pangolin with the necessary goodies:</p>
+
+<h3>RVM</h3>
+
+<p>I highly recommend RVM to manage rubies and gems</p>
+
+<ul>
+<li>Install the pre-reqs</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion pkg-config
+</span><span class='line'>curl -L https://get.rvm.io | bash -s stable
+</span><span class='line'><span class="nb">exec</span> <span class="nv">$SHELL</span>
+</span><span class='line'>rvm install 1.9.3 --default
+</span><span class='line'>ruby -v
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Don&#8217;t require rdoc and ri when installing gems:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;gem: --no-ri --no-rdoc&quot;</span> &gt; ~/.gemrc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>install the latest Rails (3.2.11):</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>gem i bundler rails
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Thin</h3>
+
+<p>Thin is a ruby server much like the default WebRIck that comes along packaged with the default version of rails.</p>
+
+<ul>
+<li>Install thin and make it have some sensible defaults</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>gem install thin
+</span><span class='line'>thin install
+</span><span class='line'>/usr/sbin/update-rc.d -f thin defaults <span class="c"># this updates the service to automatically start at login</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Now assuming we have a rails app inisde the folder structure <code>/var/www/myapp.example.com</code> we now start the deployment process:</p></li>
+<li><p>Create a configuration</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>thin config -C /etc/thin/myapp.example.com -c /var/www/myapp.example.com --servers 3 -e development <span class="c"># or: -e production for caching, etc</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Nginx</h3>
+
+<p>Nginx is a Web Server and has better performance than Apache.</p>
+
+<ul>
+<li>Install Nginx</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install nginx
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Create a vHost. To do this, edit <code>/etc/nginx/sites-available/myapp.example.com</code></li>
+</ul>
+
+
+<p>This is a sample Nginx configuration for <code>myapp</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='nginx'><span class='line'><span class="k">upstream</span> <span class="s">myapp</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kn">server</span> <span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">3000</span><span class="p">;</span>
+</span><span class='line'>  <span class="kn">server</span> <span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">3001</span><span class="p">;</span>
+</span><span class='line'>  <span class="kn">server</span> <span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">3002</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">server</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kn">listen</span>   <span class="mi">80</span><span class="p">;</span>
+</span><span class='line'>  <span class="kn">server_name</span> <span class="s">.example.com</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kn">access_log</span> <span class="s">/var/www/myapp.example.com/log/access.log</span><span class="p">;</span>
+</span><span class='line'>  <span class="kn">error_log</span>  <span class="s">/var/www/myapp.example.com/log/error.log</span><span class="p">;</span>
+</span><span class='line'>  <span class="kn">root</span>     <span class="s">/var/www/myapp.example.com</span><span class="p">;</span>
+</span><span class='line'>  <span class="kn">index</span>    <span class="s">index.html</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">proxy_set_header</span>  <span class="s">X-Real-IP</span>  <span class="nv">$remote_addr</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">proxy_set_header</span>  <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">proxy_set_header</span>  <span class="s">Host</span> <span class="nv">$http_host</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">proxy_redirect</span>  <span class="no">off</span><span class="p">;</span>
+</span><span class='line'>    <span class="kn">try_files</span> <span class="s">/system/maintenance.html</span> <span class="nv">$uri</span> <span class="nv">$uri/index.html</span> <span class="nv">$uri.html</span> <span class="s">@ruby</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kn">location</span> <span class="s">@ruby</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kn">proxy_pass</span> <span class="s">http://myapp</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And make it enabled as well:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ln -nfs /etc/nginx/sites-available/myapp.example.com /etc/nginx/sites-enabled/myapp.example.com
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Switch the app Live</h3>
+
+<ul>
+<li>Restart the different daemons</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>/etc/init.d/thin restart
+</span><span class='line'>/etc/init.d/nginx reload
+</span><span class='line'>/etc/init.d/nginx restart
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now go visit <code>http://myapp</code> and it should show you the Rails page that you are supposed to see. Easy right?</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/02/09/singleton-in-python/">Singleton in Python</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-09T19:27:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/02/09/singleton-in-python/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In my current Final Year Project (FYP) for my undergraduate degree I needed to spawn processes and be able to store their state in the memory so that they can be started/re-started or stopped. I had previously gone about doing the same kind of operation in Java with a Singleton <code>ProcessManager</code> Class so I was pretty sure that such a pattern would exist in Python as well. Turns out, it is a <a href="http://lucumr.pocoo.org/2009/7/24/singletons-and-their-problems-in-python/">bad practice</a> to do so.</p>
+
+<p>Anyways, I could not figure out a better way to do this, so I stuck with Singletons. Moreover it got me the job done.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/02/09/singleton-in-python/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/02/02/django-dynamic-forms/">Django Dynamic Forms</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-02T20:33:00+08:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
+        
+         | <a href="/blog/2013/02/02/django-dynamic-forms/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Here is an example of how to do a dynamic form in Django. I am loving this framework, it&#8217;s so simple</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">ServiceStartForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">serviceList</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Service</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">print</span> <span class="n">serviceList</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">b</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">aService</span> <span class="ow">in</span> <span class="n">serviceList</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">b</span><span class="p">[</span><span class="n">aService</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">aService</span><span class="o">.</span><span class="n">name</span>
+</span><span class='line'>    <span class="n">c</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Within the form, &quot;</span><span class="p">,</span> <span class="n">serviceList</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">serviceChoice</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Select</span><span class="p">())</span>
+</span><span class='line'>    <span class="n">input_directory</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">output_directory</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class='line'>        <span class="nb">super</span><span class="p">(</span><span class="n">ServiceStartForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">serviceList</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Service</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</span><span class='line'>        <span class="n">b</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">aService</span> <span class="ow">in</span> <span class="n">serviceList</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">b</span><span class="p">[</span><span class="n">aService</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">aService</span><span class="o">.</span><span class="n">name</span>
+</span><span class='line'>        <span class="n">c</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s">&quot;serviceChoice&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">c</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Enjoy :)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/27/django-and-travis/">Django and Travis</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-27T03:42:00+08:00" pubdate data-updated="true">Jan 27<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/27/django-and-travis/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A sample <code>.travis</code> file to allow you to run and test on the <a href="http://travis-ci.org">Travis CI</a>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">language</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">python</span>
+</span><span class='line'><span class="l-Scalar-Plain">python</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="c1"># - &quot;2.6&quot;</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="s">&quot;2.7&quot;</span>
+</span><span class='line'><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mysql</span>
+</span><span class='line'><span class="l-Scalar-Plain">env</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="c1"># - DJANGO=1.2.7</span>
+</span><span class='line'>  <span class="c1"># - DJANGO=1.3.1</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">DJANGO=1.4.3 DJANGO_SETTINGS_MODULE=&quot;mysite.travis_settings&quot;</span>
+</span><span class='line'><span class="l-Scalar-Plain">install</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install -q Django==$DJANGO --use-mirrors</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install pep8 --use-mirrors</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install mysql-python --use-mirrors</span>
+</span><span class='line'>  <span class="c1"># - pip install https://github.com/dcramer/pyflakes/tarball/master</span>
+</span><span class='line'>  <span class="c1"># - pip install -q -e . --use-mirrors</span>
+</span><span class='line'><span class="l-Scalar-Plain">before_script</span><span class="p-Indicator">:</span>
+</span><span class='line'><span class="c1">#   - &quot;pep8 --exclude=migrations --ignore=E501,E225 src&quot;</span>
+</span><span class='line'><span class="c1">#   - pyflakes -x W src</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">mysql -e &#39;create database mysite_db;&#39;</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">python manage.py syncdb --noinput</span>
+</span><span class='line'><span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span>
+</span><span class='line'>  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">python manage.py test</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Enjoy :)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/24/django-fun/">Django Fun</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-24T22:29:00+08:00" pubdate data-updated="true">Jan 24<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/24/django-fun/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Here&#8217;s how to install python on your web server :)</p>
+
+<h3>Log in using SSH access</h3>
+
+<p>This process may change from different kind of hosts to different machines so find out first.</p>
+
+<h3>Install Python 2.7.2</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir ~/python
+</span><span class='line'>cd ~/python
+</span><span class='line'>wget http://www.python.org/ftp/python/2.7.2/Python-2.7.2.tgz
+</span><span class='line'>tar zxfv Python-2.7.2.tgz
+</span><span class='line'>rm -rf Python-2.7.2.tgz
+</span><span class='line'>find ~/python -type d | xargs chmod 0755
+</span><span class='line'>cd Python-2.7.2
+</span><span class='line'>./configure --prefix=$HOME/python
+</span><span class='line'>make
+</span><span class='line'>make install
+</span><span class='line'>cd ..
+</span><span class='line'>rm -rf Python-2.7.2</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Modify ~/.bashrc</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>vim ~/.bashrc # Press i and enter the following:
+</span><span class='line'>export PATH=$HOME/python/bin:$PATH # press &lt;escape&gt;:wq&lt;enter&gt;
+</span><span class='line'>source ~/.bashrc # Whenever you want to work using Python 2.7 in the
+</span><span class='line'>                 # console you will need to enter this</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Test your Python install</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>python -V # This should output "Python 2.7.2"</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install setuptools</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget http://pypi.python.org/packages/source/s/setuptools/setuptools-0.6c11.tar.gz
+</span><span class='line'>tar xzvf setuptools-0.6c11.tar.gz
+</span><span class='line'>rm setuptools-0.6c11.tar.gz
+</span><span class='line'>cd setuptools-0.6c11
+</span><span class='line'>python setup.py install
+</span><span class='line'>cd ..
+</span><span class='line'>rm -rf setuptools-0.6c11</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install pip</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget http://pypi.python.org/packages/source/p/pip/pip-1.2.1.tar.gz
+</span><span class='line'>tar xzvf pip-1.2.1.tar.gz
+</span><span class='line'>rm pip-1.2.1.tar.gz
+</span><span class='line'>cd pip-1.2.1
+</span><span class='line'>python setup.py install
+</span><span class='line'>cd ..
+</span><span class='line'>rm -rf pip-1.2.1</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install Django, flup and MySQL Python Module</h3>
+
+<p>Now that pip is installed this is easy part.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip install Django
+</span><span class='line'>pip install flup
+</span><span class='line'>pip install MySQL-python</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Create .htaccess</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/public_html/mysite # where mysite is the root folder of your site
+</span><span class='line'>vim .htaccess # Press i then enter the following:
+</span><span class='line'>AddHandler fcgid-script .fcgi
+</span><span class='line'>RewriteEngine On
+</span><span class='line'>RewriteCond %{REQUEST_FILENAME} !-f
+</span><span class='line'>RewriteRule ^(.*)$ mysite.fcgi/$1 [QSA,L] # Press wq</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Configure Your Website</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir ~/django-projects
+</span><span class='line'>cd ~/django-projects
+</span><span class='line'>django-admin.py startproject myproject # I use the same name as mysite
+</span><span class='line'>                                       # without any periods
+</span><span class='line'>cd ~/public_html/mysite
+</span><span class='line'>vim mysite.fcgi # Press i then enter the following:
+</span><span class='line'>#!/homeX/your_username/python/bin/python
+</span><span class='line'>import sys, os
+</span><span class='line'>
+</span><span class='line'># Where /home/your_username is the path to your home directory
+</span><span class='line'>sys.path.insert(0, "/home/your_username/python")
+</span><span class='line'>sys.path.insert(13, "/home/your_username/django-projects/myproject")
+</span><span class='line'>
+</span><span class='line'>os.environ['DJANGO_SETTINGS_MODULE'] = 'myproject.settings'
+</span><span class='line'>from django.core.servers.fastcgi import runfastcgi
+</span><span class='line'>runfastcgi(method="threaded", daemonize="false") # Press &lt;escape&gt;wq&lt;enter&gt;
+</span><span class='line'>chmod 0755 mysite.fcgi</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h3>Test your configuration</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>python mysite.fcgi
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'># Fix any errors and run the command again. When you have an HTML page
+</span><span class='line'># returned your Django install is complete. You should be able to go to your
+</span><span class='line'># sites URL and view the Django welcome page.</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>That’s everything</p>
+
+<p>Now you can get to work and create some real Django pages.</p>
+
+<h3>A Few Tips</h3>
+
+<p>Remember to install every python and django package using pip – that way they will be available to your django app.
+Keep in mind that every Django command like syncdb, collectstatic  etc. should be run using the correct version of Python. This means using source ~/.bashrc every time you log into your SSH client e.g.
+source ~/.bashrc
+python manage.py syncdb
+python manage.py shell
+etc.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/11/essential-mozilla-command-line/">Essential Mozilla Command Line</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-11T00:27:00+08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/11/essential-mozilla-command-line/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>This is a reference of some of the very important mozilla commands that I use in daily Terminal Life</em></p>
+
+<h3>Requirements</h3>
+
+<p>Set up Hg, Autoconf using Brew. Look up the instructions at the official website.</p>
+
+<h3>Setting up of Source Directory</h3>
+
+<p>Mozilla Code can be checked out from http://hg.mozilla.org. To set up a Thunderbird and Calendar clone on your local machine checkout the source code as</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>bash$ hg clone http://hg.mozilla.org/comm-central</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will create a <code>comm-central</code> directory in your local machine
+Now <code>comm-central</code> depends on a number of submodules which can be fetched by the following commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bash<span class="nv">$ </span><span class="nb">cd </span>comm-central
+</span><span class='line'>bash<span class="nv">$ </span>python client.py checkout
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will fetch the submodules. It will take a while</p>
+
+<h3>Compiling Code</h3>
+
+<p>In order to build the calendar application create a <code>.mozconfig</code> file within <code>comm-central</code> and insert the following code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mk_add_options <span class="nv">MOZ_OBJDIR</span><span class="o">=</span>@TOPSRCDIR@/obj-TB
+</span><span class='line'>mk_add_options <span class="nv">AUTOCONF</span><span class="o">=</span>/usr/local/Cellar/autoconf213/2.13/bin/autoconf213
+</span><span class='line'>ac_add_options --enable-calendar
+</span><span class='line'>
+</span><span class='line'><span class="c"># Turn off compiler optimization. This will make applications run slower,</span>
+</span><span class='line'><span class="c"># will allow you to debug the applications under a debugger, like GDB.</span>
+</span><span class='line'>ac_add_options --disable-optimize
+</span><span class='line'>ac_add_options --disable-jemalloc
+</span><span class='line'>
+</span><span class='line'><span class="c"># -s makes builds quieter by default</span>
+</span><span class='line'><span class="c"># -j4 allows 4 tasks to run in parallel. Set the number to be the amount of</span>
+</span><span class='line'><span class="c"># cores in your machine. 4 is a good number.</span>
+</span><span class='line'>
+</span><span class='line'>mk_add_options <span class="nv">MOZ_MAKE_FLAGS</span><span class="o">=</span><span class="s2">&quot;-j4 -s --no-print-directory&quot;</span>
+</span><span class='line'>mk_add_options <span class="nv">JS_READLINE</span><span class="o">=</span>1
+</span><span class='line'><span class="nb">export </span><span class="nv">JS_READLINE</span><span class="o">=</span>1
+</span><span class='line'>ac_add_options --disable-tests
+</span><span class='line'>ac_add_options --disable-installer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now fire away the compiler using the following command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bash<span class="nv">$ </span>make -f client.mk
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will take quite a lot of time depending upon your machine&#8217;s strength of course.</p>
+
+<h3>Applying a patch</h3>
+
+<p>From time to time, you might need to apply a patch from someone else, or maybe your own patch. This is quite easy, but note that if you plan on applying the patch, making some changes and then want to create a patch that doesn&#8217;t contain the patch you originally applied, it might be quite a bit harder.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> <span class="nv">$MOZILLA</span>/calendar
+</span><span class='line'><span class="c"># --dry-run tests the patching process to ensure that the patch will go</span>
+</span><span class='line'><span class="c"># ahead cleanly. Be sure to run --dry-run at least once before running</span>
+</span><span class='line'><span class="c"># the actual patching process.</span>
+</span><span class='line'>patch -p1 -i ~/my_first_bug.diff --dry-run
+</span><span class='line'><span class="c"># Now check if the patch applies cleanly, or you are willing to fix the </span>
+</span><span class='line'><span class="c"># places it went wrong. When you are confident, you can call:</span>
+</span><span class='line'>patch -p0 -i ~/my_first_bug.diff
+</span><span class='line'>
+</span><span class='line'><span class="c"># If the file to patch was not found, take a look at the patch headers. For</span>
+</span><span class='line'><span class="c"># example, if the header contains &quot;+++ themes/winstripe/calendar-views.css&quot;,</span>
+</span><span class='line'><span class="c"># then you need to go into the base directory and call again. If the header</span>
+</span><span class='line'><span class="c"># contains &quot;+++ mozilla/calendar/base/Makefile.in&quot;, you can use -p2 instead to</span>
+</span><span class='line'><span class="c"># strip the &quot;mozilla/calendar&quot; part.</span>
+</span><span class='line'>patch -p2 -i ~/my_first_bug.diff
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Creating a patch</h3>
+
+<p>Simply create a diff and store it somewhere</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bash<span class="nv">$ </span>hg diff &gt; ~/my_first_patch.diff
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Reverting a patch</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bash<span class="nv">$ </span>hg revert .
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For more information refer to <a href="https://developer.mozilla.org/en-US/docs/Developer_Guide/Build_Instructions">Mozilla Documentation on Build</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/10/creating-an-api-with-net-mvc4/">Creating an API With .NET MVC4</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-10T22:26:00+08:00" pubdate data-updated="true">Jan 10<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/10/creating-an-api-with-net-mvc4/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Gist</h2>
+
+<p><em>Recently while working on a vacation assigment I had to create an API in ASP .NET MVC. This was in order to create a booking system on top of the Google Calendar Event storage. Google provides 50000 calls per day free of chrage for the API so we thought this might work. But it also required some form of authentication to prevent the API facade from being misused.</em></p>
+
+<h2>OpenId</h2>
+
+<p>Well when you can&#8217;t store the authentication result you need to think of some third party based authentication mechanism and OpenId is one those means. Most of the modern email and other service providers such as Dropbox etc provide openid schemes which can be leveraged to get basic userinfo and proceed to do something in web application.</p>
+
+<h2>Nancy</h2>
+
+<p>Nancy is a NuGet package which mimics Sinatra. It allows creation of Http GET, POST, DELETE requests as mere functions with much ease. However it does not supports sessions and hence was found to be very hard to use in some of the places. For most operations, however, Nancy is a fantastic option.</p>
+
+<h2>ASP .NET MVC</h2>
+
+<p>// Todo</p>
+
+<h2>Authentication in MVC .NET</h2>
+
+<p>// Todo</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/12/11/a-home-called-india/">A Home Called India</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-11T22:36:00+08:00" pubdate data-updated="true">Dec 11<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/12/11/a-home-called-india/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>And now some random philosphical thoughts on what I think of India: my home</em></p>
+
+<p><em>I am an Indian from India. For most of us, the buck stop right there. I grew up just like the rest of the kids in my colony: I thought we as a Nation are huge, the best in the world. Buoyed by my sense of patriotism I even wrote a story about an army related incursion in Kashmir which got published in Champak.I knew I had a passion for writing. Nationalism aside, 10 years out in the world, I don&#8217;t think I am the same sane person I used to be back then.</em></p>
+
+<h3>A lot has changed</h3>
+
+<p>Industries grew. Computers overtook our lives. Terrorists became the No#1 menace of any democratic country/nation in the world. All this affected me mentally as a child. And that&#8217;s because news was delivered to me in real-time by my Dad, who works in The Times of India (a leading English newspaper in India).</p>
+
+<h3>Education was important, but not cheap and hence the expected returns</h3>
+
+<p>Let&#8217;s not digress into the discussion of arguing whether education was cheap or not or whether it must be equated to the same pedestal as the stock market which keeps toying between various shades of VIBGYOR. Let&#8217;s just agree to the claim that Education was considered to be the golden ticket for the end of the road journey for which some people save, some people just hope to get along somehow. But this was not the case with Education. After chasing to be the brightest and the so-called <strong>cream</strong> I realized it too late that Education was merely a hall ticket to appear in examinations like the IIT and PMT, it was here that the real trading of horses was done, albeit in a grade-question-answer sort of fashion.</p>
+
+<p>I don&#8217;t know whether my battery ran out of juice or out of luck or out of hard work to run for these exams. I knew they were tough but I did not expect myself to face such obstacles, especially not after I donned the throne of being the <strong>cream</strong> in some colony, in some school.</p>
+
+<p>A fat pay package comes because of education, and that&#8217;s what everyone should think about. This is what I was told.</p>
+
+<h3>Fundamentally flawed assumption</h3>
+
+<p>If something is observed to be holding in a certain frame of reference does not mean it is true. I learnt this in statistics, unfortunately too late.</p>
+
+<h3>Back to the point, India</h3>
+
+<p>I see two systems here, an educational system and a money obsessed employment system. I don&#8217;t know which one feeds the other. I can think of (Based on my Assumption above) the educational system being the culprit. A fine secondary education on my CV though does not allow me to make such a claim. On a closer detail however, it is revealed that major companies setup training institutes to train young graduates which sort of qualifies as an educational establishment, but I would like to argue otherwise as it is a directed process as compared to the seemingly freedom like approach of the Secondary school education system.</p>
+
+<h3>India is full of opportunities and I can see it</h3>
+
+<p>Talk about the BPO boom in India, its the past. Software is the new Hip trend these days. Degree does not matter, the company, the pay does. And everything else is a big fat circle called zero.</p>
+
+<h3>Literally</h3>
+
+<p>This is not the end, its just the beginning of a new discovery about a country I never found attractive.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/12/11/design-patterns-in-javascript-widget-based-design/">Design Patterns in Javascript: Widget Based Design</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-11T22:26:00+08:00" pubdate data-updated="true">Dec 11<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/12/11/design-patterns-in-javascript-widget-based-design/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>One of the most important things people learn after doing/learning a new language or as-these-days a framework is to be able to apply one of the most sought after industrial practices in the form of design patterns.</em></p>
+
+<p>The current semester I had a course involving hefty use of Design Patterns. The course CS3213-Software Design revolved in using design patterns and applying them to the world of software in extreme detail, which I never in my dreams would have imagined.</p>
+
+<p>This is just great.</p>
+
+<h2>The Course</h2>
+
+<p>/// TODO:</p>
+
+<h2>Design Patterns Learnt</h2>
+
+<p>/// TODO:</p>
+
+<h2>Applications Conceived</h2>
+
+<p>/// TODO:</p>
+
+<h2>Moving on</h2>
+
+<p>/// TODO:</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/12/01/a-web-service-for-multi-factor-authentication/">A Web Service for Multi-Factor Authentication</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-01T21:56:00+08:00" pubdate data-updated="true">Dec 1<span>st</span>, 2012</time>
+        
+         | <a href="/blog/2012/12/01/a-web-service-for-multi-factor-authentication/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>One of the projects done by me this semester was making Multi-Factor Authentication available for use by other websites. This required hosting our MFA web service over the internet.</em></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/10/deploying-rails-on-nginx-and-thin/">Deploying Rails on Nginx and thin</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/09/singleton-in-python/">Singleton in Python</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/django-dynamic-forms/">Django Dynamic Forms</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/27/django-and-travis/">Django and Travis</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/24/django-fun/">Django Fun</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/creativepsyco">@creativepsyco</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'creativepsyco',
+            count: 6,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Mohit Kanwal -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
