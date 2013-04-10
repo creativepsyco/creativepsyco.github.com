@@ -11,7 +11,7 @@ I have developed the web service API using [Rails][rails] with MySQL being the b
 
 For deployment purposes I had no idea which of the web servers to run as such I naturally googled online and found people talking about [Capistrano][caps], a great way to have deployment scripts being run on the server.
 
-I needed something simple, I had seen the advantages of using SVN and [Nginx][ngix] as a means to deploy by SSH-ing to the server. This keeps things simple and lends us as much control as we need. So I explored.
+I needed something simple, I had seen the advantages of using SVN and [Nginx][nginx] as a means to deploy by SSH-ing to the server. This keeps things simple and lends us as much control as we need. So I explored.
 <!--more-->
 
 Here are instructions to setup a fresh copy of Ubuntu Precise Pangolin with the necessary goodies:
