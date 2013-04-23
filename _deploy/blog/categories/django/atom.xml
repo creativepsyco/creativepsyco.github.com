@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Django | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/django/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-04-11T02:30:21+08:00</updated>
+  <updated>2013-04-23T18:16:58+08:00</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -27,56 +27,7 @@
 
 <p>Here is how the final product looks like:
 <div><script src='https://gist.github.com/4744901.js'></script>
-<noscript><pre><code>#
-# Copyright (c) 2013 by Mohit Singh kanwal.  All Rights Reserved.
-#
-import subprocess
-
-
-class ProcessManager(object):
-    &quot;&quot;&quot;ProcessManager Utility Class: Its singleton&quot;&quot;&quot;
-
-    INSTANCE = None
-
-    __PROCESS_DICT = None
-
-    def __init__(self):
-        if self.INSTANCE is not None:
-            raise ValueError(&quot;An instantiation already exists!&quot;)
-
-    @classmethod
-    def get_instance(cls):
-    	if cls.INSTANCE is None:
-    		cls.INSTANCE = ProcessManager()
-    		cls.INSTANCE.__PROCESS_DICT = dict()
-    	return cls.INSTANCE
-
-    @classmethod
-    def set_process(cls, key, value):
-
-        if cls.__PROCESS_DICT is None:
-            cls.__PROCESS_DICT = dict()
-        cls.__PROCESS_DICT[key] = value
-
-    @classmethod
-    def get_process(cls, key):
-        return cls.__PROCESS_DICT[key]
-
-    @classmethod
-    def get_process_dict(cls):
-    	return cls.__PROCESS_DICT
-
-#
-# A small test suite
-#
-if __name__ == '__main__':
-    s1 = ProcessManager()
-    s2 = ProcessManager()
-    if(id(s1) == id(s2)):
-        print &quot;Same&quot;
-    else:
-        print &quot;Different&quot;
-</code></pre></noscript></div>
+<noscript><pre><code></code></pre></noscript></div>
 </p>
 
 <p>Cheers

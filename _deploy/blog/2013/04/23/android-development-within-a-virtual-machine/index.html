@@ -5,27 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Django Dynamic Forms - creativepsyco's Blog</title>
+  <title>Android Development within a Virtual Machine - creativepsyco's Blog</title>
   <meta name="author" content="Mohit Kanwal">
 
   
-  <meta name="description" content="Here is an example of how to do a dynamic form in Django. I am loving this framework, it&#8217;s so simple 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17 &hellip;">
+  <meta name="description" content="Sometimes it can be really fustrating to work within a Virtual Machine (VM) which might not have support for a number of removable devices. I am &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -34,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms/">
+  <link rel="canonical" href="http://creativepsyco.github.io/blog/2013/04/23/android-development-within-a-virtual-machine/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -104,7 +88,7 @@
   <header>
     
       
-        <h1 class="entry-title">Django Dynamic Forms</h1>
+        <h1 class="entry-title">Android Development Within a Virtual Machine</h1>
       
     
     
@@ -121,7 +105,7 @@
   
 
 
-<time datetime="2013-02-02T20:33:00+08:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
+<time datetime="2013-04-23T17:30:00+08:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -130,52 +114,117 @@
   </header>
 
 
-<div class="entry-content"><p>Here is an example of how to do a dynamic form in Django. I am loving this framework, it&#8217;s so simple</p>
+<div class="entry-content"><p>Sometimes it can be <a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1027964">really fustrating</a> to work within a Virtual Machine (VM) which might not have support for a number of removable devices. I am talking of VMWare workstation which is a big part of the problem.</p>
+
+<p>Below I describe a working way to install a reliable working environment in VMWare Workstation 9.x running Ubuntu 12.10</p>
+
+<!--more-->
+
+
+<p>For the instructions below I am installing everything under: <code>~/android</code></p>
+
+<h3>Pre-Requisite</h3>
+
+<ul>
+<li>Install Sun (Oracle) JDK for IntelliJ Idea</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">ServiceStartForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">serviceList</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Service</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-</span><span class='line'>    <span class="k">print</span> <span class="n">serviceList</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">b</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">aService</span> <span class="ow">in</span> <span class="n">serviceList</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">b</span><span class="p">[</span><span class="n">aService</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">aService</span><span class="o">.</span><span class="n">name</span>
-</span><span class='line'>    <span class="n">c</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Within the form, &quot;</span><span class="p">,</span> <span class="n">serviceList</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">serviceChoice</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Select</span><span class="p">())</span>
-</span><span class='line'>    <span class="n">input_directory</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">output_directory</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span class='line'>        <span class="nb">super</span><span class="p">(</span><span class="n">ServiceStartForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">serviceList</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Service</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-</span><span class='line'>        <span class="n">b</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">aService</span> <span class="ow">in</span> <span class="n">serviceList</span><span class="p">:</span>
-</span><span class='line'>            <span class="n">b</span><span class="p">[</span><span class="n">aService</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">aService</span><span class="o">.</span><span class="n">name</span>
-</span><span class='line'>        <span class="n">c</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s">&quot;serviceChoice&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">c</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo add-apt-repository ppa:webupd8team/java
+</span><span class='line'>sudo apt-get update
+</span><span class='line'>sudo apt-get install oracle-java7-installer
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Enjoy :)</p>
+<h3>Install Intelli-J</h3>
+
+<ul>
+<li>Donwload Intell-J from <a href="http://www.jetbrains.com/idea/download/index.html">this</a> and extract to a directory in your computer</li>
+<li>Unpack the directory</li>
+<li>Add the Idea bin folder to your PATH</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/lib/&lt;YOUR_IDEA_FOLDER&gt;/bin
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install Android SDK Bundle</h3>
+
+<ul>
+<li>Download the ADT Bundle from <a href="http://developer.android.com/sdk/index.html">this</a></li>
+<li>Extract it and move to a location in your</li>
+<li>Add these lines to your <code>.bashrc</code> file</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="k">${</span><span class="nv">PATH</span><span class="k">}</span>:~/android/android-sdk-linux/tools
+</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="k">${</span><span class="nv">PATH</span><span class="k">}</span>:~/android/android-sdk-linux/platform-tools
+</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="k">${</span><span class="nv">PATH</span><span class="k">}</span>:~/android/idea-IC/bin
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Source your <code>.bashrc</code></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">source</span> ~/.bashrc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Test a Device</h3>
+
+<p>Now go ahead and test your shiny new Android Development device by connecting it to the USB port on your machine.</p>
+
+<ul>
+<li><p>In VMWare you need to make sure that it connects to the Android Device. You can do this, by navigating to <strong>VM > Removable Devices > Samsung Android Device > Connect (Disconnect fro host)</strong>. This will disconnect it from your host machine (Windows 7 in my case) and connect it to the VMWare instance.</p></li>
+<li><p>In VMWare Ubuntu:</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>adb devices <span class="c">#lists all the devices attached to the computer</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>If the above command displays nothing, do this:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>adb <span class="nb">wait</span>-for-device
+</span><span class='line'>adb start-server
+</span><span class='line'>adb devices <span class="c"># display connected devices</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will make it wait for the device to link up</p>
+
+<h3>Android Device Issues with VMWare</h3>
+
+<p>Some of the issues that I encountered while connecting my Samsung Galaxy S-III to VMWare on a Windows 7 Enterprise workstation are as follows:</p>
+
+<ul>
+<li><p>If you have an error message that says that the device cannot be plugged out, then make sure no process is accessing the device. This includes the Kies software from Samsung. Use the Task Manager to kill them</p></li>
+<li><p>If you have an error message that says there is a driver error then perhaps you have a USB 3.0 issue. As of now, VMWare does not support Intel-based USB 3.0 controllers. So you need to suck it up for the moment and find a USB 2.0 port on your machine. Otherwise you need to look up another <a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1027964">manual</a></p></li>
+</ul>
+
+
+<h3>Conclusion</h3>
+
+<p>Hopefully by the end of this guide, there is a working android development setup on your machine.</p>
 </div>
 
 
@@ -198,12 +247,12 @@
   
 
 
-<time datetime="2013-02-02T20:33:00+08:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
+<time datetime="2013-04-23T17:30:00+08:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/django/'>Django</a>
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/vm/'>VM</a>
   
 </span>
 
@@ -212,7 +261,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms/" data-via="mohitkanwal" data-counturl="http://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://creativepsyco.github.io/blog/2013/04/23/android-development-within-a-virtual-machine/" data-via="mohitkanwal" data-counturl="http://creativepsyco.github.io/blog/2013/04/23/android-development-within-a-virtual-machine/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -225,10 +274,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left articlenav" href="/blog/2013/01/27/django-and-travis/" title="Previous Post: Django and Travis">&laquo; Django and Travis</a>
+        <a class="basic-alignment left articlenav" href="/blog/2013/04/10/deploying-rails-on-nginx-and-thin/" title="Previous Post: Deploying Rails on Nginx and thin">&laquo; Deploying Rails on Nginx and thin</a>
       
-      
-        <a class="basic-alignment right articlenav" href="/blog/2013/02/09/singleton-in-python/" title="Next Post: Singleton in Python">Singleton in Python &raquo;</a>
       
     </p>
   </footer>
@@ -323,8 +370,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms/';
-        var disqus_url = 'http://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms/';
+        var disqus_identifier = 'http://creativepsyco.github.io/blog/2013/04/23/android-development-within-a-virtual-machine/';
+        var disqus_url = 'http://creativepsyco.github.io/blog/2013/04/23/android-development-within-a-virtual-machine/';
         var disqus_script = 'embed.js';
       
     (function () {

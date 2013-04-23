@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Android | creativepsyco's Blog]]></title>
+  <link href="http://creativepsyco.github.io/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://creativepsyco.github.io/"/>
+  <updated>2013-04-23T18:16:58+08:00</updated>
+  <id>http://creativepsyco.github.io/</id>
+  <author>
+    <name><![CDATA[Mohit Kanwal]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Android Development within a Virtual Machine]]></title>
+    <link href="http://creativepsyco.github.io/blog/2013/04/23/android-development-within-a-virtual-machine/"/>
+    <updated>2013-04-23T17:30:00+08:00</updated>
+    <id>http://creativepsyco.github.io/blog/2013/04/23/android-development-within-a-virtual-machine</id>
+    <content type="html"><![CDATA[<p>Sometimes it can be <a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1027964">really fustrating</a> to work within a Virtual Machine (VM) which might not have support for a number of removable devices. I am talking of VMWare workstation which is a big part of the problem.</p>
+
+<p>Below I describe a working way to install a reliable working environment in VMWare Workstation 9.x running Ubuntu 12.10</p>
+
+<!--more-->
+
+
+<p>For the instructions below I am installing everything under: <code>~/android</code></p>
+
+<h3>Pre-Requisite</h3>
+
+<ul>
+<li>Install Sun (Oracle) JDK for IntelliJ Idea
+<code>bash
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java7-installer
+</code></li>
+</ul>
+
+
+<h3>Install Intelli-J</h3>
+
+<ul>
+<li>Donwload Intell-J from <a href="http://www.jetbrains.com/idea/download/index.html">this</a> and extract to a directory in your computer</li>
+<li>Unpack the directory</li>
+<li>Add the Idea bin folder to your PATH
+<code>bash
+export PATH=$PATH:/usr/lib/&lt;YOUR_IDEA_FOLDER&gt;/bin
+</code></li>
+</ul>
+
+
+<h3>Install Android SDK Bundle</h3>
+
+<ul>
+<li>Download the ADT Bundle from <a href="http://developer.android.com/sdk/index.html">this</a></li>
+<li>Extract it and move to a location in your</li>
+<li>Add these lines to your <code>.bashrc</code> file
+<code>bash
+export PATH=${PATH}:~/android/android-sdk-linux/tools
+export PATH=${PATH}:~/android/android-sdk-linux/platform-tools
+export PATH=${PATH}:~/android/idea-IC/bin
+</code></li>
+<li>Source your <code>.bashrc</code>
+<code>bash
+source ~/.bashrc
+</code></li>
+</ul>
+
+
+<h3>Test a Device</h3>
+
+<p>Now go ahead and test your shiny new Android Development device by connecting it to the USB port on your machine.</p>
+
+<ul>
+<li><p>In VMWare you need to make sure that it connects to the Android Device. You can do this, by navigating to <strong>VM > Removable Devices > Samsung Android Device > Connect (Disconnect fro host)</strong>. This will disconnect it from your host machine (Windows 7 in my case) and connect it to the VMWare instance.</p></li>
+<li><p>In VMWare Ubuntu:
+<code>bash
+adb devices #lists all the devices attached to the computer
+</code></p></li>
+<li>If the above command displays nothing, do this:
+<code>bash
+adb wait-for-device
+adb start-server
+adb devices # display connected devices
+</code>
+This will make it wait for the device to link up</li>
+</ul>
+
+
+<h3>Android Device Issues with VMWare</h3>
+
+<p>Some of the issues that I encountered while connecting my Samsung Galaxy S-III to VMWare on a Windows 7 Enterprise workstation are as follows:</p>
+
+<ul>
+<li><p>If you have an error message that says that the device cannot be plugged out, then make sure no process is accessing the device. This includes the Kies software from Samsung. Use the Task Manager to kill them</p></li>
+<li><p>If you have an error message that says there is a driver error then perhaps you have a USB 3.0 issue. As of now, VMWare does not support Intel-based USB 3.0 controllers. So you need to suck it up for the moment and find a USB 2.0 port on your machine. Otherwise you need to look up another <a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1027964">manual</a></p></li>
+</ul>
+
+
+<h3>Conclusion</h3>
+
+<p>Hopefully by the end of this guide, there is a working android development setup on your machine.</p>
+]]></content>
+  </entry>
+  
+</feed>
