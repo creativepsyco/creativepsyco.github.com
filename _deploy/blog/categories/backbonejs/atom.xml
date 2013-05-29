@@ -4,7 +4,7 @@
   <title><![CDATA[Category: BackboneJS | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/backbonejs/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-05-01T20:19:45+08:00</updated>
+  <updated>2013-05-25T13:08:30+05:30</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[An App called tidicity - Part 1]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/11/02/an-app-called-tidicity/"/>
-    <updated>2012-11-02T01:49:00+08:00</updated>
+    <updated>2012-11-02T01:49:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2012/11/02/an-app-called-tidicity</id>
     <content type="html"><![CDATA[<p>Do you think there is a concept of smart cities?</p>
 
@@ -39,7 +39,7 @@
   <entry>
     <title type="html"><![CDATA[Solving Cross Origin Resource Sharing policies Sinatra and BackboneJS]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs/"/>
-    <updated>2012-10-22T22:57:00+08:00</updated>
+    <updated>2012-10-22T22:57:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs</id>
     <content type="html"><![CDATA[<p>Admit it. There are so many times you wish that the localhost-ed version of the application that you are developing in BacboneJS just works. But it doesn't. And there is only one reason why it doesn't work.</p>
 

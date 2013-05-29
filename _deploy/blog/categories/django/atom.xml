@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Django | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/django/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-05-01T20:19:45+08:00</updated>
+  <updated>2013-05-25T13:08:20+05:30</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Singleton in Python]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/02/09/singleton-in-python/"/>
-    <updated>2013-02-09T19:27:00+08:00</updated>
+    <updated>2013-02-09T19:27:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2013/02/09/singleton-in-python</id>
     <content type="html"><![CDATA[<p>In my current Final Year Project (FYP) for my undergraduate degree I needed to spawn processes and be able to store their state in the memory so that they can be started/re-started or stopped. I had previously gone about doing the same kind of operation in Java with a Singleton <code>ProcessManager</code> Class so I was pretty sure that such a pattern would exist in Python as well. Turns out, it is a <a href="http://lucumr.pocoo.org/2009/7/24/singletons-and-their-problems-in-python/">bad practice</a> to do so.</p>
 
@@ -87,7 +87,7 @@ mohit</p>
   <entry>
     <title type="html"><![CDATA[Django Dynamic Forms]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms/"/>
-    <updated>2013-02-02T20:33:00+08:00</updated>
+    <updated>2013-02-02T20:33:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms</id>
     <content type="html"><![CDATA[<p>Here is an example of how to do a dynamic form in Django. I am loving this framework, it's so simple</p>
 
@@ -124,7 +124,7 @@ def __init__(self, *args, **kwargs):
   <entry>
     <title type="html"><![CDATA[Django and Travis]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/01/27/django-and-travis/"/>
-    <updated>2013-01-27T03:42:00+08:00</updated>
+    <updated>2013-01-27T03:42:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2013/01/27/django-and-travis</id>
     <content type="html"><![CDATA[<p>A sample <code>.travis</code> file to allow you to run and test on the <a href="http://travis-ci.org">Travis CI</a>.</p>
 

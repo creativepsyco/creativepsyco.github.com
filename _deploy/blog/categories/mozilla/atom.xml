@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mozilla | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/mozilla/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-05-01T20:19:45+08:00</updated>
+  <updated>2013-05-25T13:08:30+05:30</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Essential Mozilla Command Line]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/01/11/essential-mozilla-command-line/"/>
-    <updated>2013-01-11T00:27:00+08:00</updated>
+    <updated>2013-01-11T00:27:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2013/01/11/essential-mozilla-command-line</id>
     <content type="html"><![CDATA[<p><em>This is a reference of some of the very important mozilla commands that I use in daily Terminal Life</em></p>
 
@@ -80,61 +80,35 @@ bash$ make -f client.mk
 
 <p>From time to time, you might need to apply a patch from someone else, or maybe your own patch. This is quite easy, but note that if you plan on applying the patch, making some changes and then want to create a patch that doesn't contain the patch you originally applied, it might be quite a bit harder.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> <span class="nv">$MOZILLA</span>/calendar&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;--dry-run tests the patching process to ensure that the patch will go&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;ahead cleanly. Be sure to run --dry-run at least once before running&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;the actual patching process.&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;patch -p1 -i ~/my_first_bug.diff --dry-run&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;Now check <span class="k">if </span>the patch applies cleanly, or you are willing to fix the&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;places it went wrong. When you are confident, you can call:&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;patch -p0 -i ~/my_first_bug.diff&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;If the file to patch was not found, take a look at the patch headers. For&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;example, <span class="k">if </span>the header contains <span class="s2">&quot;+++ themes/winstripe/calendar-views.css&quot;</span>,&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;then you need to go into the base directory and call again. If the header&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;contains <span class="s2">&quot;+++ mozilla/calendar/base/Makefile.in&quot;</span>, you can use -p2 instead to&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;strip the <span class="s2">&quot;mozilla/calendar&quot;</span> part.&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;patch -p2 -i ~/my_first_bug.diff
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:bash %}
+cd $MOZILLA/calendar</p>
+
+<h1>--dry-run tests the patching process to ensure that the patch will go</h1>
+
+<h1>ahead cleanly. Be sure to run --dry-run at least once before running</h1>
+
+<h1>the actual patching process.</h1>
+
+<p>patch -p1 -i ~/my_first_bug.diff --dry-run</p>
+
+<h1>Now check if the patch applies cleanly, or you are willing to fix the</h1>
+
+<h1>places it went wrong. When you are confident, you can call:</h1>
+
+<p>patch -p0 -i ~/my_first_bug.diff</p>
+
+<h1>If the file to patch was not found, take a look at the patch headers. For</h1>
+
+<h1>example, if the header contains "+++ themes/winstripe/calendar-views.css",</h1>
+
+<h1>then you need to go into the base directory and call again. If the header</h1>
+
+<h1>contains "+++ mozilla/calendar/base/Makefile.in", you can use -p2 instead to</h1>
+
+<h1>strip the "mozilla/calendar" part.</h1>
+
+<p>patch -p2 -i ~/my_first_bug.diff
+{% endcodeblock %}</p>
 
 <h3>Creating a patch</h3>
 

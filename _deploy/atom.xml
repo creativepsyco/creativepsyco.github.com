@@ -4,7 +4,7 @@
   <title><![CDATA[creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-05-01T20:19:45+08:00</updated>
+  <updated>2013-05-25T13:08:20+05:30</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -14,9 +14,54 @@
 
   
   <entry>
+    <title type="html"><![CDATA[My Final Year Project - A web app hosting for apps]]></title>
+    <link href="http://creativepsyco.github.io/blog/2013/05/21/my-final-year-project-a-web-app-hosting-for-apps/"/>
+    <updated>2013-05-21T21:53:00+05:30</updated>
+    <id>http://creativepsyco.github.io/blog/2013/05/21/my-final-year-project-a-web-app-hosting-for-apps</id>
+    <content type="html"><![CDATA[<p>For my final year project in the School of Computing NUS I had to do something very exciting related to working with web apps. If you are familiar with online continuous integration environments like <a href="http://travis-ci.org">Travis</a> and <a href="http://jenkins-ci.org">Jenkins</a> then cracking this issue is a hen&#8217;s egg. The thing that I was required to do was compile and run research programs within a webapp. That is, feed input to a program written in C, C++ etc. and get the output, display it to the user. All of this included a data repository which housed patient data.</p>
+
+<!--more-->
+
+
+<h3>Abstract</h3>
+
+<p>Ever pervasive use of computational algorithms has changed the face of medical data analysis. Certain surgeries such as craniomaxillofacial (CMF) surgery require sophisticated planning. Hence computer-aided surgery planning through research algorithms becomes crucial to its success. Most analysis algorithms require themselves to be installed in a computer before they can be used. Some of the analysis algorithms also require technically intensive setups on local workstations, which medical clinicians don’t have much experience with. This significantly prevents mass distribution and adoption of new algorithms in the medical research industry.</p>
+
+<p>To advance the state-of-the-art in computer-aided surgery planning and medical data analysis, we need to collect and analyze a large amount of patient data. The goal of this project is to develop a repository and processing center for the remote management and processing of patients’ medical data. The system will be a server-based system so that it can be extended to a multi-server system. It will have to manage text data, medical images and 3D models, but also the remote installation and batch execution of software algorithms to process the data, and reporting of processing results to the users. It should also support the access, retrieval and display of the data by authorized users. This ultimately will allow users to execute sophisticated algorithms on patient data without requiring them to go through extensive technical setups</p>
+
+<p><a href="http://creativepsyco.github.io/docs/Final_Report.pdf">Download The Paper</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Making sense of vacations - Geek Style]]></title>
+    <link href="http://creativepsyco.github.io/blog/2013/05/21/making-sense-of-vacations-geek-style/"/>
+    <updated>2013-05-21T21:44:00+05:30</updated>
+    <id>http://creativepsyco.github.io/blog/2013/05/21/making-sense-of-vacations-geek-style</id>
+    <content type="html"><![CDATA[<p><strong>tl;dr</strong></p>
+
+<p>Summer time and any geek knows that sitting at home means doing something to increase your productivity levels is a good thing. So here is something that I plan/have done.</p>
+
+<!--more-->
+
+
+<ul>
+<li>Learn a new language - Whether it&#8217;s a programming or simply Arabic, Japanese or Mandarin one must keep up the brain lobes working</li>
+<li>Travel on a road trip - Some people call road trips boring but I think it gives you the freedom to try out different stuff, stop on the road, do something, hop back on</li>
+<li>Go to a museum - How many times do you actually goto historically significant places? Vacations give you time that you must use</li>
+<li>Join a Gym - No matter what body shape you are in, keeping yourself fit and sharp does not come easy. Vacations are the apt time to build this habit. Do regular workouts and warmups if you are not planning to join a gym.</li>
+<li>Cook some dishes - Vacations are the best time to get into the kitchen and start experimenting, something we never really find a time to do</li>
+</ul>
+
+
+<p>Well so far I am good on the first 3, need to gradually pickup the rest. And my vacation is running out.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Android Development within a Virtual Machine]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/04/23/android-development-within-a-virtual-machine/"/>
-    <updated>2013-04-23T17:30:00+08:00</updated>
+    <updated>2013-04-23T17:30:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2013/04/23/android-development-within-a-virtual-machine</id>
     <content type="html"><![CDATA[<p>Sometimes it can be <a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1027964">really fustrating</a> to work within a Virtual Machine (VM) which might not have support for a number of removable devices. I am talking of VMWare workstation which is a big part of the problem.</p>
 
@@ -135,7 +180,7 @@
   <entry>
     <title type="html"><![CDATA[Deploying Rails on Nginx and thin]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/04/10/deploying-rails-on-nginx-and-thin/"/>
-    <updated>2013-04-10T15:17:00+08:00</updated>
+    <updated>2013-04-10T15:17:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2013/04/10/deploying-rails-on-nginx-and-thin</id>
     <content type="html"><![CDATA[<p>I have been busy lately doing my Final Year Project which comprises of building a web based service for processing analysis jobs on patient data.</p>
 
@@ -327,7 +372,7 @@
   <entry>
     <title type="html"><![CDATA[Singleton in Python]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/02/09/singleton-in-python/"/>
-    <updated>2013-02-09T19:27:00+08:00</updated>
+    <updated>2013-02-09T19:27:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2013/02/09/singleton-in-python</id>
     <content type="html"><![CDATA[<p>In my current Final Year Project (FYP) for my undergraduate degree I needed to spawn processes and be able to store their state in the memory so that they can be started/re-started or stopped. I had previously gone about doing the same kind of operation in Java with a Singleton <code>ProcessManager</code> Class so I was pretty sure that such a pattern would exist in Python as well. Turns out, it is a <a href="http://lucumr.pocoo.org/2009/7/24/singletons-and-their-problems-in-python/">bad practice</a> to do so.</p>
 
@@ -399,7 +444,7 @@ mohit</p>
   <entry>
     <title type="html"><![CDATA[Django Dynamic Forms]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms/"/>
-    <updated>2013-02-02T20:33:00+08:00</updated>
+    <updated>2013-02-02T20:33:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms</id>
     <content type="html"><![CDATA[<p>Here is an example of how to do a dynamic form in Django. I am loving this framework, it&#8217;s so simple</p>
 
@@ -453,7 +498,7 @@ mohit</p>
   <entry>
     <title type="html"><![CDATA[Django and Travis]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/01/27/django-and-travis/"/>
-    <updated>2013-01-27T03:42:00+08:00</updated>
+    <updated>2013-01-27T03:42:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2013/01/27/django-and-travis</id>
     <content type="html"><![CDATA[<p>A sample <code>.travis</code> file to allow you to run and test on the <a href="http://travis-ci.org">Travis CI</a>.</p>
 
@@ -511,7 +556,7 @@ mohit</p>
   <entry>
     <title type="html"><![CDATA[Django Fun]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/01/24/django-fun/"/>
-    <updated>2013-01-24T22:29:00+08:00</updated>
+    <updated>2013-01-24T22:29:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2013/01/24/django-fun</id>
     <content type="html"><![CDATA[<p>Here&#8217;s how to install python on your web server :)</p>
 
@@ -705,7 +750,7 @@ etc.</p>
   <entry>
     <title type="html"><![CDATA[Essential Mozilla Command Line]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/01/11/essential-mozilla-command-line/"/>
-    <updated>2013-01-11T00:27:00+08:00</updated>
+    <updated>2013-01-11T00:27:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2013/01/11/essential-mozilla-command-line</id>
     <content type="html"><![CDATA[<p><em>This is a reference of some of the very important mozilla commands that I use in daily Terminal Life</em></p>
 
@@ -845,7 +890,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[Creating an API with .NET MVC4]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/01/10/creating-an-api-with-net-mvc4/"/>
-    <updated>2013-01-10T22:26:00+08:00</updated>
+    <updated>2013-01-10T22:26:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2013/01/10/creating-an-api-with-net-mvc4</id>
     <content type="html"><![CDATA[<h2>Gist</h2>
 
@@ -872,7 +917,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[A home called India]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/12/11/a-home-called-india/"/>
-    <updated>2012-12-11T22:36:00+08:00</updated>
+    <updated>2012-12-11T22:36:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2012/12/11/a-home-called-india</id>
     <content type="html"><![CDATA[<p><em>And now some random philosphical thoughts on what I think of India: my home</em></p>
 
@@ -911,7 +956,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[Design Patterns in Javascript: Widget Based Design]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/12/11/design-patterns-in-javascript-widget-based-design/"/>
-    <updated>2012-12-11T22:26:00+08:00</updated>
+    <updated>2012-12-11T22:26:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2012/12/11/design-patterns-in-javascript-widget-based-design</id>
     <content type="html"><![CDATA[<p><em>One of the most important things people learn after doing/learning a new language or as-these-days a framework is to be able to apply one of the most sought after industrial practices in the form of design patterns.</em></p>
 
@@ -940,7 +985,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[A Web Service for Multi-Factor Authentication]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/12/01/a-web-service-for-multi-factor-authentication/"/>
-    <updated>2012-12-01T21:56:00+08:00</updated>
+    <updated>2012-12-01T21:56:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2012/12/01/a-web-service-for-multi-factor-authentication</id>
     <content type="html"><![CDATA[<p><em>One of the projects done by me this semester was making Multi-Factor Authentication available for use by other websites. This required hosting our MFA web service over the internet.</em></p>
 ]]></content>
@@ -949,7 +994,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[An App called tidicity - Part 1]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/11/02/an-app-called-tidicity/"/>
-    <updated>2012-11-02T01:49:00+08:00</updated>
+    <updated>2012-11-02T01:49:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2012/11/02/an-app-called-tidicity</id>
     <content type="html"><![CDATA[<p>Do you think there is a concept of smart cities?</p>
 
@@ -972,7 +1017,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[New Technologies Galore]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/11/02/new-technologies-galore/"/>
-    <updated>2012-11-02T01:12:00+08:00</updated>
+    <updated>2012-11-02T01:12:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2012/11/02/new-technologies-galore</id>
     <content type="html"><![CDATA[<p><em>Most of the stuff is still under production, more details later</em></p>
 
@@ -1054,7 +1099,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[Solving Cross Origin Resource Sharing policies Sinatra and BackboneJS]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs/"/>
-    <updated>2012-10-22T22:57:00+08:00</updated>
+    <updated>2012-10-22T22:57:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs</id>
     <content type="html"><![CDATA[<p>Admit it. There are so many times you wish that the localhost-ed version of the application that you are developing in BacboneJS just works. But it doesn&#8217;t. And there is only one reason why it doesn&#8217;t work.</p>
 
@@ -1080,7 +1125,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[Node JS Script to run a web server for Backbone etc]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc/"/>
-    <updated>2012-10-22T00:18:00+08:00</updated>
+    <updated>2012-10-22T00:18:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc</id>
     <content type="html"><![CDATA[<h2>The Problem</h2>
 
@@ -1119,7 +1164,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[Page Control Javascript]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/10/21/page-control-javascript/"/>
-    <updated>2012-10-21T23:59:00+08:00</updated>
+    <updated>2012-10-21T23:59:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2012/10/21/page-control-javascript</id>
     <content type="html"><![CDATA[<h2>The Problem</h2>
 
@@ -1140,7 +1185,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[Doing a Wizard Like Flow in Backbone.js and Jquery Mobile]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/10/21/doing-a-wizard-like-flow-in-backbone-dot-js-and-jquery-mobile/"/>
-    <updated>2012-10-21T23:26:00+08:00</updated>
+    <updated>2012-10-21T23:26:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2012/10/21/doing-a-wizard-like-flow-in-backbone-dot-js-and-jquery-mobile</id>
     <content type="html"><![CDATA[<p>One of the things that new app developers do especially mobile ones, is that they give a step like flow to their users to enter data in a much more streamlined process by breaking it down into a number of steps and then load each one at a different time.</p>
 
@@ -1157,36 +1202,9 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[CS3235]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/10/12/cs3235/"/>
-    <updated>2012-10-12T11:07:00+08:00</updated>
+    <updated>2012-10-12T11:07:00+05:30</updated>
     <id>http://creativepsyco.github.io/blog/2012/10/12/cs3235</id>
     <content type="html"><![CDATA[<p>Hi -</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[hello world]]></title>
-    <link href="http://creativepsyco.github.io/blog/2012/10/12/hello-world/"/>
-    <updated>2012-10-12T08:11:00+08:00</updated>
-    <id>http://creativepsyco.github.io/blog/2012/10/12/hello-world</id>
-    <content type="html"><![CDATA[<p><em>Every post starts with a Hello World. Every code you write starts with Hello World.</em></p>
-
-<p><em>Then perhaps this should also.</em></p>
-
-<p>I have moved my blog to Github now with the intention of using more and more of Git and ruby for use in my daily life. I can&#8217;t comment how much I am going to miss in this or how much I am going to gain, it is just a start and hopefully a start of something really new and tidy.</p>
-
-<p>I am using Jekyll to power up the blog. It looks awesome and from the amount of configs needed to get it running I must it does not have that much of a turnaround time. Let&#8217;s see how far I go with this.</p>
-
-<p>And what&#8217;s more this
-&#8211;mohit</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Zombie Ninjas Attack: A survivor's retrospective]]></title>
-    <link href="http://creativepsyco.github.io/blog/2012/10/12/zombie-ninjas-attack-a-survivors-retrospective/"/>
-    <updated>2012-10-12T07:46:00+08:00</updated>
-    <id>http://creativepsyco.github.io/blog/2012/10/12/zombie-ninjas-attack-a-survivors-retrospective</id>
-    <content type="html"><![CDATA[
 ]]></content>
   </entry>
   
