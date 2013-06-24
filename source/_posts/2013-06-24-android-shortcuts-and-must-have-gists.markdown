@@ -116,4 +116,6 @@ And this is the login view code. Note that in the invoker's code we use the `Int
 
 More information available at the [Android Documentation][android]
 
+Cheers
+
 [android]: http://developer.android.com/guide/components/tasks-and-back-stack.html
