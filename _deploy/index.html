@@ -9,7 +9,19 @@
   <meta name="author" content="Mohit Kanwal">
 
   
-  <meta name="description" content="For my final year project in the School of Computing NUS I had to do something very exciting related to working with web apps. If you are familiar &hellip;">
+  <meta name="description" content="Making use of shared preferences for storing information 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13 public boolean getStoredLoginState() { prefs = &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +103,243 @@
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2013/06/24/android-shortcuts-and-must-have-gists/">Android Shortcuts and Must-have Gists</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-24T17:27:00+08:00" pubdate data-updated="true">Jun 24<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/06/24/android-shortcuts-and-must-have-gists/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Making use of shared preferences for storing information</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">getStoredLoginState</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">prefs</span> <span class="o">=</span> <span class="n">getSharedPreferences</span><span class="o">(</span><span class="n">PREF_NAME</span><span class="o">,</span> <span class="n">MODE_PRIVATE</span><span class="o">);</span>
+</span><span class='line'>        <span class="kt">boolean</span> <span class="n">state</span> <span class="o">=</span> <span class="n">prefs</span><span class="o">.</span><span class="na">getBoolean</span><span class="o">(</span><span class="n">B_LOGGED_IN_STATE</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">state</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLoggedInState</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">isLoggedIn</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">prefs</span> <span class="o">=</span> <span class="n">getSharedPreferences</span><span class="o">(</span><span class="n">PREF_NAME</span><span class="o">,</span> <span class="n">MODE_PRIVATE</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">SharedPreferences</span><span class="o">.</span><span class="na">Editor</span> <span class="n">editor</span> <span class="o">=</span> <span class="n">prefs</span><span class="o">.</span><span class="na">edit</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">editor</span><span class="o">.</span><span class="na">putBoolean</span><span class="o">(</span><span class="n">B_LOGGED_IN_STATE</span><span class="o">,</span> <span class="n">isLoggedIn</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">editor</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Making use of the redirection trick</h3>
+
+<p>Let&#8217;s say you want to make sure the user is logged in before giving him access to a particular activity view. What you can do is to check the status of the login token through a shared preference and send back an intent with the intent that the current view was invoked with via an extra Intent parameter</p>
+
+<p>This is the code for the invoker:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">detail_view</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">getStoredLoginState</span><span class="o">()</span> <span class="o">==</span> <span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getIntent</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;DetailView onCreate recd position of item: &quot;</span> <span class="o">+</span> <span class="n">intent</span><span class="o">.</span><span class="na">getIntExtra</span><span class="o">(</span><span class="n">ITEM_ID</span><span class="o">,</span> <span class="mi">10</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">intent</span><span class="o">.</span><span class="na">getIntExtra</span><span class="o">(</span><span class="n">ITEM_ID</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c1">// Set the text</span>
+</span><span class='line'>            <span class="n">TextView</span> <span class="n">textView</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">textView1</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">textView</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">pos</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>            <span class="c1">// not logged in</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getIntent</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">Intent</span> <span class="n">newIntent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">LoginActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">newIntent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">REDIRECT_INTENT</span><span class="o">,</span> <span class="n">intent</span><span class="o">);</span>
+</span><span class='line'><span class="c1">//            newIntent.setAction(Intent.ACTION_MAIN);</span>
+</span><span class='line'>            <span class="n">newIntent</span><span class="o">.</span><span class="na">setFlags</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">FLAG_ACTIVITY_NO_HISTORY</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">startActivity</span><span class="o">(</span><span class="n">newIntent</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And this is the login view code. Note that in the invoker&#8217;s code we use the <code>Intent.FLAG_ACTIVITY_NO_HISTORY</code> to make sure that the call does not stay in the stack since login is something we need to ensure out of navigation:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;LoginActivity onCreate() hit&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">main</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Login State: &quot;</span> <span class="o">+</span> <span class="n">getStoredLoginState</span><span class="o">());</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Check for a redirect</span>
+</span><span class='line'>        <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">redirect_intent</span> <span class="o">=</span> <span class="n">intent</span><span class="o">.</span><span class="na">getParcelableExtra</span><span class="o">(</span><span class="n">REDIRECT_INTENT</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">redirect_intent</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;LoginActivity : this is a redirect intent &quot;</span> <span class="o">+</span> <span class="n">redirect_intent</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onBtnSubmitClicked</span><span class="o">(</span><span class="n">View</span> <span class="n">view</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">TextView</span> <span class="n">username</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">editText</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">TextView</span> <span class="n">password</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">editText1</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">isValidLogin</span><span class="o">(</span><span class="n">username</span><span class="o">.</span><span class="na">getText</span><span class="o">().</span><span class="na">toString</span><span class="o">(),</span> <span class="n">password</span><span class="o">.</span><span class="na">getText</span><span class="o">().</span><span class="na">toString</span><span class="o">()))</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">isLoggedIn</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;LoginActivity onBtnSubmitClicked() Username Password match&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">isLoggedIn</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>            <span class="k">new</span> <span class="n">AlertDialog</span><span class="o">.</span><span class="na">Builder</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+</span><span class='line'>                    <span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="s">&quot;Wrong username/password&quot;</span><span class="o">)</span>
+</span><span class='line'>                    <span class="o">.</span><span class="na">setMessage</span><span class="o">(</span><span class="s">&quot;You have entered wrong username/password&quot;</span><span class="o">)</span>
+</span><span class='line'>                    <span class="o">.</span><span class="na">setPositiveButton</span><span class="o">(</span><span class="s">&quot;Ok&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">DialogInterface</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>                        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">DialogInterface</span> <span class="n">dialog</span><span class="o">,</span> <span class="kt">int</span> <span class="n">which</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                            <span class="c1">// continue with delete</span>
+</span><span class='line'>                        <span class="o">}</span>
+</span><span class='line'>                    <span class="o">})</span>
+</span><span class='line'>                    <span class="o">.</span><span class="na">show</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">setLoggedInState</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">isLoggedIn</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;LoginActivity onBtnSubmitClicked starting List View Activity&quot;</span><span class="o">);</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">redirect_intent</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="c1">// this will make the activity pop up back from the Task stack</span>
+</span><span class='line'>                <span class="n">redirect_intent</span><span class="o">.</span><span class="na">addFlags</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">FLAG_ACTIVITY_CLEAR_TOP</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">startActivity</span><span class="o">(</span><span class="n">redirect_intent</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">ListActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>More information available at the <a href="http://developer.android.com/guide/components/tasks-and-back-stack.html">Android Documentation</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
         <h1 class="entry-title"><a href="/blog/2013/05/21/my-final-year-project-a-web-app-hosting-for-apps/">My Final Year Project - a Web App Hosting for Apps</a></h1>
       
     
@@ -108,7 +357,7 @@
   
 
 
-<time datetime="2013-05-21T21:53:00+05:30" pubdate data-updated="true">May 21<span>st</span>, 2013</time>
+<time datetime="2013-05-21T21:53:00+08:00" pubdate data-updated="true">May 21<span>st</span>, 2013</time>
         
          | <a href="/blog/2013/05/21/my-final-year-project-a-web-app-hosting-for-apps/#disqus_thread">Comments</a>
         
@@ -153,7 +402,7 @@
   
 
 
-<time datetime="2013-05-21T21:44:00+05:30" pubdate data-updated="true">May 21<span>st</span>, 2013</time>
+<time datetime="2013-05-21T21:44:00+08:00" pubdate data-updated="true">May 21<span>st</span>, 2013</time>
         
          | <a href="/blog/2013/05/21/making-sense-of-vacations-geek-style/#disqus_thread">Comments</a>
         
@@ -200,7 +449,7 @@
   
 
 
-<time datetime="2013-04-23T17:30:00+05:30" pubdate data-updated="true">Apr 23<span>rd</span>, 2013</time>
+<time datetime="2013-04-23T17:30:00+08:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2013</time>
         
          | <a href="/blog/2013/04/23/android-development-within-a-virtual-machine/#disqus_thread">Comments</a>
         
@@ -247,7 +496,7 @@
   
 
 
-<time datetime="2013-04-10T15:17:00+05:30" pubdate data-updated="true">Apr 10<span>th</span>, 2013</time>
+<time datetime="2013-04-10T15:17:00+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2013</time>
         
          | <a href="/blog/2013/04/10/deploying-rails-on-nginx-and-thin/#disqus_thread">Comments</a>
         
@@ -298,7 +547,7 @@
   
 
 
-<time datetime="2013-02-09T19:27:00+05:30" pubdate data-updated="true">Feb 9<span>th</span>, 2013</time>
+<time datetime="2013-02-09T19:27:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2013</time>
         
          | <a href="/blog/2013/02/09/singleton-in-python/#disqus_thread">Comments</a>
         
@@ -345,7 +594,7 @@
   
 
 
-<time datetime="2013-02-02T20:33:00+05:30" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
+<time datetime="2013-02-02T20:33:00+08:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
         
          | <a href="/blog/2013/02/02/django-dynamic-forms/#disqus_thread">Comments</a>
         
@@ -430,7 +679,7 @@
   
 
 
-<time datetime="2013-01-27T03:42:00+05:30" pubdate data-updated="true">Jan 27<span>th</span>, 2013</time>
+<time datetime="2013-01-27T03:42:00+08:00" pubdate data-updated="true">Jan 27<span>th</span>, 2013</time>
         
          | <a href="/blog/2013/01/27/django-and-travis/#disqus_thread">Comments</a>
         
@@ -519,7 +768,7 @@
   
 
 
-<time datetime="2013-01-24T22:29:00+05:30" pubdate data-updated="true">Jan 24<span>th</span>, 2013</time>
+<time datetime="2013-01-24T22:29:00+08:00" pubdate data-updated="true">Jan 24<span>th</span>, 2013</time>
         
          | <a href="/blog/2013/01/24/django-fun/#disqus_thread">Comments</a>
         
@@ -744,7 +993,7 @@ etc.</p>
   
 
 
-<time datetime="2013-01-11T00:27:00+05:30" pubdate data-updated="true">Jan 11<span>th</span>, 2013</time>
+<time datetime="2013-01-11T00:27:00+08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2013</time>
         
          | <a href="/blog/2013/01/11/essential-mozilla-command-line/#disqus_thread">Comments</a>
         
@@ -892,64 +1141,6 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2013/01/10/creating-an-api-with-net-mvc4/">Creating an API With .NET MVC4</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-10T22:26:00+05:30" pubdate data-updated="true">Jan 10<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/10/creating-an-api-with-net-mvc4/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Gist</h2>
-
-<p><em>Recently while working on a vacation assigment I had to create an API in ASP .NET MVC. This was in order to create a booking system on top of the Google Calendar Event storage. Google provides 50000 calls per day free of chrage for the API so we thought this might work. But it also required some form of authentication to prevent the API facade from being misused.</em></p>
-
-<h2>OpenId</h2>
-
-<p>Well when you can&#8217;t store the authentication result you need to think of some third party based authentication mechanism and OpenId is one those means. Most of the modern email and other service providers such as Dropbox etc provide openid schemes which can be leveraged to get basic userinfo and proceed to do something in web application.</p>
-
-<h2>Nancy</h2>
-
-<p>Nancy is a NuGet package which mimics Sinatra. It allows creation of Http GET, POST, DELETE requests as mere functions with much ease. However it does not supports sessions and hence was found to be very hard to use in some of the places. For most operations, however, Nancy is a fantastic option.</p>
-
-<h2>ASP .NET MVC</h2>
-
-<p>// Todo</p>
-
-<h2>Authentication in MVC .NET</h2>
-
-<p>// Todo</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -965,6 +1156,10 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/06/24/android-shortcuts-and-must-have-gists/">Android Shortcuts and Must-have Gists</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/05/21/my-final-year-project-a-web-app-hosting-for-apps/">My Final Year Project - A web app hosting for apps</a>
       </li>
     
@@ -978,10 +1173,6 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
     
       <li class="post">
         <a href="/blog/2013/04/10/deploying-rails-on-nginx-and-thin/">Deploying Rails on Nginx and thin</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/02/09/singleton-in-python/">Singleton in Python</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-05-25T13:08:20+05:30</updated>
+  <updated>2013-06-24T18:41:21+08:00</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -14,9 +14,215 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Android Shortcuts and Must-have Gists]]></title>
+    <link href="http://creativepsyco.github.io/blog/2013/06/24/android-shortcuts-and-must-have-gists/"/>
+    <updated>2013-06-24T17:27:00+08:00</updated>
+    <id>http://creativepsyco.github.io/blog/2013/06/24/android-shortcuts-and-must-have-gists</id>
+    <content type="html"><![CDATA[<h3>Making use of shared preferences for storing information</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">getStoredLoginState</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">prefs</span> <span class="o">=</span> <span class="n">getSharedPreferences</span><span class="o">(</span><span class="n">PREF_NAME</span><span class="o">,</span> <span class="n">MODE_PRIVATE</span><span class="o">);</span>
+</span><span class='line'>        <span class="kt">boolean</span> <span class="n">state</span> <span class="o">=</span> <span class="n">prefs</span><span class="o">.</span><span class="na">getBoolean</span><span class="o">(</span><span class="n">B_LOGGED_IN_STATE</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">state</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLoggedInState</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">isLoggedIn</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">prefs</span> <span class="o">=</span> <span class="n">getSharedPreferences</span><span class="o">(</span><span class="n">PREF_NAME</span><span class="o">,</span> <span class="n">MODE_PRIVATE</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">SharedPreferences</span><span class="o">.</span><span class="na">Editor</span> <span class="n">editor</span> <span class="o">=</span> <span class="n">prefs</span><span class="o">.</span><span class="na">edit</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">editor</span><span class="o">.</span><span class="na">putBoolean</span><span class="o">(</span><span class="n">B_LOGGED_IN_STATE</span><span class="o">,</span> <span class="n">isLoggedIn</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">editor</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Making use of the redirection trick</h3>
+
+<p>Let&#8217;s say you want to make sure the user is logged in before giving him access to a particular activity view. What you can do is to check the status of the login token through a shared preference and send back an intent with the intent that the current view was invoked with via an extra Intent parameter</p>
+
+<p>This is the code for the invoker:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">detail_view</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">getStoredLoginState</span><span class="o">()</span> <span class="o">==</span> <span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getIntent</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;DetailView onCreate recd position of item: &quot;</span> <span class="o">+</span> <span class="n">intent</span><span class="o">.</span><span class="na">getIntExtra</span><span class="o">(</span><span class="n">ITEM_ID</span><span class="o">,</span> <span class="mi">10</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">intent</span><span class="o">.</span><span class="na">getIntExtra</span><span class="o">(</span><span class="n">ITEM_ID</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c1">// Set the text</span>
+</span><span class='line'>            <span class="n">TextView</span> <span class="n">textView</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">textView1</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">textView</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">pos</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>            <span class="c1">// not logged in</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getIntent</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">Intent</span> <span class="n">newIntent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">LoginActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">newIntent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">REDIRECT_INTENT</span><span class="o">,</span> <span class="n">intent</span><span class="o">);</span>
+</span><span class='line'><span class="c1">//            newIntent.setAction(Intent.ACTION_MAIN);</span>
+</span><span class='line'>            <span class="n">newIntent</span><span class="o">.</span><span class="na">setFlags</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">FLAG_ACTIVITY_NO_HISTORY</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">startActivity</span><span class="o">(</span><span class="n">newIntent</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And this is the login view code. Note that in the invoker&#8217;s code we use the <code>Intent.FLAG_ACTIVITY_NO_HISTORY</code> to make sure that the call does not stay in the stack since login is something we need to ensure out of navigation:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;LoginActivity onCreate() hit&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">main</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Login State: &quot;</span> <span class="o">+</span> <span class="n">getStoredLoginState</span><span class="o">());</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Check for a redirect</span>
+</span><span class='line'>        <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">redirect_intent</span> <span class="o">=</span> <span class="n">intent</span><span class="o">.</span><span class="na">getParcelableExtra</span><span class="o">(</span><span class="n">REDIRECT_INTENT</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">redirect_intent</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;LoginActivity : this is a redirect intent &quot;</span> <span class="o">+</span> <span class="n">redirect_intent</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onBtnSubmitClicked</span><span class="o">(</span><span class="n">View</span> <span class="n">view</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">TextView</span> <span class="n">username</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">editText</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">TextView</span> <span class="n">password</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">editText1</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">isValidLogin</span><span class="o">(</span><span class="n">username</span><span class="o">.</span><span class="na">getText</span><span class="o">().</span><span class="na">toString</span><span class="o">(),</span> <span class="n">password</span><span class="o">.</span><span class="na">getText</span><span class="o">().</span><span class="na">toString</span><span class="o">()))</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">isLoggedIn</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;LoginActivity onBtnSubmitClicked() Username Password match&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">isLoggedIn</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>            <span class="k">new</span> <span class="n">AlertDialog</span><span class="o">.</span><span class="na">Builder</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+</span><span class='line'>                    <span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="s">&quot;Wrong username/password&quot;</span><span class="o">)</span>
+</span><span class='line'>                    <span class="o">.</span><span class="na">setMessage</span><span class="o">(</span><span class="s">&quot;You have entered wrong username/password&quot;</span><span class="o">)</span>
+</span><span class='line'>                    <span class="o">.</span><span class="na">setPositiveButton</span><span class="o">(</span><span class="s">&quot;Ok&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">DialogInterface</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>                        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">DialogInterface</span> <span class="n">dialog</span><span class="o">,</span> <span class="kt">int</span> <span class="n">which</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                            <span class="c1">// continue with delete</span>
+</span><span class='line'>                        <span class="o">}</span>
+</span><span class='line'>                    <span class="o">})</span>
+</span><span class='line'>                    <span class="o">.</span><span class="na">show</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">setLoggedInState</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">isLoggedIn</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;LoginActivity onBtnSubmitClicked starting List View Activity&quot;</span><span class="o">);</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">redirect_intent</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="c1">// this will make the activity pop up back from the Task stack</span>
+</span><span class='line'>                <span class="n">redirect_intent</span><span class="o">.</span><span class="na">addFlags</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">FLAG_ACTIVITY_CLEAR_TOP</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">startActivity</span><span class="o">(</span><span class="n">redirect_intent</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">ListActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>More information available at the <a href="http://developer.android.com/guide/components/tasks-and-back-stack.html">Android Documentation</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[My Final Year Project - A web app hosting for apps]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/05/21/my-final-year-project-a-web-app-hosting-for-apps/"/>
-    <updated>2013-05-21T21:53:00+05:30</updated>
+    <updated>2013-05-21T21:53:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/05/21/my-final-year-project-a-web-app-hosting-for-apps</id>
     <content type="html"><![CDATA[<p>For my final year project in the School of Computing NUS I had to do something very exciting related to working with web apps. If you are familiar with online continuous integration environments like <a href="http://travis-ci.org">Travis</a> and <a href="http://jenkins-ci.org">Jenkins</a> then cracking this issue is a hen&#8217;s egg. The thing that I was required to do was compile and run research programs within a webapp. That is, feed input to a program written in C, C++ etc. and get the output, display it to the user. All of this included a data repository which housed patient data.</p>
 
@@ -36,7 +242,7 @@
   <entry>
     <title type="html"><![CDATA[Making sense of vacations - Geek Style]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/05/21/making-sense-of-vacations-geek-style/"/>
-    <updated>2013-05-21T21:44:00+05:30</updated>
+    <updated>2013-05-21T21:44:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/05/21/making-sense-of-vacations-geek-style</id>
     <content type="html"><![CDATA[<p><strong>tl;dr</strong></p>
 
@@ -61,7 +267,7 @@
   <entry>
     <title type="html"><![CDATA[Android Development within a Virtual Machine]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/04/23/android-development-within-a-virtual-machine/"/>
-    <updated>2013-04-23T17:30:00+05:30</updated>
+    <updated>2013-04-23T17:30:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/04/23/android-development-within-a-virtual-machine</id>
     <content type="html"><![CDATA[<p>Sometimes it can be <a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1027964">really fustrating</a> to work within a Virtual Machine (VM) which might not have support for a number of removable devices. I am talking of VMWare workstation which is a big part of the problem.</p>
 
@@ -180,7 +386,7 @@
   <entry>
     <title type="html"><![CDATA[Deploying Rails on Nginx and thin]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/04/10/deploying-rails-on-nginx-and-thin/"/>
-    <updated>2013-04-10T15:17:00+05:30</updated>
+    <updated>2013-04-10T15:17:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/04/10/deploying-rails-on-nginx-and-thin</id>
     <content type="html"><![CDATA[<p>I have been busy lately doing my Final Year Project which comprises of building a web based service for processing analysis jobs on patient data.</p>
 
@@ -372,7 +578,7 @@
   <entry>
     <title type="html"><![CDATA[Singleton in Python]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/02/09/singleton-in-python/"/>
-    <updated>2013-02-09T19:27:00+05:30</updated>
+    <updated>2013-02-09T19:27:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/02/09/singleton-in-python</id>
     <content type="html"><![CDATA[<p>In my current Final Year Project (FYP) for my undergraduate degree I needed to spawn processes and be able to store their state in the memory so that they can be started/re-started or stopped. I had previously gone about doing the same kind of operation in Java with a Singleton <code>ProcessManager</code> Class so I was pretty sure that such a pattern would exist in Python as well. Turns out, it is a <a href="http://lucumr.pocoo.org/2009/7/24/singletons-and-their-problems-in-python/">bad practice</a> to do so.</p>
 
@@ -384,56 +590,7 @@
 <p>Here is how the final product looks like:</p>
 
 <div><script src='https://gist.github.com/4744901.js'></script>
-<noscript><pre><code>#
-# Copyright (c) 2013 by Mohit Singh kanwal.  All Rights Reserved.
-#
-import subprocess
-
-
-class ProcessManager(object):
-    &quot;&quot;&quot;ProcessManager Utility Class: Its singleton&quot;&quot;&quot;
-
-    INSTANCE = None
-
-    __PROCESS_DICT = None
-
-    def __init__(self):
-        if self.INSTANCE is not None:
-            raise ValueError(&quot;An instantiation already exists!&quot;)
-
-    @classmethod
-    def get_instance(cls):
-        if cls.INSTANCE is None:
-            cls.INSTANCE = ProcessManager()
-            cls.INSTANCE.__PROCESS_DICT = dict()
-        return cls.INSTANCE
-
-    @classmethod
-    def set_process(cls, key, value):
-
-        if cls.__PROCESS_DICT is None:
-            cls.__PROCESS_DICT = dict()
-        cls.__PROCESS_DICT[key] = value
-
-    @classmethod
-    def get_process(cls, key):
-        return cls.__PROCESS_DICT[key]
-
-    @classmethod
-    def get_process_dict(cls):
-        return cls.__PROCESS_DICT
-
-#
-# A small test suite
-#
-if __name__ == '__main__':
-    s1 = ProcessManager()
-    s2 = ProcessManager()
-    if(id(s1) == id(s2)):
-        print &quot;Same&quot;
-    else:
-        print &quot;Different&quot;
-</code></pre></noscript></div>
+<noscript><pre><code></code></pre></noscript></div>
 
 
 <p>Cheers
@@ -444,7 +601,7 @@ mohit</p>
   <entry>
     <title type="html"><![CDATA[Django Dynamic Forms]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms/"/>
-    <updated>2013-02-02T20:33:00+05:30</updated>
+    <updated>2013-02-02T20:33:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms</id>
     <content type="html"><![CDATA[<p>Here is an example of how to do a dynamic form in Django. I am loving this framework, it&#8217;s so simple</p>
 
@@ -498,7 +655,7 @@ mohit</p>
   <entry>
     <title type="html"><![CDATA[Django and Travis]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/01/27/django-and-travis/"/>
-    <updated>2013-01-27T03:42:00+05:30</updated>
+    <updated>2013-01-27T03:42:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/01/27/django-and-travis</id>
     <content type="html"><![CDATA[<p>A sample <code>.travis</code> file to allow you to run and test on the <a href="http://travis-ci.org">Travis CI</a>.</p>
 
@@ -556,7 +713,7 @@ mohit</p>
   <entry>
     <title type="html"><![CDATA[Django Fun]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/01/24/django-fun/"/>
-    <updated>2013-01-24T22:29:00+05:30</updated>
+    <updated>2013-01-24T22:29:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/01/24/django-fun</id>
     <content type="html"><![CDATA[<p>Here&#8217;s how to install python on your web server :)</p>
 
@@ -750,7 +907,7 @@ etc.</p>
   <entry>
     <title type="html"><![CDATA[Essential Mozilla Command Line]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/01/11/essential-mozilla-command-line/"/>
-    <updated>2013-01-11T00:27:00+05:30</updated>
+    <updated>2013-01-11T00:27:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/01/11/essential-mozilla-command-line</id>
     <content type="html"><![CDATA[<p><em>This is a reference of some of the very important mozilla commands that I use in daily Terminal Life</em></p>
 
@@ -890,7 +1047,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[Creating an API with .NET MVC4]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/01/10/creating-an-api-with-net-mvc4/"/>
-    <updated>2013-01-10T22:26:00+05:30</updated>
+    <updated>2013-01-10T22:26:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/01/10/creating-an-api-with-net-mvc4</id>
     <content type="html"><![CDATA[<h2>Gist</h2>
 
@@ -917,7 +1074,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[A home called India]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/12/11/a-home-called-india/"/>
-    <updated>2012-12-11T22:36:00+05:30</updated>
+    <updated>2012-12-11T22:36:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2012/12/11/a-home-called-india</id>
     <content type="html"><![CDATA[<p><em>And now some random philosphical thoughts on what I think of India: my home</em></p>
 
@@ -956,7 +1113,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[Design Patterns in Javascript: Widget Based Design]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/12/11/design-patterns-in-javascript-widget-based-design/"/>
-    <updated>2012-12-11T22:26:00+05:30</updated>
+    <updated>2012-12-11T22:26:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2012/12/11/design-patterns-in-javascript-widget-based-design</id>
     <content type="html"><![CDATA[<p><em>One of the most important things people learn after doing/learning a new language or as-these-days a framework is to be able to apply one of the most sought after industrial practices in the form of design patterns.</em></p>
 
@@ -985,7 +1142,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[A Web Service for Multi-Factor Authentication]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/12/01/a-web-service-for-multi-factor-authentication/"/>
-    <updated>2012-12-01T21:56:00+05:30</updated>
+    <updated>2012-12-01T21:56:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2012/12/01/a-web-service-for-multi-factor-authentication</id>
     <content type="html"><![CDATA[<p><em>One of the projects done by me this semester was making Multi-Factor Authentication available for use by other websites. This required hosting our MFA web service over the internet.</em></p>
 ]]></content>
@@ -994,7 +1151,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[An App called tidicity - Part 1]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/11/02/an-app-called-tidicity/"/>
-    <updated>2012-11-02T01:49:00+05:30</updated>
+    <updated>2012-11-02T01:49:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2012/11/02/an-app-called-tidicity</id>
     <content type="html"><![CDATA[<p>Do you think there is a concept of smart cities?</p>
 
@@ -1017,7 +1174,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[New Technologies Galore]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/11/02/new-technologies-galore/"/>
-    <updated>2012-11-02T01:12:00+05:30</updated>
+    <updated>2012-11-02T01:12:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2012/11/02/new-technologies-galore</id>
     <content type="html"><![CDATA[<p><em>Most of the stuff is still under production, more details later</em></p>
 
@@ -1099,7 +1256,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[Solving Cross Origin Resource Sharing policies Sinatra and BackboneJS]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs/"/>
-    <updated>2012-10-22T22:57:00+05:30</updated>
+    <updated>2012-10-22T22:57:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs</id>
     <content type="html"><![CDATA[<p>Admit it. There are so many times you wish that the localhost-ed version of the application that you are developing in BacboneJS just works. But it doesn&#8217;t. And there is only one reason why it doesn&#8217;t work.</p>
 
@@ -1125,7 +1282,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[Node JS Script to run a web server for Backbone etc]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc/"/>
-    <updated>2012-10-22T00:18:00+05:30</updated>
+    <updated>2012-10-22T00:18:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc</id>
     <content type="html"><![CDATA[<h2>The Problem</h2>
 
@@ -1164,7 +1321,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[Page Control Javascript]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/10/21/page-control-javascript/"/>
-    <updated>2012-10-21T23:59:00+05:30</updated>
+    <updated>2012-10-21T23:59:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2012/10/21/page-control-javascript</id>
     <content type="html"><![CDATA[<h2>The Problem</h2>
 
@@ -1185,7 +1342,7 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
   <entry>
     <title type="html"><![CDATA[Doing a Wizard Like Flow in Backbone.js and Jquery Mobile]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/10/21/doing-a-wizard-like-flow-in-backbone-dot-js-and-jquery-mobile/"/>
-    <updated>2012-10-21T23:26:00+05:30</updated>
+    <updated>2012-10-21T23:26:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2012/10/21/doing-a-wizard-like-flow-in-backbone-dot-js-and-jquery-mobile</id>
     <content type="html"><![CDATA[<p>One of the things that new app developers do especially mobile ones, is that they give a step like flow to their users to enter data in a much more streamlined process by breaking it down into a number of steps and then load each one at a different time.</p>
 
@@ -1196,15 +1353,6 @@ Now <code>comm-central</code> depends on a number of submodules which can be fet
 
 <script src="https://gist.github.com/3927260.js?file=WizardBackbone.js"></script>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[CS3235]]></title>
-    <link href="http://creativepsyco.github.io/blog/2012/10/12/cs3235/"/>
-    <updated>2012-10-12T11:07:00+05:30</updated>
-    <id>http://creativepsyco.github.io/blog/2012/10/12/cs3235</id>
-    <content type="html"><![CDATA[<p>Hi -</p>
 ]]></content>
   </entry>
   

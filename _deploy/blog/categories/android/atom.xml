@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-05-25T13:08:20+05:30</updated>
+  <updated>2013-06-24T18:41:21+08:00</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Android Development within a Virtual Machine]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/04/23/android-development-within-a-virtual-machine/"/>
-    <updated>2013-04-23T17:30:00+05:30</updated>
+    <updated>2013-04-23T17:30:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/04/23/android-development-within-a-virtual-machine</id>
     <content type="html"><![CDATA[<p>Sometimes it can be <a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1027964">really fustrating</a> to work within a Virtual Machine (VM) which might not have support for a number of removable devices. I am talking of VMWare workstation which is a big part of the problem.</p>
 

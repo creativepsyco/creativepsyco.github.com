@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-05-25T13:08:20+05:30</updated>
+  <updated>2013-06-24T18:41:21+08:00</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Singleton in Python]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/02/09/singleton-in-python/"/>
-    <updated>2013-02-09T19:27:00+05:30</updated>
+    <updated>2013-02-09T19:27:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/02/09/singleton-in-python</id>
     <content type="html"><![CDATA[<p>In my current Final Year Project (FYP) for my undergraduate degree I needed to spawn processes and be able to store their state in the memory so that they can be started/re-started or stopped. I had previously gone about doing the same kind of operation in Java with a Singleton <code>ProcessManager</code> Class so I was pretty sure that such a pattern would exist in Python as well. Turns out, it is a <a href="http://lucumr.pocoo.org/2009/7/24/singletons-and-their-problems-in-python/">bad practice</a> to do so.</p>
 
@@ -27,56 +27,7 @@
 
 <p>Here is how the final product looks like:
 <div><script src='https://gist.github.com/4744901.js'></script>
-<noscript><pre><code>#
-# Copyright (c) 2013 by Mohit Singh kanwal.  All Rights Reserved.
-#
-import subprocess
-
-
-class ProcessManager(object):
-    &quot;&quot;&quot;ProcessManager Utility Class: Its singleton&quot;&quot;&quot;
-
-    INSTANCE = None
-
-    __PROCESS_DICT = None
-
-    def __init__(self):
-        if self.INSTANCE is not None:
-            raise ValueError(&quot;An instantiation already exists!&quot;)
-
-    @classmethod
-    def get_instance(cls):
-    	if cls.INSTANCE is None:
-    		cls.INSTANCE = ProcessManager()
-    		cls.INSTANCE.__PROCESS_DICT = dict()
-    	return cls.INSTANCE
-
-    @classmethod
-    def set_process(cls, key, value):
-
-        if cls.__PROCESS_DICT is None:
-            cls.__PROCESS_DICT = dict()
-        cls.__PROCESS_DICT[key] = value
-
-    @classmethod
-    def get_process(cls, key):
-        return cls.__PROCESS_DICT[key]
-
-    @classmethod
-    def get_process_dict(cls):
-    	return cls.__PROCESS_DICT
-
-#
-# A small test suite
-#
-if __name__ == '__main__':
-    s1 = ProcessManager()
-    s2 = ProcessManager()
-    if(id(s1) == id(s2)):
-        print &quot;Same&quot;
-    else:
-        print &quot;Different&quot;
-</code></pre></noscript></div>
+<noscript><pre><code></code></pre></noscript></div>
 </p>
 
 <p>Cheers
@@ -87,7 +38,7 @@ mohit</p>
   <entry>
     <title type="html"><![CDATA[Django Fun]]></title>
     <link href="http://creativepsyco.github.io/blog/2013/01/24/django-fun/"/>
-    <updated>2013-01-24T22:29:00+05:30</updated>
+    <updated>2013-01-24T22:29:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/01/24/django-fun</id>
     <content type="html"><![CDATA[<p>Here's how to install python on your web server :)</p>
 

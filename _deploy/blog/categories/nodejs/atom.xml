@@ -4,7 +4,7 @@
   <title><![CDATA[Category: NodeJS | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/nodejs/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-05-25T13:08:30+05:30</updated>
+  <updated>2013-06-24T18:41:21+08:00</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[New Technologies Galore]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/11/02/new-technologies-galore/"/>
-    <updated>2012-11-02T01:12:00+05:30</updated>
+    <updated>2012-11-02T01:12:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2012/11/02/new-technologies-galore</id>
     <content type="html"><![CDATA[<p><em>Most of the stuff is still under production, more details later</em></p>
 
@@ -87,7 +87,7 @@ $ express --sessions --css stylus --ejs myapp
   <entry>
     <title type="html"><![CDATA[Node JS Script to run a web server for Backbone etc]]></title>
     <link href="http://creativepsyco.github.io/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc/"/>
-    <updated>2012-10-22T00:18:00+05:30</updated>
+    <updated>2012-10-22T00:18:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc</id>
     <content type="html"><![CDATA[<h2>The Problem</h2>
 
@@ -112,9 +112,9 @@ connect.createServer(</p>
 <p>In order to use you must put the code in a file called <em>server.js</em></p>
 
 <p>And Also must install <code>connect</code> module via
-{% codeblock lang:bash %}
-  npm install connect
-{% endcodeblock %}</p>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  npm install connect
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>--mohit</p>
 ]]></content>
