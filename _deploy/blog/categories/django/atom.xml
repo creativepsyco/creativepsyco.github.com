@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Django | creativepsyco's Blog]]></title>
+  <link href="http://creativepsyco.github.io/blog/categories/django/atom.xml" rel="self"/>
+  <link href="http://creativepsyco.github.io/"/>
+  <updated>2013-07-04T13:52:57+08:00</updated>
+  <id>http://creativepsyco.github.io/</id>
+  <author>
+    <name><![CDATA[Mohit Kanwal]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Singleton in Python]]></title>
+    <link href="http://creativepsyco.github.io/blog/2013/02/09/singleton-in-python/"/>
+    <updated>2013-02-09T19:27:00+08:00</updated>
+    <id>http://creativepsyco.github.io/blog/2013/02/09/singleton-in-python</id>
+    <content type="html"><![CDATA[<p>In my current Final Year Project (FYP) for my undergraduate degree I needed to spawn processes and be able to store their state in the memory so that they can be started/re-started or stopped. I had previously gone about doing the same kind of operation in Java with a Singleton <code>ProcessManager</code> Class so I was pretty sure that such a pattern would exist in Python as well. Turns out, it is a <a href="http://lucumr.pocoo.org/2009/7/24/singletons-and-their-problems-in-python/">bad practice</a> to do so.</p>
+
+<p>Anyways, I could not figure out a better way to do this, so I stuck with Singletons. Moreover it got me the job done.</p>
+
+<!--more-->
+
+
+<p>Here is how the final product looks like:
+<div><script src='https://gist.github.com/4744901.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+<p>Cheers
+mohit</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Django Dynamic Forms]]></title>
+    <link href="http://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms/"/>
+    <updated>2013-02-02T20:33:00+08:00</updated>
+    <id>http://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms</id>
+    <content type="html"><![CDATA[<p>Here is an example of how to do a dynamic form in Django. I am loving this framework, it's so simple</p>
+
+<p>```python
+class ServiceStartForm(forms.Form):</p>
+
+<pre><code>serviceList = service.models.Service.objects.all()
+print serviceList.count()
+b = {}
+for aService in serviceList:
+    b[aService.id] = aService.name
+c = b.items()
+print "Within the form, ", serviceList.count()
+serviceChoice = forms.ChoiceField(choices=c, widget=forms.Select())
+input_directory = forms.CharField(max_length=200)
+output_directory = forms.CharField(max_length=200)
+
+def __init__(self, *args, **kwargs):
+    super(ServiceStartForm, self).__init__(*args, **kwargs)
+    serviceList = service.models.Service.objects.all()
+    b = {}
+    for aService in serviceList:
+        b[aService.id] = aService.name
+    c = b.items()
+    self.fields["serviceChoice"].choices = c
+</code></pre>
+
+<p>```</p>
+
+<p>Enjoy :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Django and Travis]]></title>
+    <link href="http://creativepsyco.github.io/blog/2013/01/27/django-and-travis/"/>
+    <updated>2013-01-27T03:42:00+08:00</updated>
+    <id>http://creativepsyco.github.io/blog/2013/01/27/django-and-travis</id>
+    <content type="html"><![CDATA[<p>A sample <code>.travis</code> file to allow you to run and test on the <a href="http://travis-ci.org">Travis CI</a>.</p>
+
+<p>```yaml</p>
+
+<p>language: python
+python:
+  # - "2.6"
+  - "2.7"
+services: mysql
+env:
+  # - DJANGO=1.2.7
+  # - DJANGO=1.3.1
+  - DJANGO=1.4.3 DJANGO_SETTINGS_MODULE="mysite.travis_settings"
+install:
+  - pip install -q Django==$DJANGO --use-mirrors
+  - pip install pep8 --use-mirrors
+  - pip install mysql-python --use-mirrors
+  # - pip install https://github.com/dcramer/pyflakes/tarball/master
+  # - pip install -q -e . --use-mirrors
+before_script:</p>
+
+<h1>- "pep8 --exclude=migrations --ignore=E501,E225 src"</h1>
+
+<h1>- pyflakes -x W src</h1>
+
+<ul>
+<li>mysql -e 'create database mysite_db;'</li>
+<li>python manage.py syncdb --noinput
+script:</li>
+<li>python manage.py test</li>
+</ul>
+
+
+<p>```</p>
+
+<p>Enjoy :)</p>
+]]></content>
+  </entry>
+  
+</feed>

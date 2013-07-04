@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Hacks | creativepsyco's Blog]]></title>
+  <link href="http://creativepsyco.github.io/blog/categories/hacks/atom.xml" rel="self"/>
+  <link href="http://creativepsyco.github.io/"/>
+  <updated>2013-07-04T13:52:57+08:00</updated>
+  <id>http://creativepsyco.github.io/</id>
+  <author>
+    <name><![CDATA[Mohit Kanwal]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[An App called tidicity - Part 1]]></title>
+    <link href="http://creativepsyco.github.io/blog/2012/11/02/an-app-called-tidicity/"/>
+    <updated>2012-11-02T01:49:00+08:00</updated>
+    <id>http://creativepsyco.github.io/blog/2012/11/02/an-app-called-tidicity</id>
+    <content type="html"><![CDATA[<p>Do you think there is a concept of smart cities?</p>
+
+<p>Well there is. Sort of.</p>
+
+<h2>Engagement Platforms with Web 2.0</h2>
+
+<p>With the internet and all the social media buzz in the air, we have truly beein in the grip of a global phenomena. It does not need to affect us globally but rather can have local implications as well. Civic Engagement platforms are the means to realize that and although there are kickstarters for Civic Projects, why not put the responsibility in the hands of the citizens themselves.</p>
+
+<h2>Enter Tidicity</h2>
+
+<p>Tidicity is supposed to be an app which realizes this very objective. Its supposed to be a platform of aggregation of data from crowdsourcing and then relay this to the right channels. It aims to create a buzz about issues for which the required agencies need to wake up.</p>
+
+<h2>Update</h2>
+
+<p>More about the technical challenges in a separate blog post :)</p>
+]]></content>
+  </entry>
+  
+</feed>

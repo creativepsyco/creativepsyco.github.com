@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Mozilla | creativepsyco's Blog]]></title>
+  <link href="http://creativepsyco.github.io/blog/categories/mozilla/atom.xml" rel="self"/>
+  <link href="http://creativepsyco.github.io/"/>
+  <updated>2013-07-04T13:52:57+08:00</updated>
+  <id>http://creativepsyco.github.io/</id>
+  <author>
+    <name><![CDATA[Mohit Kanwal]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Essential Mozilla Command Line]]></title>
+    <link href="http://creativepsyco.github.io/blog/2013/01/11/essential-mozilla-command-line/"/>
+    <updated>2013-01-11T00:27:00+08:00</updated>
+    <id>http://creativepsyco.github.io/blog/2013/01/11/essential-mozilla-command-line</id>
+    <content type="html"><![CDATA[<p><em>This is a reference of some of the very important mozilla commands that I use in daily Terminal Life</em></p>
+
+<h3>Requirements</h3>
+
+<p>Set up Hg, Autoconf using Brew. Look up the instructions at the official website.</p>
+
+<h3>Setting up of Source Directory</h3>
+
+<p>Mozilla Code can be checked out from http://hg.mozilla.org. To set up a Thunderbird and Calendar clone on your local machine checkout the source code as</p>
+
+<p><code>
+bash$ hg clone http://hg.mozilla.org/comm-central
+</code></p>
+
+<p>This will create a <code>comm-central</code> directory in your local machine
+Now <code>comm-central</code> depends on a number of submodules which can be fetched by the following commands
+<code>bash
+bash$ cd comm-central
+bash$ python client.py checkout
+</code>
+This will fetch the submodules. It will take a while</p>
+
+<h3>Compiling Code</h3>
+
+<p>In order to build the calendar application create a <code>.mozconfig</code> file within <code>comm-central</code> and insert the following code:</p>
+
+<p>```
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-TB
+mk_add_options AUTOCONF=/usr/local/Cellar/autoconf213/2.13/bin/autoconf213
+ac_add_options --enable-calendar</p>
+
+<h1>Turn off compiler optimization. This will make applications run slower,</h1>
+
+<h1>will allow you to debug the applications under a debugger, like GDB.</h1>
+
+<p>ac_add_options --disable-optimize
+ac_add_options --disable-jemalloc</p>
+
+<h1>-s makes builds quieter by default</h1>
+
+<h1>-j4 allows 4 tasks to run in parallel. Set the number to be the amount of</h1>
+
+<h1>cores in your machine. 4 is a good number.</h1>
+
+<p>mk_add_options MOZ_MAKE_FLAGS="-j4 -s --no-print-directory"
+mk_add_options JS_READLINE=1
+export JS_READLINE=1
+ac_add_options --disable-tests
+ac_add_options --disable-installer
+```</p>
+
+<p>Now fire away the compiler using the following command:
+<code>
+bash$ make -f client.mk
+</code></p>
+
+<p>This will take quite a lot of time depending upon your machine's strength of course.</p>
+
+<h3>Applying a patch</h3>
+
+<p>From time to time, you might need to apply a patch from someone else, or maybe your own patch. This is quite easy, but note that if you plan on applying the patch, making some changes and then want to create a patch that doesn't contain the patch you originally applied, it might be quite a bit harder.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> <span class="nv">$MOZILLA</span>/calendar&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;--dry-run tests the patching process to ensure that the patch will go&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;ahead cleanly. Be sure to run --dry-run at least once before running&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;the actual patching process.&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;patch -p1 -i ~/my_first_bug.diff --dry-run&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;Now check <span class="k">if </span>the patch applies cleanly, or you are willing to fix the&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;places it went wrong. When you are confident, you can call:&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;patch -p0 -i ~/my_first_bug.diff&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;If the file to patch was not found, take a look at the patch headers. For&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;example, <span class="k">if </span>the header contains <span class="s2">&quot;+++ themes/winstripe/calendar-views.css&quot;</span>,&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;then you need to go into the base directory and call again. If the header&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;contains <span class="s2">&quot;+++ mozilla/calendar/base/Makefile.in&quot;</span>, you can use -p2 instead to&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;strip the <span class="s2">&quot;mozilla/calendar&quot;</span> part.&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;patch -p2 -i ~/my_first_bug.diff
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>Creating a patch</h3>
+
+<p>Simply create a diff and store it somewhere
+<code>
+bash$ hg diff &gt; ~/my_first_patch.diff
+</code></p>
+
+<h3>Reverting a patch</h3>
+
+<p><code>
+bash$ hg revert .
+</code></p>
+
+<p>For more information refer to <a href="https://developer.mozilla.org/en-US/docs/Developer_Guide/Build_Instructions">Mozilla Documentation on Build</a></p>
+]]></content>
+  </entry>
+  
+</feed>
