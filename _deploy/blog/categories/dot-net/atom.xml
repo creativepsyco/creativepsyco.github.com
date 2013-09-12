@@ -4,7 +4,7 @@
   <title><![CDATA[Category: .NET | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/dot-net/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-08-05T23:59:40+08:00</updated>
+  <updated>2013-09-12T08:35:38+08:00</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -24,7 +24,7 @@
 
 <h2>OpenId</h2>
 
-<p>Well when you can't store the authentication result you need to think of some third party based authentication mechanism and OpenId is one those means. Most of the modern email and other service providers such as Dropbox etc provide openid schemes which can be leveraged to get basic userinfo and proceed to do something in web application.</p>
+<p>Well when you can&rsquo;t store the authentication result you need to think of some third party based authentication mechanism and OpenId is one those means. Most of the modern email and other service providers such as Dropbox etc provide openid schemes which can be leveraged to get basic userinfo and proceed to do something in web application.</p>
 
 <h2>Nancy</h2>
 

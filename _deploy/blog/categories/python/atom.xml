@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-08-05T23:59:40+08:00</updated>
+  <updated>2013-09-12T08:35:38+08:00</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -27,56 +27,7 @@
 
 <p>Here is how the final product looks like:
 <div><script src='https://gist.github.com/4744901.js'></script>
-<noscript><pre><code>#
-# Copyright (c) 2013 by Mohit Singh kanwal.  All Rights Reserved.
-#
-import subprocess
-
-
-class ProcessManager(object):
-    &quot;&quot;&quot;ProcessManager Utility Class: Its singleton&quot;&quot;&quot;
-
-    INSTANCE = None
-
-    __PROCESS_DICT = None
-
-    def __init__(self):
-        if self.INSTANCE is not None:
-            raise ValueError(&quot;An instantiation already exists!&quot;)
-
-    @classmethod
-    def get_instance(cls):
-    	if cls.INSTANCE is None:
-    		cls.INSTANCE = ProcessManager()
-    		cls.INSTANCE.__PROCESS_DICT = dict()
-    	return cls.INSTANCE
-
-    @classmethod
-    def set_process(cls, key, value):
-
-        if cls.__PROCESS_DICT is None:
-            cls.__PROCESS_DICT = dict()
-        cls.__PROCESS_DICT[key] = value
-
-    @classmethod
-    def get_process(cls, key):
-        return cls.__PROCESS_DICT[key]
-
-    @classmethod
-    def get_process_dict(cls):
-    	return cls.__PROCESS_DICT
-
-#
-# A small test suite
-#
-if __name__ == '__main__':
-    s1 = ProcessManager()
-    s2 = ProcessManager()
-    if(id(s1) == id(s2)):
-        print &quot;Same&quot;
-    else:
-        print &quot;Different&quot;
-</code></pre></noscript></div>
+<noscript><pre><code></code></pre></noscript></div>
 </p>
 
 <p>Cheers
@@ -89,7 +40,7 @@ mohit</p>
     <link href="http://creativepsyco.github.io/blog/2013/01/24/django-fun/"/>
     <updated>2013-01-24T22:29:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/01/24/django-fun</id>
-    <content type="html"><![CDATA[<p>Here's how to install python on your web server :)</p>
+    <content type="html"><![CDATA[<p>Here&rsquo;s how to install python on your web server :)</p>
 
 <h3>Log in using SSH access</h3>
 
@@ -194,12 +145,12 @@ vim mysite.fcgi # Press i then enter the following:</p>
 
 <h1>Where /home/your_username is the path to your home directory</h1>
 
-<p>sys.path.insert(0, "/home/your_username/python")
-sys.path.insert(13, "/home/your_username/django-projects/myproject")</p>
+<p>sys.path.insert(0, &ldquo;/home/your_username/python&rdquo;)
+sys.path.insert(13, &ldquo;/home/your_username/django-projects/myproject&rdquo;)</p>
 
-<p>os.environ['DJANGO_SETTINGS_MODULE'] = 'myproject.settings'
+<p>os.environ[&lsquo;DJANGO_SETTINGS_MODULE&rsquo;] = &lsquo;myproject.settings&rsquo;
 from django.core.servers.fastcgi import runfastcgi
-runfastcgi(method="threaded", daemonize="false") # Press <escape>wq<enter>
+runfastcgi(method=&ldquo;threaded&rdquo;, daemonize=&ldquo;false&rdquo;) # Press <escape>wq<enter>
 chmod 0755 mysite.fcgi
 ```</p>
 

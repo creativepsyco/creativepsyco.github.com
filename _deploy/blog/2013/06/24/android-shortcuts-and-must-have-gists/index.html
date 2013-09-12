@@ -159,7 +159,7 @@
 
 <h3>Making use of the redirection trick</h3>
 
-<p>Let&#8217;s say you want to make sure the user is logged in before giving him access to a particular activity view. What you can do is to check the status of the login token through a shared preference and send back an intent with the intent that the current view was invoked with via an extra Intent parameter</p>
+<p>Let&rsquo;s say you want to make sure the user is logged in before giving him access to a particular activity view. What you can do is to check the status of the login token through a shared preference and send back an intent with the intent that the current view was invoked with via an extra Intent parameter</p>
 
 <p>This is the code for the invoker:</p>
 
@@ -218,7 +218,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>And this is the login view code. Note that in the invoker&#8217;s code we use the <code>Intent.FLAG_ACTIVITY_NO_HISTORY</code> to make sure that the call does not stay in the stack since login is something we need to ensure out of navigation:</p>
+<p>And this is the login view code. Note that in the invoker&rsquo;s code we use the <code>Intent.FLAG_ACTIVITY_NO_HISTORY</code> to make sure that the call does not stay in the stack since login is something we need to ensure out of navigation:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

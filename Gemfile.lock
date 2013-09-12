@@ -1,5 +1,5 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     RedCloth (4.2.9)
     chunky_png (1.2.8)
@@ -9,7 +9,7 @@ GEM
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
-    directory_watcher (1.5.1)
+    directory_watcher (1.4.1)
     execjs (1.4.0)
       multi_json (~> 1.0)
     fast-stemmer (1.0.2)
@@ -36,7 +36,7 @@ GEM
       rack
     rake (10.1.0)
     rb-fsevent (0.9.3)
-    rdiscount (1.6.8)
+    rdiscount (2.0.7.3)
     rubypants (0.2.0)
     sass (3.2.9)
     sass-globbing (1.0.0)
@@ -56,6 +56,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth (~> 4.2.9)
   compass (~> 0.12.2)
+  directory_watcher (= 1.4.1)
   execjs
   haml (~> 3.1.7)
   jekyll (~> 0.12)
@@ -63,8 +64,9 @@ DEPENDENCIES
   pygments.rb (~> 0.3.4)
   rake
   rb-fsevent (~> 0.9)
-  rdiscount (~> 1.6.8)
+  rdiscount (~> 2.0.7)
   rubypants (~> 0.2.0)
+  sass (~> 3.2)
   sass-globbing (~> 1.0.0)
   sinatra (~> 1.4.2)
   stringex (~> 1.4.0)

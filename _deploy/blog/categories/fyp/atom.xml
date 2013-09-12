@@ -4,7 +4,7 @@
   <title><![CDATA[Category: FYP | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/fyp/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-08-05T23:59:40+08:00</updated>
+  <updated>2013-09-12T08:35:38+08:00</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -18,7 +18,7 @@
     <link href="http://creativepsyco.github.io/blog/2013/05/21/my-final-year-project-a-web-app-hosting-for-apps/"/>
     <updated>2013-05-21T21:53:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2013/05/21/my-final-year-project-a-web-app-hosting-for-apps</id>
-    <content type="html"><![CDATA[<p>For my final year project in the School of Computing NUS I had to do something very exciting related to working with web apps. If you are familiar with online continuous integration environments like <a href="http://travis-ci.org">Travis</a> and <a href="http://jenkins-ci.org">Jenkins</a> then cracking this issue is a hen's egg. The thing that I was required to do was compile and run research programs within a webapp. That is, feed input to a program written in C, C++ etc. and get the output, display it to the user. All of this included a data repository which housed patient data.</p>
+    <content type="html"><![CDATA[<p>For my final year project in the School of Computing NUS I had to do something very exciting related to working with web apps. If you are familiar with online continuous integration environments like <a href="http://travis-ci.org">Travis</a> and <a href="http://jenkins-ci.org">Jenkins</a> then cracking this issue is a hen&rsquo;s egg. The thing that I was required to do was compile and run research programs within a webapp. That is, feed input to a program written in C, C++ etc. and get the output, display it to the user. All of this included a data repository which housed patient data.</p>
 
 <!--more-->
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gists | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/gists/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-08-05T23:59:40+08:00</updated>
+  <updated>2013-09-12T08:35:38+08:00</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -41,7 +41,7 @@ public void setLoggedInState(boolean isLoggedIn) {
 
 <h3>Making use of the redirection trick</h3>
 
-<p>Let's say you want to make sure the user is logged in before giving him access to a particular activity view. What you can do is to check the status of the login token through a shared preference and send back an intent with the intent that the current view was invoked with via an extra Intent parameter</p>
+<p>Let&rsquo;s say you want to make sure the user is logged in before giving him access to a particular activity view. What you can do is to check the status of the login token through a shared preference and send back an intent with the intent that the current view was invoked with via an extra Intent parameter</p>
 
 <p>This is the code for the invoker:</p>
 
@@ -80,7 +80,7 @@ public void setLoggedInState(boolean isLoggedIn) {
 
 <p>```</p>
 
-<p>And this is the login view code. Note that in the invoker's code we use the <code>Intent.FLAG_ACTIVITY_NO_HISTORY</code> to make sure that the call does not stay in the stack since login is something we need to ensure out of navigation:</p>
+<p>And this is the login view code. Note that in the invoker&rsquo;s code we use the <code>Intent.FLAG_ACTIVITY_NO_HISTORY</code> to make sure that the call does not stay in the stack since login is something we need to ensure out of navigation:</p>
 
 <p>```java
 @Override</p>

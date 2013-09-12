@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-08-05T23:59:40+08:00</updated>
+  <updated>2013-09-12T08:35:38+08:00</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -44,7 +44,7 @@ exec $SHELL
 rvm install 1.9.3 --default
 ruby -v
 </code></li>
-<li>Don't require rdoc and ri when installing gems:
+<li>Don&rsquo;t require rdoc and ri when installing gems:
 <code>bash
 echo "gem: --no-ri --no-rdoc" &gt; ~/.gemrc
 </code></li>

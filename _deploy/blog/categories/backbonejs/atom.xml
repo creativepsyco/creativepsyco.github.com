@@ -4,7 +4,7 @@
   <title><![CDATA[Category: BackboneJS | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/backbonejs/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-08-05T23:59:40+08:00</updated>
+  <updated>2013-09-12T08:35:38+08:00</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -41,7 +41,7 @@
     <link href="http://creativepsyco.github.io/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs/"/>
     <updated>2012-10-22T22:57:00+08:00</updated>
     <id>http://creativepsyco.github.io/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs</id>
-    <content type="html"><![CDATA[<p>Admit it. There are so many times you wish that the localhost-ed version of the application that you are developing in BacboneJS just works. But it doesn't. And there is only one reason why it doesn't work.</p>
+    <content type="html"><![CDATA[<p>Admit it. There are so many times you wish that the localhost-ed version of the application that you are developing in BacboneJS just works. But it doesn&rsquo;t. And there is only one reason why it doesn&rsquo;t work.</p>
 
 <h2>Cross Origin Resource Sharing</h2>
 

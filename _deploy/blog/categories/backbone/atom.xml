@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Backbone | creativepsyco's Blog]]></title>
   <link href="http://creativepsyco.github.io/blog/categories/backbone/atom.xml" rel="self"/>
   <link href="http://creativepsyco.github.io/"/>
-  <updated>2013-08-05T23:59:40+08:00</updated>
+  <updated>2013-09-12T08:35:38+08:00</updated>
   <id>http://creativepsyco.github.io/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -20,17 +20,17 @@
     <id>http://creativepsyco.github.io/blog/2012/11/02/new-technologies-galore</id>
     <content type="html"><![CDATA[<p><em>Most of the stuff is still under production, more details later</em></p>
 
-<p>Don't know why but these days I am hooked to Javascript. Perhaps that's coz I write way too much Javascript these days or maybe the world is really moving to the client side of things. Now I don't want to go into the details of the holy war of server side vs client side of things. However, I do find that client side stuff is very exciting not to mention that completely open.</p>
+<p>Don&rsquo;t know why but these days I am hooked to Javascript. Perhaps that&rsquo;s coz I write way too much Javascript these days or maybe the world is really moving to the client side of things. Now I don&rsquo;t want to go into the details of the holy war of server side vs client side of things. However, I do find that client side stuff is very exciting not to mention that completely open.</p>
 
 <p>For client side development I am using a host of technologies to work my way around. These are BackboneJS, ExpressJS, NodeJS and Redis.</p>
 
 <h2>Food For Thought</h2>
 
-<p>Now you would be wondering how come so many *JS appended libraries. Man! if I had known myself I would tell but really don't know what is up with the JS convention anyways.</p>
+<p>Now you would be wondering how come so many *JS appended libraries. Man! if I had known myself I would tell but really don&rsquo;t know what is up with the JS convention anyways.</p>
 
 <h2>NodeJS</h2>
 
-<p>To me nodejs seems pretty darn powerful when it comes to serving requests. With it's event driven framework to go around I am sure it's the language of the server in the times to come. Although I would like to step back and think that Javascript is not really a <code>language</code> but more like a <code>scripting language</code> but I guess the perceptions will change over time. To start a simple node js server all you need is to install <a href="http://nodejs.org/">Node</a> first. My favorite for doing this is <a href="http://mxcl.github.com/homebrew/">Homebrew</a></p>
+<p>To me nodejs seems pretty darn powerful when it comes to serving requests. With it&rsquo;s event driven framework to go around I am sure it&rsquo;s the language of the server in the times to come. Although I would like to step back and think that Javascript is not really a <code>language</code> but more like a <code>scripting language</code> but I guess the perceptions will change over time. To start a simple node js server all you need is to install <a href="http://nodejs.org/">Node</a> first. My favorite for doing this is <a href="http://mxcl.github.com/homebrew/">Homebrew</a></p>
 
 <p><code>bash
 $ brew install node
@@ -52,11 +52,11 @@ To run this all you need to do is:</p>
 $ node server.js
 </code></p>
 
-<p>And voila goto <code>localhost:1337</code> and be greeted by a HTML page response. Cool isn't it?</p>
+<p>And voila goto <code>localhost:1337</code> and be greeted by a HTML page response. Cool isn&rsquo;t it?</p>
 
 <h2>ExpressJS</h2>
 
-<p>Now we dive into a framework for creating web applications with Node. Why? Coz Frameworks rock and there is a clear well defined design strategy at work which frankly most of us would take a lot of time to devise. So why don't we use the community's advice and just do it!</p>
+<p>Now we dive into a framework for creating web applications with Node. Why? Coz Frameworks rock and there is a clear well defined design strategy at work which frankly most of us would take a lot of time to devise. So why don&rsquo;t we use the community&rsquo;s advice and just do it!</p>
 
 <p><a href="http://expressjs.com/">ExpressJS</a> makes the creation of web apps with Node such a breeze.</p>
 
@@ -98,7 +98,7 @@ $ express --sessions --css stylus --ejs myapp
 <p>The solution is a simple piece of node js script living in the directory. Surprisingly it is way way small</p>
 
 <p>``` javascript Sample NodeJS Script to run server
-var connect = require('connect');
+var connect = require(&lsquo;connect&rsquo;);
 connect.createServer(</p>
 
 <pre><code>connect.static(__dirname)
@@ -116,7 +116,7 @@ connect.createServer(</p>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>  npm install connect
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>--mohit</p>
+<p>&mdash;mohit</p>
 ]]></content>
   </entry>
   
