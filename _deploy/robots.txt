@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://creativepsyco.github.io/sitemap.xml 
