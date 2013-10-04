@@ -17,6 +17,8 @@ module Jekyll
       @text           = text
       @cache_disabled = false
       @cache_folder   = File.expand_path "../.gist-cache", File.dirname(__FILE__)
+      # Only for Octopress
+      @github_user    = Jekyll.configuration({})['github_user']
       FileUtils.mkdir_p @cache_folder
     end
 
@@ -40,13 +42,17 @@ module Jekyll
     end
 
     def script_url_for(gist_id, filename)
-      url = "https://gist.github.com/#{gist_id}.js"
-      url = "#{url}?file=#{filename}" unless filename.nil? or filename.empty?
-      url
+      if !@github_user.nil?
+        url = "https://gist.github.com/#{@github_user}/#{gist_id}.js"     
+        url = "#{url}?file=#{filename}" unless filename.nil? or filename.empty?
+        url   
+      end
     end
 
     def get_gist_url_for(gist, file)
-      "https://raw.github.com/gist/#{gist}/#{file}"
+      if !@github_user.nil?
+        "https://gist.github.com/#{@github_user}/#{gist}/raw/#{file}"
+      end
     end
 
     def cache(gist, file, data)
