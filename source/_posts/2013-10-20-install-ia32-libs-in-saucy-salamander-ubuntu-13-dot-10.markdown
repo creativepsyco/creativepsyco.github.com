@@ -33,6 +33,10 @@ So you can install the package as follow:
 sudo apt-get install ia32-libs:i386
 ```
 
+####Update
+According to Rick below, the above method may not work. In that case, perhaps check out this [Link][link]. This should definitely resolve the issue, although it might end up screwing up your package management. But you gotta try what you gotta try, right?
+
 Cheers
 
 [ask-ubuntu]: http://askubuntu.com/questions/107230/what-happened-to-the-ia32-libs-package
+[link]: http://wiki.phoenixviewer.com/ia32-libs-in-ubuntu-13-10
