@@ -9,6 +9,7 @@ categories: ["Android"]
 These days I have been working extensively on apps for the Android Platform. And one thing keeps coming back to me: Resuse of components and widgets. Although most of the time when you are doing simple apps, you don't really pay much attention to the type of design and navigation strategies (`SINGLE_TOP` activities vs `SINGLE_TASK` blah.. blah) but when you are faced with putting different kinds of components in a single view then you probably have shuddered to think whether you were better off accomplishing this as a separate widget of its own. As can be seen from Romain Guy's [Google IO Talk][googleio], developing custom views has its own significant advantages.
 
 Some of the advantages are as follows:
+
 * A piece of highly reusable component will be at your disposal
 * you will have fine-grained control over the lifecycle of the control/widget that you are developing, (For example, you can decide whether to load images from the network or display a dummy error image in a custom `ImageView` see `volley` [`NetworkImageView`][netio] for details)
 * Custom views prevent cluttering of code in a single view thereby making abstraction more powerful
