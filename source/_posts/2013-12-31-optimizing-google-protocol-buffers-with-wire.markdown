@@ -12,6 +12,8 @@ The concept of [Protocol Buffers][protobuf] by Google is amazing.
 
 Protocol Buffers is a serialization strategy, much like XML or JSON. A lot of mobile apps and web services make use of JSON for passing information. However, protocol buffers are inherently compressed formats and not intented for the human eye (readability wise). You should definitely take a look at it if you feel that you are using a lot of the mobile data or if the primary target group of your app is the domain of mobile. It however, makes sense to use them for internal RPC related APIs and communication channels.
 
+<!--more-->
+
 ###Why should you not use it
 
 Having worked with protocol buffers extensively during the development of one of my company's Android apps, I can say that Protocol Buffers definitely can have their own problems. In an agile environment where requirements can change extensively during development, it makes no sense to actually use protocol buffers without breaking the schema. And according to Google you might not wanna change the structure of Enums. I will just summarize what [Blake Smith][smith] has to say about the anti-pattern:
