@@ -15,11 +15,11 @@ From the [Official Github Guide](https://help.github.com/articles/using-pull-req
 
 Pull requests are useful in the shared repository model where contributors can work on different topic branches and then file a pull request to be able to initiate discussion about potential changes which does not need to affect the rest of the project.
 
-<!--more-->
 Example
 -------
 Here is an [example](https://github.com/square/wire/pull/81) of a pull request I filed for Square's Wire open source project.
 
+<!--more-->
 Creating a pull request
 -----------------------
 These steps create a topic branch off the `master` branch.
@@ -46,7 +46,7 @@ Filing up a pull request
 ------------------------
 You will need to use the browser to visit the repository web page and file one. More details [here](http://yangsu.github.io/pull-request-tutorial/)
 
-![Pull Request Page](http://github-images.s3.amazonaws.com/help/pull_requests/pull-request-review-page.png)
+![Pull Request Page](http://github-images.s3.amazonaws.com/help/pull_requests/pull-request-review-page.png =800x400)
 
 Modifying Code after discussions
 --------------------------------
