@@ -11,7 +11,6 @@ I use Octopress to blog from multiple computers, work and home computers, someti
 However, recently while deploying I encountered this strange error:
 
 ```bash
-
 ## Pushing generated _deploy website
 To git@github.com:creativepsyco/creativepsyco.github.com.git
  ! [rejected]        master -> master (non-fast-forward)
@@ -20,8 +19,8 @@ To git@github.com:creativepsyco/creativepsyco.github.com.git
  hint: its remote counterpart. Integrate the remote changes (e.g.
  hint: 'git pull ...') before pushing again.
  hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
 
- ```
 
 The reason is that Octopress only does a push to the `master` branch and not a pull. To resolve this, do this:
 
@@ -38,6 +37,7 @@ To git@github.com:creativepsyco/creativepsyco.github.com.git
 ```
 
 After that all is well:
+
 ```bash
 msk@MathBook Pro ~/Projects/creativepsyco.github.com/_deploy (master)$ cd ..
 msk@MathBook Pro ~/Projects/creativepsyco.github.com (source)$ rake gen_deploy
