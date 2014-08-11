@@ -6,6 +6,11 @@ comments: true
 categories: ["Android", "Hacks", "Facebook"]
 ---
 
+**Small Clarification**
+Since this post went live it triggered quite a discussion [HN][hn].
+
+*Just to clarify before you start bashing me in the comments. I knew about FB doing the LinearAlloc buffer thing when they had released the patch. However, there are other solutions [out there][dex] to fix this issue, and Facebook did not try adopting any of them, their reasons for not adopting it are not that convincing, AFAIK from a software development perspective.*
+
 Recently I found this crash trace in my phone:
 
 ```
@@ -54,3 +59,5 @@ Facebook did not miss it, however the reasons they have mentioned don't seem to 
 [link1]: https://www.facebook.com/notes/facebook-engineering/under-the-hood-dalvik-patch-for-facebook-for-android/10151345597798920
 [custom]: http://android-developers.blogspot.sg/2011/07/custom-class-loading-in-dalvik.html
 [link3]: https://github.com/creativepsyco/secondary-dex-gradle
+[hn]: https://news.ycombinator.com/item?id=8162342
+[dex]: https://medium.com/@rotxed/dex-skys-the-limit-no-65k-methods-is-28e6cb40cf71
