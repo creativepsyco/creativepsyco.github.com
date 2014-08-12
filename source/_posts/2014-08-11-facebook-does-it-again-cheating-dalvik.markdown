@@ -15,7 +15,7 @@ Since this post went live it triggered quite a discussion [HN][hn].
 
 **Also LinearAlloc!=dex method count**
 
-*I should have been more explicit about this, however having too many methods and deep interface hierarchies within a single DEX file does amount to [exceeding the Linear allocation buffer](https://code.google.com/p/android/issues/detail?id=22586). Note that you can still exceed the Linear allocation buffer even if you have fewer methods in your DEX file, if you can deep complicated interface hierarchy, its fairly easy to create on. Exceeding the methods in a DEX file is just one of the ways why this can happen*
+*I should have been more explicit about this, however having too many methods and deep interface hierarchies within a single DEX file does amount to [exceeding the Linear allocation buffer](https://code.google.com/p/android/issues/detail?id=22586). Note that you can still exceed the Linear allocation buffer even if you have fewer methods in your DEX file, if you can deep complicated interface hierarchy, its fairly easy to create one. Exceeding the methods in a DEX file is just one of the ways why this can happen*
 
 Recently I found this crash trace in my phone:
 
@@ -62,6 +62,8 @@ Quoting from FB:
 
 I am assuming that when they say **too many of our classes are accessed directly by the Android Framework**, they mean that a lot of Activities, Views, Receivers etc. need to registered which can only happen at the DexOpt stage of the app. This supports my assumption that the reason why they can't break the app is because of a lot of direct views and class hierarchies that need to be injected into the 
 system classloader before the start of the app.
+
+However, that said, FB is using the secondary dex file loading mechanism to some extent on their app. You can decompile the APK and take a look. But why then they would need to do a Linear Alloc even now is the main question, which was the motivation behind this post.
 
 **EDIT**
 
