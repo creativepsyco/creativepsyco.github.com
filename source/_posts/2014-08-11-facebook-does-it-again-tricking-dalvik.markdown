@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Facebook does it again. Cheating Dalvik"
+title: "Facebook does it again. Tricking Dalvik"
 date: 2014-08-11 10:48:33 +0800
-comments: true
-published: true
+comments: false
+published: false
 categories: ["Android", "Hacks", "Facebook"]
 ---
 
@@ -43,7 +43,7 @@ Recently I found this crash trace in my phone:
             at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:601)
 ```
 
-I immediately realized that this is Facebook's version of trying to [cheat Dalvik VM][link1] for its limit of only 5MB on the linear allocation buffer. One of the very prominent ways of exceeding this is having too many inter-related in a single DEX file. If you have more than 64K (the exact number is 65536) methods in your DEX file, you will definitely fail during the DexOpt stage (which is when the methods are loaded into the buffer).
+I immediately realized that this is Facebook's version of trying to [tricking the Dalvik VM][link1] for its limit of only 5MB on the linear allocation buffer. One of the very prominent ways of exceeding this is having too many inter-related in a single DEX file. If you have more than 64K (the exact number is 65536) methods in your DEX file, you will definitely fail during the DexOpt stage (which is when the methods are loaded into the buffer).
 
 Quoting from the article:
 
