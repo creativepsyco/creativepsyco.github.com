@@ -3,17 +3,19 @@ layout: post
 title: "Facebook does it again. Cheating Dalvik"
 date: 2014-08-11 10:48:33 +0800
 comments: true
-published: false
+published: true
 categories: ["Android", "Hacks", "Facebook"]
 ---
 
 **Small Clarification**
+
 Since this post went live it triggered quite a discussion [HN][hn].
 
 *Just to clarify before you start bashing me in the comments. I knew about FB doing the LinearAlloc buffer thing when they had released the patch. However, there are other solutions [out there][dex] to fix this issue, and Facebook did not try adopting any of them, their reasons for not adopting it are not that convincing, AFAIK from a software development perspective.*
 
 **Also LinearAlloc!=dex method count**
-*I should have been more explicit about this, however having too many methods and deep interface hierarchies within a single DEX file does amount to [exceeding the Linear allocation buffer](https://code.google.com/p/android/issues/detail?id=22586)*
+
+*I should have been more explicit about this, however having too many methods and deep interface hierarchies within a single DEX file does amount to [exceeding the Linear allocation buffer](https://code.google.com/p/android/issues/detail?id=22586). Note that you can still exceed the Linear allocation buffer even if you have fewer methods in your DEX file, if you can deep complicated interface hierarchy, its fairly easy to create on. Exceeding the methods in a DEX file is just one of the ways why this can happen*
 
 Recently I found this crash trace in my phone:
 
@@ -41,7 +43,7 @@ Recently I found this crash trace in my phone:
             at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:601)
 ```
 
-I immediately realized that this is Facebook's version of trying to [cheat Dalvik VM][link1] for its limit of only 5MB on the linear allocation buffer. One of the very prominent ways of exceeding this is having too many inter-related in a single DEX file. If you have more than 64K (the exact number is 65536) methods in your DEX file, you will definitely fail during the DexOpt stage.
+I immediately realized that this is Facebook's version of trying to [cheat Dalvik VM][link1] for its limit of only 5MB on the linear allocation buffer. One of the very prominent ways of exceeding this is having too many inter-related in a single DEX file. If you have more than 64K (the exact number is 65536) methods in your DEX file, you will definitely fail during the DexOpt stage (which is when the methods are loaded into the buffer).
 
 Quoting from the article:
 
@@ -61,13 +63,13 @@ Quoting from FB:
 I am assuming that when they say **too many of our classes are accessed directly by the Android Framework**, they mean that a lot of Activities, Views, Receivers etc. need to registered which can only happen at the DexOpt stage of the app. This supports my assumption that the reason why they can't break the app is because of a lot of direct views and class hierarchies that need to be injected into the 
 system classloader before the start of the app.
 
-*EDIT*
+**EDIT**
 
 ~~Seems like Facebook missed it. What a waste.~~
 
 Facebook did not miss it, however the reasons they have mentioned don't seem to be very convincing. Android apps load up in a sequence with different entry points being called at different stages of the application, not everything is a core part of the app, it can be argued to some extent. 
 
-[Here][link3] is a nifty way to split DEX files if you are facing a similar situation.
+[Here][link3] is another very hacky way to split DEX files if you are facing a similar situation.
 
 [link1]: https://www.facebook.com/notes/facebook-engineering/under-the-hood-dalvik-patch-for-facebook-for-android/10151345597798920
 [custom]: http://android-developers.blogspot.sg/2011/07/custom-class-loading-in-dalvik.html
