@@ -3,6 +3,7 @@ layout: post
 title: "Facebook does it again. Cheating Dalvik"
 date: 2014-08-11 10:48:33 +0800
 comments: true
+published: false
 categories: ["Android", "Hacks", "Facebook"]
 ---
 
@@ -10,6 +11,9 @@ categories: ["Android", "Hacks", "Facebook"]
 Since this post went live it triggered quite a discussion [HN][hn].
 
 *Just to clarify before you start bashing me in the comments. I knew about FB doing the LinearAlloc buffer thing when they had released the patch. However, there are other solutions [out there][dex] to fix this issue, and Facebook did not try adopting any of them, their reasons for not adopting it are not that convincing, AFAIK from a software development perspective.*
+
+**Also LinearAlloc!=dex method count**
+*I should have been more explicit about this, however having too many methods and deep interface hierarchies within a single DEX file does amount to [exceeding the Linear allocation buffer](https://code.google.com/p/android/issues/detail?id=22586)*
 
 Recently I found this crash trace in my phone:
 
@@ -37,16 +41,25 @@ Recently I found this crash trace in my phone:
             at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:601)
 ```
 
-I immediately realized that this is Facebook's version of trying to [cheat Dalvik VM][link1] for its limit of 65K methods in a single DEX file.
+I immediately realized that this is Facebook's version of trying to [cheat Dalvik VM][link1] for its limit of only 5MB on the linear allocation buffer. One of the very prominent ways of exceeding this is having too many inter-related in a single DEX file. If you have more than 64K (the exact number is 65536) methods in your DEX file, you will definitely fail during the DexOpt stage.
 
 Quoting from the article:
 
 > As it stood, the release of the much-anticipated Facebook for Android 2.0 was at risk. It seemed like we would have to choose between cutting significant features from the app or only shipping our new version to the newest Android phones (ICS and up). Neither seemed acceptable. We needed a better solution.
+
 > Once again, we looked to the Android source code. Looking at the definition of the LinearAlloc buffer, we realized that if we could only increase that buffer from 5 MB to 8 MB, we would be safe!
 
-I maintain that this is a horrible hack and one that is beset with many problems. On a really non-technical note, this fix is a very dirty which can cause other apps to misbehave on your phone. Also, it means you as a developer don't really believe in the existence of well-defined APIs. Recently, Facebook did the same by launching App Links for Mobile SDK, another hacky product, without a proper involvement of the community, in a standards enforced way. You can read all other really technical jot-downs [here](https://news.ycombinator.com/item?id=5321634)
+I maintain that this is not a great way to fix this issue and seems a quick hack and one that is beset with many problems. On a really non-technical note, this fix is a very dirty which can cause other apps to misbehave on your phone. Also, it means you as a developer don't really believe in the existence of well-defined APIs. Recently, Facebook did the same by launching App Links for Mobile SDK, another much needed product(on mobile) but with its own set of protocols, versioning info etc., without a proper involvement of the community, in a standards enforced way. You can read all other really technical jot-downs [here](https://news.ycombinator.com/item?id=5321634)
 
-While the official standard way to to fix this problem is described in the offical [Android Blog][custom].
+While the official standard way to to fix this problem is described in the offical [Android Blog][custom]. 
+
+**Why I say that it's a problem of too many methods in a single DEX file**
+
+Quoting from FB:
+> However, there was no way we could break our app up this way--too many of our classes are accessed directly by the Android framework. Instead, we needed to inject our secondary dex files directly into the system class loader. This isn't normally possible, but we examined the Android source code and used Java reflection to directly modify some of its internal structures. We were certainly glad and grateful that Android is open source—otherwise, this change wouldn’t have been possible. 
+
+I am assuming that when they say **too many of our classes are accessed directly by the Android Framework**, they mean that a lot of Activities, Views, Receivers etc. need to registered which can only happen at the DexOpt stage of the app. This supports my assumption that the reason why they can't break the app is because of a lot of direct views and class hierarchies that need to be injected into the 
+system classloader before the start of the app.
 
 *EDIT*
 
