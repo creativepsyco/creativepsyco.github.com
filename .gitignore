@@ -13,3 +13,4 @@ node_modules
 
 _deploy/
 .ruby-version
+.preview-mode
