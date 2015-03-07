@@ -9,7 +9,7 @@ categories: ["open source", "mozilla", "gsoc"]
 ###GSoC Tenth Year Anniversary Celebrations
 
 This year was the 10th year of Google Summer of Code (GSoC). The mentor summit was held in Marriott, San Jose, CA. I was extremely lucky and honored to be part of the Mozilla delegation participating in this event.
-
+<!--more-->
 ####My tryst with GSoC
 I was a GSoC student in 2011 contributing to the Mozilla Calendar Project, My project was entitled as "[Implementation of Offline Mode][1]"
 

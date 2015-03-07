@@ -9,7 +9,7 @@ categories: ["Android"]
 ###Problem
 
 Here is an interesting problem. Let's say you are in a particular view, and you want to be able to set a background. You simple use the `View.setBackground(Drawable)` or `View.setBackgroundDrawable(Drawable)` call to do this. However once you do this, you realize that whenever the soft keyboard is opened it pushes your view to the top/resizes it such that your background looks squished.
-
+<!--more-->
 I encountered this while working on a chatting application. The resulting image looks something like this:
 
 ![Image](/images/flat_background.jpg)

@@ -12,7 +12,7 @@ categories: ["Android", "Hacks", "Facebook"]
 Since this post went live it triggered quite a discussion [HN][hn].
 
 *Just to clarify before you start bashing me in the comments. I knew about FB doing the LinearAlloc buffer thing when they had released the patch. However, there are other solutions [out there][dex] to fix this issue, and Facebook did not try adopting any of them, their reasons for not adopting it are not that convincing, AFAIK from a software development perspective.*
-
+<!--more-->
 **Also LinearAlloc!=dex method count**
 
 *I should have been more explicit about this, however having too many methods and deep interface hierarchies within a single DEX file does amount to [exceeding the Linear allocation buffer](https://code.google.com/p/android/issues/detail?id=22586). Note that you can still exceed the Linear allocation buffer even if you have fewer methods in your DEX file, if you can deep complicated interface hierarchy, its fairly easy to create one. Exceeding the methods in a DEX file is just one of the ways why this can happen*

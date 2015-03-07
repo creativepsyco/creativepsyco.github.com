@@ -20,7 +20,7 @@ To git@github.com:creativepsyco/creativepsyco.github.com.git
  hint: 'git pull ...') before pushing again.
  hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 ```
-
+<!--more-->
 
 The reason is that Octopress only does a push to the `master` branch and not a pull. To resolve this, do this:
 
