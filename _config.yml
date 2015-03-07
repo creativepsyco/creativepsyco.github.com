@@ -19,7 +19,7 @@ date_format: "ordinal"
 subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
-email:
+email: mohit.kanwal+blog@gmail.com
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -102,3 +102,6 @@ google_analytics_tracking_id: UA-36037120-1
 
 # Facebook Like
 facebook_like: true
+
+# Linkedin
+linkedin_user: mohitkanwal
