@@ -5,7 +5,7 @@ date: 2015-03-07 21:30:25 +0800
 comments: true
 categories: ['Android']
 ---
-[Android Lollipop](http://www.android.com/versions/lollipop-5-0/) was released back in Google I/O reflecting the new Material Design design philosophy. It was followed soon by the AppCompat Library updating to [`v21`](http://android-developers.blogspot.sg/2014/10/appcompat-v21-material-design-for-pre.html). The Library brought in a new Action Bar pattern called `Toolbar` which behaves more like a custom view with a promise to customize the look and feel of it instead of the quirks of the [ActionBar](http://cyrilmottier.com/2013/05/24/pushing-the-actionbar-to-the-next-level/). The Action Bar was both less customizable and hard to style. With Toolbar some of it goes away as the Toolbar behaves more like a view group and you can initialize it with various different views which previously you could not.
+[Android Lollipop](http://www.android.com/versions/lollipop-5-0/) was released back in Google I/O reflecting the new Material Design philosophy. It was followed soon by the AppCompat Library updating to [`v21`](http://android-developers.blogspot.sg/2014/10/appcompat-v21-material-design-for-pre.html). The Library brought in a new Action Bar pattern called `Toolbar` which behaves more like a custom view with a promise to customize the look and feel of it instead of the quirks of the [ActionBar](http://cyrilmottier.com/2013/05/24/pushing-the-actionbar-to-the-next-level/). The Action Bar was both less customizable and hard to style. With Toolbar some of it goes away as the Toolbar behaves more like a view group and you can initialize it with various different views which previously you could not.
 
 <!--more-->
 
