@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Rooting Samsung Galaxy S3 GT-I9305 With CyanogenMod Jelly Bean 4.2.2 - creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="Rooting Samsung Galaxy S3 GT-I9305 With CyanogenMod Jelly Bean 4.2.2 written Feb 2nd, 2014 in android, hacks After getting the 4.3 update my Samsung &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.mohitkanwal.com/blog/2014/02/02/rooting-samsung-galaxy-s3-gt-i9305-with-cyanogenmod-jelly-bean-4-dot-2-2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Rooting Samsung Galaxy S3 GT-I9305 With CyanogenMod Jelly Bean 4.2.2</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-02-02T03:36:00+08:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2014</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>android</a>, <a class='category' href='/blog/categories/hacks/'>hacks</a>
+  
+</span>
+
+
+        </div>
+        <p>After getting the 4.3 update my Samsung Galaxy S3 started having <a href="http://au.ibtimes.com/articles/536399/20140129/galaxy-s4-s3-note-2-update.htm#.Uu1M9HeSxqs">weird battery problems</a>, it was a high I moved to a custom ROM since they were a lot stable than a few years back and offered a much better stock Android experience without any bloated software than device OEMs put inside.</p>
+
+<p>In this post, I shall roughly tell you how I installed a custom on my Samsung Phone.</p>
+
+<blockquote><p>Warning: Rooting voids the warranty of your device. We and the developers of these files are not responsible if anything happens to your device. Use this rooting guide at your own risk!</p></blockquote>
+
+<!--more-->
+
+
+<h2>Prerequisites</h2>
+
+<ul>
+<li>Need a Windows XP/Windows 7/Windows 8 PC</li>
+<li>Ample of charge on your phone battery</li>
+<li>The Galaxy S3 I9305 should be factory unlocked.</li>
+<li>Have a model number <em>I9305</em> phone, the international model of Samsung Galaxy 3 LTE.</li>
+<li>Do make a backup of the phone date, as everything will be erased.</li>
+</ul>
+
+
+<h2>Downloads</h2>
+
+<ul>
+<li><a href="http://download.chainfire.eu/232/CF-Root/CF-Auto-Root/CF-Auto-Root-m3-m3zh-gti9305.zip">ODIN + Auto Root File</a></li>
+<li><a href="http://techerrata.com/file/twrp2/i9305/openrecovery-twrp-2.5.0.0-i9305.tar">TWRP File</a>, only version 2.5.* works properly with the CyanogenMod ROM</li>
+<li><a href="http://download.cyanogenmod.org/?device=i9305&amp;type=stable">CyanogenMod ROM for 4.2.2</a></li>
+<li>Corresponding <a href="http://goo.im/gapps/gapps-jb-20130812-signed.zip">Google Apps package</a></li>
+</ul>
+
+
+<h2>Steps</h2>
+
+<ul>
+<li>Plug the S3 into your computer and make sure all drivers are installed correctly. If you run into problems, try a different USB cable or port. Then turn your device off.</li>
+<li>Put the S3 into Download Mode by holding in the Power, Home, and Volume Down buttons at the same time. Then push the Volume Up button once this screen pops up.</li>
+<li>Unzip and open the CF-Auto-Root folder and right click on Odin.exe, then click on “Run as Administrator”.</li>
+<li>Make sure there is a yellow box in the screen, if not then the USB drivers did not install correctly and you should try a different USB cable/port.</li>
+<li>Once you have the yellow box, click on PDA and then browse for the file that was downloaded with Odin, (CF-Auto-Root-i9305.tar.md5). Then click Start.</li>
+<li>Once you get a &ldquo;green&rdquo; box, means you have succeeded.</li>
+</ul>
+
+
+<p>Next we need to install TWRP:</p>
+
+<ul>
+<li>Put you device in Download mode, make sure its connected via USB</li>
+<li>Go back to Odin, and click PDA</li>
+<li>This time, get the openrecoveryXXX-twrp-2.5.x.tar file and flash it</li>
+<li>If you get a &ldquo;green&rdquo; box at the end, means you passed</li>
+</ul>
+
+
+<p>Now we need to transfer the Custom ROM + Google Apps package zip files to the Phone either via <code>adb</code> or via manual file transfer through Windows Explorer</p>
+
+<p>Once that&rsquo;s done we can launch the recovery mode to commence installing the custom ROM.</p>
+
+<ul>
+<li>Turn off your phone</li>
+<li>Hold in the Power, Volume Up, and Home buttons until “Recovery Booting” appears in the top left corner. Then release the power button but keep holding the Volume Up and the Home button until “TeamWin” appears on the screen.</li>
+<li>Click on Wipe – Advanced Wipe and select “Dalvik Cache”, “System”, and “Cache”. Then move the slider to complete the wipe.</li>
+<li>Go back and click on Install and scroll down to the location where you transfered the ROM zip file. Click on the zip file and then slide to install the ROM.</li>
+<li>After that do the same step to install Google Apps</li>
+<li>After move to Home and do a factory reset to delete useless App Data</li>
+</ul>
+
+
+<p>And you are done, Congratulations!</p>
+
+<h2>Known Issues</h2>
+
+<ul>
+<li>If your <a href="http://forum.cyanogenmod.com/topic/78601-unfortunately-android-keyboard-aosp-has-stopped-problem/">Google Apps don&rsquo;t work</a>, like the Keyboard crashes or something, make sure that you have the correct Google Apps package</li>
+<li>If you get assert failed error, you will need to try with different nightlies until you hit the one that succeeds.</li>
+<li>For some of the common problems, visit the <a href="http://wiki.cyanogenmod.org/w/Wiki_Problems">Wiki</a></li>
+</ul>
+
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/01/24/doing-a-proper-github-pull-request/" title="Previous Post: Doing a proper Github pull request">&laquo; Previous: Doing a proper Github pull request</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/02/02/webview-vulnerability-in-facebook-android-sdk-embedded-oauth/" title="Next Post: WebView vulnerability in Facebook Android SDK: Embedded OAuth">Next: WebView vulnerability in Facebook Android SDK: Embedded OAuth &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/mohitkanwal"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/creativepsyco"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+    <a href="https://linkedin.com/in/mskanwal"><img src="/images/glyphicons_social_17_linked_in.png"/></a>
+    
+
+    
+    <a href="mailto:mohit.kanwal+blog@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.mohitkanwal.com/blog/2014/02/02/rooting-samsung-galaxy-s3-gt-i9305-with-cyanogenmod-jelly-bean-4-dot-2-2/';
+        var disqus_url = 'http://blog.mohitkanwal.com/blog/2014/02/02/rooting-samsung-galaxy-s3-gt-i9305-with-cyanogenmod-jelly-bean-4-dot-2-2/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

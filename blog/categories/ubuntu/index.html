@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Category: Ubuntu - creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="Category: Ubuntu">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.mohitkanwal.comblog/categories/ubuntu">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <div class="all-posts">
+  <div class="container">
+    <div class="row">
+      <div class="list-title col-md-offset-2 col-md-8">
+        <h4>Posts in Ubuntu</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-list">
+    <div class="container">
+      
+        
+        <div class="row">
+          <div class="col-md-offset-2 col-md-8">
+            <article>
+  <h2><a href="/blog/2013/10/20/install-ia32-libs-in-saucy-salamander-ubuntu-13-dot-10/">Install Ia32-libs in Saucy Salamander Ubuntu 13.10</a></h2>
+  
+  <p>
+    <p>With the official release of Saucy Salamander 13.10 now available, I found myself installing it cleanly on my machine.</p>
+
+<p>However, when I went ahead to install the <code>ia32-libs</code> package for the Android 32-bit shared libraries supplied with the SDK. I had a shock. I could not install and the terminal returned this error message:</p>
+
+<p>```bash
+output$ sudo apt-get install ia32-libs
+Reading package lists&hellip; Done
+Building dependency tree
+Reading state information&hellip; Done
+Package ia32-libs is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+However the following packages replace it:
+  lib32z1 lib32ncurses5 lib32bz2-1.0</p>
+
+<p>E: Package &lsquo;ia32-libs&rsquo; has no installation candidate
+```</p>
+
+<p>Fortunately there is a solution.</p>
+
+<p>According to this <a href="http://askubuntu.com/questions/107230/what-happened-to-the-ia32-libs-package">thread</a> all you gotta do is use the <code>i386</code> code behind the package name</p>
+
+<p>So you can install the package as follow:</p>
+
+<p><code>bash
+sudo apt-get install ia32-libs:i386
+</code></p>
+
+<h4>Update</h4>
+
+<p>According to Rick below, the above method may not work. In that case, perhaps check out this <a href="http://wiki.phoenixviewer.com/ia32-libs-in-ubuntu-13-10">Link</a>. This should definitely resolve the issue, although it might end up screwing up your package management. But you gotta try what you gotta try, right?</p>
+
+<p>Cheers</p>
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-10-20T23:55:00+08:00" pubdate data-updated="true">Oct 20<span>th</span>, 2013</time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/ubuntu/'>Ubuntu</a>
+  
+</span>
+
+
+  </span>
+
+  
+</article>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/mohitkanwal"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/creativepsyco"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+    <a href="https://linkedin.com/in/mskanwal"><img src="/images/glyphicons_social_17_linked_in.png"/></a>
+    
+
+    
+    <a href="mailto:mohit.kanwal+blog@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+  </body>
+</html>

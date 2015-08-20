@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Optimizing Google Protocol Buffers With Wire - creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="Optimizing Google Protocol Buffers With Wire written Dec 31st, 2013 in Android, Protocol Buffers The concept of Protocol Buffers by Google is &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.mohitkanwal.com/blog/2013/12/31/optimizing-google-protocol-buffers-with-wire">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Optimizing Google Protocol Buffers With Wire</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-12-31T02:10:00+08:00" pubdate data-updated="true">Dec 31<span>st</span>, 2013</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/protocol-buffers/'>Protocol Buffers</a>
+  
+</span>
+
+
+        </div>
+        <p>The concept of <a href="https://code.google.com/p/protobuf/">Protocol Buffers</a> by Google is amazing.</p>
+
+<h3>Why should you use it</h3>
+
+<p>Protocol Buffers is a serialization strategy, much like XML or JSON. A lot of mobile apps and web services make use of JSON for passing information. However, protocol buffers are inherently compressed formats and not intented for the human eye (readability wise). You should definitely take a look at it if you feel that you are using a lot of the mobile data or if the primary target group of your app is the domain of mobile. It however, makes sense to use them for internal RPC related APIs and communication channels.</p>
+
+<!--more-->
+
+
+<h3>Why should you not use it</h3>
+
+<p>Having worked with protocol buffers extensively during the development of one of my company&rsquo;s Android apps, I can say that Protocol Buffers definitely can have their own problems. In an agile environment where requirements can change extensively during development, it makes no sense to actually use protocol buffers without breaking the schema. And according to Google you might not wanna change the structure of Enums. I will just summarize what <a href="http://blakesmith.me/2012/09/05/a-primer-on-protocol-buffers.html">Blake Smith</a> has to say about the anti-pattern:</p>
+
+<p>Don&rsquo;t use Protocol Buffers <strong>IF</strong>:</p>
+
+<blockquote><ul>
+<li>You need <strong>dynamic message</strong> schemas</li>
+<li>You’re sending a lot of data directly to the browser</li>
+<li>You need wide-spread language support as the ability to generate protocol buffer code files is only for a limited set of languages</li>
+<li>You require direct human readability</li>
+</ul>
+</blockquote>
+
+<h3>Google Protocol Buffers on Android</h3>
+
+<p>On Android there is an option to use the pure <a href="https://code.google.com/p/protobuf/downloads/list">Java version</a> or a lite version (included within the original jar) or a <a href="https://code.google.com/p/protobuf-j2me/">Java ME version</a> which reduces the generated code size. However, there is a big issue with the usage of Protocol Buffer on Android. The Android Dalvik VM only allows 60K public methods to be exposed during runtime due to the limitation of the size of the DEX class file that it cam store in memory, for Android Gingerbread, this is about 7MBs. This limit is strictly enforced on Gingerbread (Android 2.3.3) and if it is the minimum version of Android that you want to support then you are in pretty bad luck. For each attribute on the protocol buffer message file there are about 9 public methods generated and this increases for optional/repeated fields. As such a lot of code is generated which won&rsquo;t be used by large anyways in your app. On the other hand, due to the amount of public methods exposed, you run the risk of not being able to ship your app on Gingerbread.</p>
+
+<h3>With Wire</h3>
+
+<p>I used the Java Me version and the lite version of the protocol buffers but without any significant gains in application public method size. Then came <a href="https://github.com/square/wire">Wire</a> by Square (the company is obsessed with Android.. <a href="http://square.github.io/">check out their open source contributions</a>). Wire allowed me to reduce the number of public methods exposed in the application. The generated code definition files became so sleek that for once I could actually read them (with Google protobuf implementation, there were simply and quite literally thousands and thousands of lines to go over). The rest of the code did not need much change, just a few rewiring here and there and it was done.</p>
+
+<h3>A note about proguard</h3>
+
+<p>In addition you need the following proguard rules:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>-keep public class * extends com.squareup.wire.**{*;}
+</span><span class='line'>
+</span><span class='line'># Keep methods with Wire annotations (e.g. @ProtoField)
+</span><span class='line'>-keepclassmembers class ** {
+</span><span class='line'>    @com.squareup.wire.ProtoField public *;
+</span><span class='line'>    @com.squareup.wire.ProtoEnum public *;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Cheers</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/11/05/open-source-is-an-ideology/" title="Previous Post: Open Source is an ideology not a verb">&laquo; Previous: Open Source is an ideology not a verb</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/01/05/android-activity-problem-with-posting-runnables/" title="Next Post: Android Activity: Problem with Posting Runnables">Next: Android Activity: Problem with Posting Runnables &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/mohitkanwal"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/creativepsyco"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+    <a href="https://linkedin.com/in/mskanwal"><img src="/images/glyphicons_social_17_linked_in.png"/></a>
+    
+
+    
+    <a href="mailto:mohit.kanwal+blog@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.mohitkanwal.com/blog/2013/12/31/optimizing-google-protocol-buffers-with-wire/';
+        var disqus_url = 'http://blog.mohitkanwal.com/blog/2013/12/31/optimizing-google-protocol-buffers-with-wire/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

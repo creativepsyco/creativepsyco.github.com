@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Finding a Perfect Dev Environment - creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="Finding a Perfect Dev Environment written Jul 4th, 2013 in android, development, ubuntu Setting up a unobstrusive development environment has its &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.mohitkanwal.com/blog/2013/07/04/finding-a-perfect-dev-environment">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Finding a Perfect Dev Environment</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-07-04T13:51:00+08:00" pubdate data-updated="true">Jul 4<span>th</span>, 2013</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>android</a>, <a class='category' href='/blog/categories/development/'>development</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a>
+  
+</span>
+
+
+        </div>
+        <p>Setting up a unobstrusive development environment has its advantages. If you are one of those people who probably spend about 14 hours a day sitting in front of a monitor doing what-not, from testing to deployment and development, then read on. Otherwise you can spend some time reading an <a href="http://www.ibm.com/developerworks/rational/library/define-scope-development-environment/">IBM</a> justification of how and why a solid dev environment pays off. This post is about setting up a solid development environment on Ubuntu Linux 12.04 and contains bits and pieces of information of how a lot of things can be automated.</p>
+
+<p>I assume some familiarity with Linux command-line for the below.</p>
+
+<h3>Prepare your home directory</h3>
+
+<p>This would be where all your patches come in handy. Spice it with some names that you can remember in the long-run. Keep a separate directory for SDKs, sources and the common shared libraries that you use.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir /home/creativepsyco
+</span><span class='line'><span class="nb">cd</span> /home
+</span><span class='line'>chown msk creativepsyco
+</span><span class='line'>chgrp msk creativepsyco
+</span><span class='line'><span class="nb">cd</span> /home/creativepsyco
+</span><span class='line'>mkdir android
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install ZSH and Oh-My-ZSH</h3>
+
+<p><a href="http://www.zsh.org/">ZSH</a> is a fanstastic tool and better than your average joe-bash-shell. It has advanced modules for autocompletion and lots of plugins which, after you use, trust me, are going to be your goto tools for specific tasks.</p>
+
+<p>You can install zsh by using these commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get install zsh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Also, install <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> which is another cake layer on top of zsh. It includes tons of automatic zsh scripts and plugins to aid you in development.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Set ZSH as your default shell</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>chsh -s /bin/zsh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>A tip: To get more out of your oh-my-zsh installation you need to enable some or a lot of the plugins in your <code>~/.zshrc</code> file which replaces your <code>~/.bashrc</code> file</p></blockquote>
+
+<h3>Install Git</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install git-core
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Make yourself feel at home with solarized</h3>
+
+<p>I absolutely love the <a href="http://ethanschoonover.com/solarized">Solarized dark theme</a>. I use it everywhere: At work, in my MacBook Pro (running from 2010 without a scratch so far [touch wood]). Here&rsquo;s how it looks like:</p>
+
+<p><img src="http://d.pr/i/xmRI.jpg" alt="Solarized Dark Image" /></p>
+
+<p>Isn&rsquo;t it absolutely delicious. Unfortunately some of the ways to install on ubuntu terminal or gnome-terminal have been rather futile. Here&rsquo;s one that works so far:</p>
+
+<ol>
+<li>Go to your home directory</li>
+<li>Blindly follow the commands below</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone git://github.com/sigurdga/gnome-terminal-colors-solarized.git
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>gnome-terminal-colors-solarized
+</span><span class='line'><span class="nv">$ </span>./solarize
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>And Voila experiment between the two themes</li>
+</ol>
+
+
+<h3>Start installing Android Libraries</h3>
+
+<p>Now that the eyes are set, start installing the necessary SDKs from Android. You can get the SDK from Android&rsquo;s site. Just need to unzip it and place it in the home folder. Eventually your folder configuration should look something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>msk@ubuntu:/home/creativepsyco/android<span class="nv">$ </span>ls
+</span><span class='line'>adt-bundle-linux            ----- ADT bundle
+</span><span class='line'>idea-IC                     ----- IDE IntelliJ stack <span class="o">(</span>Or Eclipse<span class="o">)</span>
+</span><span class='line'>shared_android_lib          ----- Shared library
+</span><span class='line'>project_android             ----- Project Git directory
+</span><span class='line'>anotherapp_android          ----- Project Git directory
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>A Tip: If you are using a 64-bit OS then to make your life easy, you should install these compatible libs to help you: <code>sudo apt-get install ia32-libs</code></p></blockquote>
+
+<h3>SQLite</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install sqlite3
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Ending Note</h3>
+
+<p>Now you have everything for Android development and please follow <a href="http://developer.android.com/training/index.html">Google&rsquo;s tutorials</a>.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/06/24/android-shortcuts-and-must-have-gists/" title="Previous Post: Android Shortcuts and Must-have Gists">&laquo; Previous: Android Shortcuts and Must-have Gists</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/09/27/phonelib-bug-regarding-cant-find-proto/" title="Next Post: PhoneLib bug regarding cant find proto">Next: PhoneLib bug regarding cant find proto &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/mohitkanwal"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/creativepsyco"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+    <a href="https://linkedin.com/in/mskanwal"><img src="/images/glyphicons_social_17_linked_in.png"/></a>
+    
+
+    
+    <a href="mailto:mohit.kanwal+blog@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.mohitkanwal.com/blog/2013/07/04/finding-a-perfect-dev-environment/';
+        var disqus_url = 'http://blog.mohitkanwal.com/blog/2013/07/04/finding-a-perfect-dev-environment/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

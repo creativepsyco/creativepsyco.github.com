@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Styling Material Toolbar in Android - creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="Styling Material Toolbar in Android written Mar 7th, 2015 in Android Android Lollipop was released back in Google I/O reflecting the new Material &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.mohitkanwal.com/blog/2015/03/07/styling-material-toolbar-in-android">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Styling Material Toolbar in Android</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-03-07T21:30:25+08:00" pubdate data-updated="true">Mar 7<span>th</span>, 2015</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>Android</a>
+  
+</span>
+
+
+        </div>
+        <p><a href="http://www.android.com/versions/lollipop-5-0/">Android Lollipop</a> was released back in Google I/O reflecting the new Material Design philosophy. It was followed soon by the AppCompat Library updating to <a href="http://android-developers.blogspot.sg/2014/10/appcompat-v21-material-design-for-pre.html"><code>v21</code></a>. The Library brought in a new Action Bar pattern called <code>Toolbar</code> which behaves more like a custom view with a promise to customize the look and feel of it instead of the quirks of the <a href="http://cyrilmottier.com/2013/05/24/pushing-the-actionbar-to-the-next-level/">ActionBar</a>. The Action Bar was both less customizable and hard to style. With Toolbar some of it goes away as the Toolbar behaves more like a view group and you can initialize it with various different views which previously you could not.</p>
+
+<!--more-->
+
+
+<p>However, I still found a lot of inconsistent quirks when styling the Toolbar for use in <a href="https://www.pie.co">Pie</a>.</p>
+
+<h3>The Action Button Styles</h3>
+
+<p>This is how you are supposed to style the Toolbar:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;android.support.v7.widget.Toolbar</span>
+</span><span class='line'>    <span class="na">android:layout_height=</span><span class="s">”wrap_content”</span>
+</span><span class='line'>    <span class="na">android:layout_width=</span><span class="s">”match_parent”</span>
+</span><span class='line'>    <span class="na">android:minHeight=</span><span class="s">”@dimen/triple_height_toolbar”</span>
+</span><span class='line'>    <span class="na">app:theme=</span><span class="s">&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;</span>
+</span><span class='line'>    <span class="na">app:popupTheme=</span><span class="s">&quot;@style/ThemeOverlay.AppCompat.Light&quot;</span> <span class="nt">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, you soon begin to realize that not everything works with this style, especially the ripple effect in the navigation button is inconsistent with the rounded ripple effect, it gets cut off at the navigation button boundaries. The problem happens because when Toolbar is used as a stand alone widget instead of the normal way of using it as an Action Bar styles start breaking up. So how do we fix it? The way to go is to basically make the theme that you apply on the <code>Toolbar</code> to inherit from <code>Widget.AppCompat.Toolbar</code> theme like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;style</span> <span class="na">name=</span><span class="s">&quot;ActionBarTheme&quot;</span> <span class="na">parent=</span><span class="s">&quot;Widget.AppCompat.Toolbar&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="c">&lt;!-- Define custom attributes here --&gt;</span>
+</span><span class='line'><span class="nt">&lt;/style&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, that still does not properly fix it. In order to rectify, we need to provide additional properties, namely: the <code>actionButtonStyle</code> and the <code>selectableItemBackground</code>. So here&rsquo;s the complete fix:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;style</span> <span class="na">name=</span><span class="s">&quot;ActionBarTheme&quot;</span> <span class="na">parent=</span><span class="s">&quot;Widget.AppCompat.Toolbar&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;item</span> <span class="na">name=</span><span class="s">&quot;android:textColorPrimary&quot;</span><span class="nt">&gt;</span>@color/white<span class="nt">&lt;/item&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;item</span> <span class="na">name=</span><span class="s">&quot;colorControlNormal&quot;</span><span class="nt">&gt;</span>?actionBarIconColor<span class="nt">&lt;/item&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;item</span> <span class="na">name=</span><span class="s">&quot;actionButtonStyle&quot;</span><span class="nt">&gt;</span>@style/ActionBar.ActionButton<span class="nt">&lt;/item&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;item</span> <span class="na">name=</span><span class="s">&quot;selectableItemBackground&quot;</span><span class="nt">&gt;</span>?android:selectableItemBackground<span class="nt">&lt;/item&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;item</span> <span class="na">name=</span><span class="s">&quot;selectableItemBackgroundBorderless&quot;</span><span class="nt">&gt;</span>?android:selectableItemBackground<span class="nt">&lt;/item&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;item</span> <span class="na">name=</span><span class="s">&quot;colorControlHighlight&quot;</span><span class="nt">&gt;</span>@color/colorSecondary<span class="nt">&lt;/item&gt;</span>
+</span><span class='line'><span class="nt">&lt;/style&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that for the Button Style we are using the ActionBar button style because the Toolbar does not define one, and if you are inheriting the theme from Toolbar then you will need to do this.</p>
+
+<p>Also to customize the ripple colors, you can change the <code>colorControlHighlight</code> property. Also notice that none of the properties are using the <code>android:</code> prefix because these are not defined by the framework instead they are part of the <code>AppCompat</code> library.</p>
+
+<p>This way you can continue to use the Toolbar as an independent view but still inherit some styles from the ActionBar action button styles which comes in really handy.</p>
+
+<h3>Providing Drop Shadow for compatibility</h3>
+
+<p>Lollipop introduced really cool <code>elevation</code> properties which provide crispy, papery feel to the entire app UX. However, there is no compatible method for older devices to simulate the effect. Shadows seems to be the hardest thing to achieve on the Android platform. There are various ways to simulate the effect on pre-21 devices. However the most credible way to do it is to wrap the content layout in a <a href="http://goo.gl/ANIhgr"><code>DrawShadowFrameLayout</code></a>. It is used by the Google Official I/O App, the source for which is available on <a href="https://github.com/google/iosched">Github</a>.</p>
+
+<p>However, this still requires the resulting content layout to be wrapped inside another layout, which might be a bit too much for being against flattening the UI view hierarchy. I am still searching if this can be done without wrapping the content layout in another layout, perhaps by drawing the 9-patch drawable directly after all the views have been drawn, up &amp; over them. Currently, it causes me to write code like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">protected</span> <span class="n">View</span> <span class="nf">_createContentView</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">View</span> <span class="n">view</span> <span class="o">=</span> <span class="kd">super</span><span class="o">.</span><span class="na">_createContentView</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">VersionUtils</span><span class="o">.</span><span class="na">isLollipopAndAbove</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">DrawShadowFrameLayout</span> <span class="n">frameLayout</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DrawShadowFrameLayout</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">frameLayout</span><span class="o">.</span><span class="na">setLayoutParams</span><span class="o">(</span><span class="k">new</span> <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">(</span><span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">MATCH_PARENT</span><span class="o">,</span>
+</span><span class='line'>                                                              <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">MATCH_PARENT</span><span class="o">));</span>
+</span><span class='line'>        <span class="n">frameLayout</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">view</span><span class="o">,</span> <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">MATCH_PARENT</span><span class="o">,</span>
+</span><span class='line'>                                  <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">MATCH_PARENT</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">frameLayout</span><span class="o">.</span><span class="na">setDefaultShadowDrawable</span><span class="o">(</span><span class="n">AppResources</span><span class="o">.</span><span class="na">getDrawable</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">header_shadow</span><span class="o">),</span> <span class="kc">true</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">frameLayout</span><span class="o">.</span><span class="na">setShadowVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">frameLayout</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">view</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But the good thing, it works perfectly fine. But you can&rsquo;t really animate the shadow regions alongwith the Toolbar, for example if you wanted to gently bring down the action bar when the user launches the app. The shadow is drawn on the content layout therefore does not travel with the action bar. For example something like this effect</p>
+
+<p><img src="https://www.dropbox.com/s/gag8nh7uubgw5km/ezgif.com-gif-maker.gif?dl=0&amp;raw=1" alt="Gif" /></p>
+
+<p>There were more quirks I had to put in while making <a href="https://www.pie.co">Pie</a> I can&rsquo;t seem to remember them right now. But I will write future posts on the various amount of small fixes in the coming weeks. Perhaps something about setting the status bar color correctly. It seems really small but finding the right way of doing things tests your Android knowledge to the limits. And in the end when Stack Overflow turns up nothing about the issue you have, you start to look and debug as to why this really happens. And that&rsquo;s when the fun really begins :)</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/12/26/fixing-android-studio-startup-on-mac-a-valid-jvm-was-not-found-on-this-machine/" title="Previous Post: Fixing Android Studio startup on Mac: A valid JVM was not found on this machine">&laquo; Previous: Fixing Android Studio startup on Mac: A valid JVM was not found on this machine</a>
+        
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/mohitkanwal"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/creativepsyco"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+    <a href="https://linkedin.com/in/mskanwal"><img src="/images/glyphicons_social_17_linked_in.png"/></a>
+    
+
+    
+    <a href="mailto:mohit.kanwal+blog@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.mohitkanwal.com/blog/2015/03/07/styling-material-toolbar-in-android/';
+        var disqus_url = 'http://blog.mohitkanwal.com/blog/2015/03/07/styling-material-toolbar-in-android/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

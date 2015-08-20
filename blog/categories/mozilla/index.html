@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Category: Mozilla - creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="Category: Mozilla">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.mohitkanwal.comblog/categories/mozilla">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <div class="all-posts">
+  <div class="container">
+    <div class="row">
+      <div class="list-title col-md-offset-2 col-md-8">
+        <h4>Posts in Mozilla</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-list">
+    <div class="container">
+      
+        
+        <div class="row">
+          <div class="col-md-offset-2 col-md-8">
+            <article>
+  <h2><a href="/blog/2013/01/11/essential-mozilla-command-line/">Essential Mozilla Command Line</a></h2>
+  
+  <p>
+    <p><em>This is a reference of some of the very important mozilla commands that I use in daily Terminal Life</em></p>
+
+<h3>Requirements</h3>
+
+<p>Set up Hg, Autoconf using Brew. Look up the instructions at the official website.</p>
+
+<h3>Setting up of Source Directory</h3>
+
+<p>Mozilla Code can be checked out from <a href="http://hg.mozilla.org.">http://hg.mozilla.org.</a> To set up a Thunderbird and Calendar clone on your local machine checkout the source code as</p>
+
+<p><code>
+bash$ hg clone http://hg.mozilla.org/comm-central
+</code></p>
+
+<p>This will create a <code>comm-central</code> directory in your local machine
+Now <code>comm-central</code> depends on a number of submodules which can be fetched by the following commands
+<code>bash
+bash$ cd comm-central
+bash$ python client.py checkout
+</code>
+This will fetch the submodules. It will take a while</p>
+
+<h3>Compiling Code</h3>
+
+<p>In order to build the calendar application create a <code>.mozconfig</code> file within <code>comm-central</code> and insert the following code:</p>
+
+<p>```
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-TB
+mk_add_options AUTOCONF=/usr/local/Cellar/autoconf213/2.13/bin/autoconf213
+ac_add_options &mdash;enable-calendar</p>
+
+<h1>Turn off compiler optimization. This will make applications run slower,</h1>
+
+<h1>will allow you to debug the applications under a debugger, like GDB.</h1>
+
+<p>ac_add_options &mdash;disable-optimize
+ac_add_options &mdash;disable-jemalloc</p>
+
+<h1>-s makes builds quieter by default</h1>
+
+<h1>-j4 allows 4 tasks to run in parallel. Set the number to be the amount of</h1>
+
+<h1>cores in your machine. 4 is a good number.</h1>
+
+<p>mk_add_options MOZ_MAKE_FLAGS=&ldquo;-j4 -s &mdash;no-print-directory&rdquo;
+mk_add_options JS_READLINE=1
+export JS_READLINE=1
+ac_add_options &mdash;disable-tests
+ac_add_options &mdash;disable-installer
+```</p>
+
+<p>Now fire away the compiler using the following command:
+<code>
+bash$ make -f client.mk
+</code></p>
+
+<p>This will take quite a lot of time depending upon your machine&rsquo;s strength of course.</p>
+
+<h3>Applying a patch</h3>
+
+<p>From time to time, you might need to apply a patch from someone else, or maybe your own patch. This is quite easy, but note that if you plan on applying the patch, making some changes and then want to create a patch that doesn&rsquo;t contain the patch you originally applied, it might be quite a bit harder.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> <span class="nv">$MOZILLA</span>/calendar&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;&amp;mdash;dry-run tests the patching process to ensure that the patch will go&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;ahead cleanly. Be sure to run &amp;mdash;dry-run at least once before running&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;the actual patching process.&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;patch -p1 -i ~/my_first_bug.diff &amp;mdash;dry-run&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;Now check <span class="k">if </span>the patch applies cleanly, or you are willing to fix the&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;places it went wrong. When you are confident, you can call:&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;patch -p0 -i ~/my_first_bug.diff&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;If the file to patch was not found, take a look at the patch headers. For&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;example, <span class="k">if </span>the header contains &amp;ldquo;+++ themes/winstripe/calendar-views.css&amp;rdquo;,&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;then you need to go into the base directory and call again. If the header&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;contains &amp;ldquo;+++ mozilla/calendar/base/Makefile.in&amp;rdquo;, you can use -p2 instead to&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;strip the &amp;ldquo;mozilla/calendar&amp;rdquo; part.&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;patch -p2 -i ~/my_first_bug.diff
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>Creating a patch</h3>
+
+<p>Simply create a diff and store it somewhere
+<code>
+bash$ hg diff &gt; ~/my_first_patch.diff
+</code></p>
+
+<h3>Reverting a patch</h3>
+
+<p><code>
+bash$ hg revert .
+</code></p>
+
+<p>For more information refer to <a href="https://developer.mozilla.org/en-US/docs/Developer_Guide/Build_Instructions">Mozilla Documentation on Build</a></p>
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-01-11T00:27:00+08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2013</time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/calendar/'>Calendar</a>, <a class='category' href='/blog/categories/mozilla/'>Mozilla</a>
+  
+</span>
+
+
+  </span>
+
+  
+</article>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/mohitkanwal"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/creativepsyco"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+    <a href="https://linkedin.com/in/mskanwal"><img src="/images/glyphicons_social_17_linked_in.png"/></a>
+    
+
+    
+    <a href="mailto:mohit.kanwal+blog@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+  </body>
+</html>

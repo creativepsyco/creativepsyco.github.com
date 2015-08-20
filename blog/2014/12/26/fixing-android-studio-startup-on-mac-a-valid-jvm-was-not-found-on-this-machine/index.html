@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Fixing Android Studio Startup on Mac: A Valid JVM Was Not Found on This Machine - creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="Fixing Android Studio Startup on Mac: A Valid JVM Was Not Found on This Machine written Dec 26th, 2014 Android Studio on Mac OSX Yosemite I recently &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.mohitkanwal.com/blog/2014/12/26/fixing-android-studio-startup-on-mac-a-valid-jvm-was-not-found-on-this-machine">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Fixing Android Studio Startup on Mac: A Valid JVM Was Not Found on This Machine</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-12-26T02:25:02+08:00" pubdate data-updated="true">Dec 26<span>th</span>, 2014</time>
+          
+
+
+        </div>
+        <h3>Android Studio on Mac OSX Yosemite</h3>
+
+<p>I recently migrated to Mac OSX Yosemite and discovered that when I booted Android Studio I could not start it up since a JVM was not found on the machine. I was running 1.0RC3 version of Android Studio, and did not have this problem before, on Mavericks. I knew I had a JVM installed.</p>
+
+<!--more-->
+
+
+<p>I did some search and stumbled upon this <a href="http://stackoverflow.com/questions/27369269/android-studio-was-unable-to-find-a-valid-jvm-related-to-mac-os">thread</a> on stackoverflow. From RC3 onwards Android Studio requires a <code>STUDIO_JDK</code> <a href="http://tools.android.com/recent/androidstudio1rc3_releasecandidate3released">environment variable</a> to be able to run correctly. I found the resulting applescript as discussed in the answer a bit of an overkill. Here&rsquo;s what I did:</p>
+
+<p>First find out the correct version of Java installed in your machine. As provided in the comments, you can use this command to find it out</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>echo $(find /Library/Java/JavaVirtualMachines -depth 1|tail -n1)
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It will print something like</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk</span></code></pre></td></tr></table></div></figure>
+
+
+<p>depending on your Java version</p>
+
+<p>Open your <code>/etc/launchd.conf</code> on your mac using the terminal and add the lines from the <code>echo</code> command (<code>launchd.conf</code> might not exist on your machine):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>setenv STUDIO_JDK /Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now open your <code>~/.bashrc</code> file and add the following lines:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk
+</span><span class='line'>grep -E "^setenv" /etc/launchd.conf | xargs -t -L 1 launchctl</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will set the correct environment variable during startup. And you can continue to launch Android Studio properly. To see immediate effect, type <code>source ~/.bashrc</code> in your terminal to refresh the environment variables.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/05/12/set-background-that-does-not-resize-on-soft-keyboard/" title="Previous Post: Set Background that does not resize on Soft Keyboard">&laquo; Previous: Set Background that does not resize on Soft Keyboard</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2015/03/07/styling-material-toolbar-in-android/" title="Next Post: Styling Material Toolbar in Android">Next: Styling Material Toolbar in Android &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/mohitkanwal"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/creativepsyco"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+    <a href="https://linkedin.com/in/mskanwal"><img src="/images/glyphicons_social_17_linked_in.png"/></a>
+    
+
+    
+    <a href="mailto:mohit.kanwal+blog@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.mohitkanwal.com/blog/2014/12/26/fixing-android-studio-startup-on-mac-a-valid-jvm-was-not-found-on-this-machine/';
+        var disqus_url = 'http://blog.mohitkanwal.com/blog/2014/12/26/fixing-android-studio-startup-on-mac-a-valid-jvm-was-not-found-on-this-machine/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

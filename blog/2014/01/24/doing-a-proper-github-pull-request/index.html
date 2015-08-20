@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Doing a Proper Github Pull Request - creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="Doing a Proper Github Pull Request written Jan 24th, 2014 in code quality, development While there may be different kind of development strategies &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.mohitkanwal.com/blog/2014/01/24/doing-a-proper-github-pull-request">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Doing a Proper Github Pull Request</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-01-24T16:16:00+08:00" pubdate data-updated="true">Jan 24<span>th</span>, 2014</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/code-quality/'>code quality</a>, <a class='category' href='/blog/categories/development/'>development</a>
+  
+</span>
+
+
+        </div>
+        <p>While there may be different kind of development strategies floating around the merge vs rebase git model, one thing is for sure, you would at the end of the day want a clean merge from the contributors so that it can be tracked tested and cherry-picked if it needs to. This is where pull-requests are so effective.</p>
+
+<h2>What is a pull-request?</h2>
+
+<p>From the <a href="https://help.github.com/articles/using-pull-requests">Official Github Guide</a>:</p>
+
+<blockquote><p>Pull requests let you tell others about changes you&rsquo;ve pushed to a GitHub repository. Once a pull request is sent, interested parties can review the set of changes, discuss potential modifications, and even push follow-up commits if necessary.</p></blockquote>
+
+<p>Pull requests are useful in the shared repository model where contributors can work on different topic branches and then file a pull request to be able to initiate discussion about potential changes which does not need to affect the rest of the project.</p>
+
+<h2>Example</h2>
+
+<p>Here is an <a href="https://github.com/square/wire/pull/81">example</a> of a pull request I filed for Square&rsquo;s Wire open source project.</p>
+
+<!--more-->
+
+
+<h2>Creating a pull request</h2>
+
+<p>These steps create a topic branch off the <code>master</code> branch.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git pull origin master
+</span><span class='line'>git checkout -b pull-request-demo
+</span><span class='line'>git push origin pull-request-demo
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After that you can work on the branch and do indvidual commits. At this point if you need to update your local copy of the source you should not in any case do a</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git pull origin master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will screw up your commits by merging the two branches and will cause issues when your topic branch will is merged with <code>master</code>. Instead do a <code>rebase</code>. In short this will preserve the order of your commits and keeps the git history linear. To understand why please refer to <a href="https://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/">this</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git rebase origin master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>Never rebase already pushed branches. Rebase should only be applied to your local working branch about no one needs to know. This way we can always force push our changes to Github so that the pull request is bettter as we will see in the next step.</p></blockquote>
+
+<h2>Filing up a pull request</h2>
+
+<p>You will need to use the browser to visit the repository web page and file one. More details <a href="http://yangsu.github.io/pull-request-tutorial/">here</a></p>
+
+<p><img src="http://github-images.s3.amazonaws.com/help/pull_requests/pull-request-review-page.png" height="400" width="800" alt="Pull Request Page" /></p>
+
+<h2>Modifying Code after discussions</h2>
+
+<p>Once the pull request has been filed you can start discussing with the maintainer of the project about the potential changes that need to be made. For example, style fixes etc.</p>
+
+<p>You can push more commits to the the topic branch and the pull request will get updated. Once the pull request is sort of approved by the maintainer, he/she will probably ask you submit only one single commit for your changes. This is very important as merging any contributed can be tracked.</p>
+
+<p>You would need to squash your commits for this. You can do this by:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git rebase -i HEAD~5
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will allow you to pick the commits that you want to keep or squash them altogether. The disadvantage of squashing commits is that you lose your git history. However, if you want you can have a dirty branch to move the commits to in case you want the history to remain.</p>
+
+<p>And force push your changes</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git push origin pull-request-demo --force
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Your changes will appear on the filed pull request page. And if all goes will be merged with the main project branch :)</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/01/05/android-activity-problem-with-posting-runnables/" title="Previous Post: Android Activity: Problem with Posting Runnables">&laquo; Previous: Android Activity: Problem with Posting Runnables</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/02/02/rooting-samsung-galaxy-s3-gt-i9305-with-cyanogenmod-jelly-bean-4-dot-2-2/" title="Next Post: Rooting Samsung Galaxy S3 GT-I9305 with CyanogenMod Jelly Bean 4.2.2">Next: Rooting Samsung Galaxy S3 GT-I9305 with CyanogenMod Jelly Bean 4.2.2 &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/mohitkanwal"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/creativepsyco"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+    <a href="https://linkedin.com/in/mskanwal"><img src="/images/glyphicons_social_17_linked_in.png"/></a>
+    
+
+    
+    <a href="mailto:mohit.kanwal+blog@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.mohitkanwal.com/blog/2014/01/24/doing-a-proper-github-pull-request/';
+        var disqus_url = 'http://blog.mohitkanwal.com/blog/2014/01/24/doing-a-proper-github-pull-request/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

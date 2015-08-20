@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Android Development Within a Virtual Machine - creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="Android Development Within a Virtual Machine written Apr 23rd, 2013 in Android, VM Sometimes it can be really fustrating to work within a Virtual &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.mohitkanwal.com/blog/2013/04/23/android-development-within-a-virtual-machine">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Android Development Within a Virtual Machine</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-04-23T17:30:00+08:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2013</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/vm/'>VM</a>
+  
+</span>
+
+
+        </div>
+        <p>Sometimes it can be <a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1027964">really fustrating</a> to work within a Virtual Machine (VM) which might not have support for a number of removable devices. I am talking of VMWare workstation which is a big part of the problem.</p>
+
+<p>Below I describe a working way to install a reliable working environment in VMWare Workstation 9.x running Ubuntu 12.10</p>
+
+<!--more-->
+
+
+<p>For the instructions below I am installing everything under: <code>~/android</code></p>
+
+<h3>Pre-Requisite</h3>
+
+<ul>
+<li>Install Sun (Oracle) JDK for IntelliJ Idea</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo add-apt-repository ppa:webupd8team/java
+</span><span class='line'>sudo apt-get update
+</span><span class='line'>sudo apt-get install oracle-java7-installer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install Intelli-J</h3>
+
+<ul>
+<li>Donwload Intell-J from <a href="http://www.jetbrains.com/idea/download/index.html">this</a> and extract to a directory in your computer</li>
+<li>Unpack the directory</li>
+<li>Add the Idea bin folder to your PATH</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/lib/&lt;YOUR_IDEA_FOLDER&gt;/bin
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install Android SDK Bundle</h3>
+
+<ul>
+<li>Download the ADT Bundle from <a href="http://developer.android.com/sdk/index.html">this</a></li>
+<li>Extract it and move to a location in your</li>
+<li>Add these lines to your <code>.bashrc</code> file</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="k">${</span><span class="nv">PATH</span><span class="k">}</span>:~/android/android-sdk-linux/tools
+</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="k">${</span><span class="nv">PATH</span><span class="k">}</span>:~/android/android-sdk-linux/platform-tools
+</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="k">${</span><span class="nv">PATH</span><span class="k">}</span>:~/android/idea-IC/bin
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Source your <code>.bashrc</code></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">source</span> ~/.bashrc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Test a Device</h3>
+
+<p>Now go ahead and test your shiny new Android Development device by connecting it to the USB port on your machine.</p>
+
+<ul>
+<li><p>In VMWare you need to make sure that it connects to the Android Device. You can do this, by navigating to <strong>VM > Removable Devices > Samsung Android Device > Connect (Disconnect fro host)</strong>. This will disconnect it from your host machine (Windows 7 in my case) and connect it to the VMWare instance.</p></li>
+<li><p>In VMWare Ubuntu:</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>adb devices <span class="c">#lists all the devices attached to the computer</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>If the above command displays nothing, do this:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>adb <span class="nb">wait</span>-for-device
+</span><span class='line'>adb start-server
+</span><span class='line'>adb devices <span class="c"># display connected devices</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will make it wait for the device to link up</p>
+
+<h3>Android Device Issues with VMWare</h3>
+
+<p>Some of the issues that I encountered while connecting my Samsung Galaxy S-III to VMWare on a Windows 7 Enterprise workstation are as follows:</p>
+
+<ul>
+<li><p>If you have an error message that says that the device cannot be plugged out, then make sure no process is accessing the device. This includes the Kies software from Samsung. Use the Task Manager to kill them</p></li>
+<li><p>If you have an error message that says there is a driver error then perhaps you have a USB 3.0 issue. As of now, VMWare does not support Intel-based USB 3.0 controllers. So you need to suck it up for the moment and find a USB 2.0 port on your machine. Otherwise you need to look up another <a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1027964">manual</a></p></li>
+</ul>
+
+
+<h3>Conclusion</h3>
+
+<p>Hopefully by the end of this guide, there is a working android development setup on your machine.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/04/10/deploying-rails-on-nginx-and-thin/" title="Previous Post: Deploying Rails on Nginx and thin">&laquo; Previous: Deploying Rails on Nginx and thin</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/05/21/making-sense-of-vacations-geek-style/" title="Next Post: Making sense of vacations - Geek Style">Next: Making sense of vacations - Geek Style &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/mohitkanwal"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/creativepsyco"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+    <a href="https://linkedin.com/in/mskanwal"><img src="/images/glyphicons_social_17_linked_in.png"/></a>
+    
+
+    
+    <a href="mailto:mohit.kanwal+blog@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.mohitkanwal.com/blog/2013/04/23/android-development-within-a-virtual-machine/';
+        var disqus_url = 'http://blog.mohitkanwal.com/blog/2013/04/23/android-development-within-a-virtual-machine/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

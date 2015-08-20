@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Android Programming Tip#1: Making a Custom Centre Aligned Radio Button With a State List Drawable - creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="Android Programming Tip#1: Making a Custom Centre Aligned Radio Button With a State List Drawable written Oct 2nd, 2013 in Android Custom Widgets &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.mohitkanwal.com/blog/2013/10/02/making-a-custom-centre-aligned-radio-button-with-a-state-list-drawable">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Android Programming Tip#1: Making a Custom Centre Aligned Radio Button With a State List Drawable</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-10-02T19:10:00+08:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2013</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>Android</a>
+  
+</span>
+
+
+        </div>
+        <h3>Custom Widgets</h3>
+
+<p>These days I have been working extensively on apps for the Android Platform. And one thing keeps coming back to me: Resuse of components and widgets. Although most of the time when you are doing simple apps, you don&rsquo;t really pay much attention to the type of design and navigation strategies (<code>SINGLE_TOP</code> activities vs <code>SINGLE_TASK</code> blah.. blah) but when you are faced with putting different kinds of components in a single view then you probably have shuddered to think whether you were better off accomplishing this as a separate widget of its own. As can be seen from Romain Guy&rsquo;s <a href="http://www.youtube.com/watch?v=NYtB6mlu7vA">Google IO Talk</a>, developing custom views has its own significant advantages.</p>
+
+<p>Some of the advantages are as follows:</p>
+
+<ul>
+<li>A piece of highly reusable component will be at your disposal</li>
+<li>you will have fine-grained control over the lifecycle of the control/widget that you are developing, (For example, you can decide whether to load images from the network or display a dummy error image in a custom <code>ImageView</code> see <code>volley</code> <a href="https://android.googlesource.com/platform/frameworks/volley/+/d62a616ebca5bfa4f9ec5517208e13f2d501b69a/src/com/android/volley/toolbox/NetworkImageView.java"><code>NetworkImageView</code></a> for details)</li>
+<li>Custom views prevent cluttering of code in a single view thereby making abstraction more powerful</li>
+<li>Other general advantages due to code reuse</li>
+</ul>
+
+
+<p>So let&rsquo;s dive into how I managed to make a custom widget for one of the apps.</p>
+
+<!--more-->
+
+
+<h2>The Problem</h2>
+
+<p>Develop a custom control that behaves like a radio button but has a custom icon instead of the ordinary radio button icon and also has two drawable states to show when in highlighted mode as well as normal mode</p>
+
+<h2>The Solution</h2>
+
+<p>Once you know how to create custom widgets its very easy.</p>
+
+<p>First start by creating the attibutes your control will have in <code>attrs.xml</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'> <span class="nt">&lt;declare-styleable</span> <span class="na">name=</span><span class="s">&quot;HighlightedImageRadioButton&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;attr</span> <span class="na">name=</span><span class="s">&quot;focusedDrawable&quot;</span> <span class="na">format=</span><span class="s">&quot;reference&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;attr</span> <span class="na">name=</span><span class="s">&quot;normalDrawable&quot;</span> <span class="na">format=</span><span class="s">&quot;reference&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'> <span class="nt">&lt;/declare-styleable&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we have 2 drawables that will function as our highlighted and normal state drawables respectively</p>
+
+<p>Then, create your custom radio button by extending from <code>RadioButton</code></p>
+
+<div><script src='https://gist.github.com/creativepsyco/6821592.js'></script>
+<noscript><pre><code>
+public class HighlightedImageRadioButton extends RadioButton {
+
+
+    private Drawable buttonDrawable;
+
+    public HighlightedImageRadioButton(Context context) {
+        super(context);
+    }
+
+    public HighlightedImageRadioButton(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initHighlightedImageRadioButton(context, attrs, 0);
+    }
+
+    public HighlightedImageRadioButton(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+
+        initHighlightedImageRadioButton(context, attrs, defStyle);
+    }
+
+    private void initHighlightedImageRadioButton(Context context, AttributeSet attrs, int defStyle) {
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HighlightedImageRadioButton, defStyle, 0);
+        if (a == null) return;
+        Drawable normalDrawable = a.getDrawable(R.styleable.HighlightedImageRadioButton_normalDrawable);
+        Drawable focusedDrawable = a.getDrawable(R.styleable.HighlightedImageRadioButton_focusedDrawable);
+
+        StateListDrawable stateListDrawable = new StateListDrawable();
+        stateListDrawable.addState(new int[]{android.R.attr.state_enabled, android.R.attr.state_focused}, focusedDrawable);
+        stateListDrawable.addState(new int[]{android.R.attr.state_checked, android.R.attr.state_enabled}, focusedDrawable);
+        stateListDrawable.addState(new int[]{android.R.attr.state_enabled, android.R.attr.state_pressed}, focusedDrawable);
+        stateListDrawable.addState(new int[]{android.R.attr.state_enabled, android.R.attr.state_selected}, focusedDrawable);
+        stateListDrawable.addState(new int[]{android.R.attr.state_enabled}, normalDrawable);
+
+        buttonDrawable = stateListDrawable;
+        setButtonDrawable(R.drawable.beetalk_common_buzz_transparent_bg);
+    }
+
+    /**
+     * Fix for putting the drawable in the center
+     * notice that we put the background color of the drawable to transparent
+     *
+     * @param canvas
+     */
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        if (buttonDrawable != null) {
+            buttonDrawable.setState(getDrawableState());
+            final int verticalGravity = getGravity() &amp; Gravity.VERTICAL_GRAVITY_MASK;
+            final int height = buttonDrawable.getIntrinsicHeight();
+
+            int y = 0;
+
+            switch (verticalGravity) {
+                case Gravity.BOTTOM:
+                    y = getHeight() - height;
+                    break;
+                case Gravity.CENTER_VERTICAL:
+                    y = (getHeight() - height) / 2;
+                    break;
+            }
+
+            int buttonWidth = buttonDrawable.getIntrinsicWidth();
+            int buttonLeft = (getWidth() - buttonWidth) / 2;
+            buttonDrawable.setBounds(buttonLeft, y, buttonLeft+buttonWidth, y + height);
+            buttonDrawable.draw(canvas);
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        buttonDrawable = null;
+    }
+}</code></pre></noscript></div>
+
+
+<p>There&rsquo;s is a trick though, you need to center align the drawable since the default <code>RadioButton</code> is left aligned and has a text on the right side. To do this you need to override the <code>onDraw</code> method:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Fix for putting the drawable in the center</span>
+</span><span class='line'><span class="cm"> * notice that we put the background color of the drawable to transparent</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> * @param canvas</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onDraw</span><span class="o">(</span><span class="n">Canvas</span> <span class="n">canvas</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">super</span><span class="o">.</span><span class="na">onDraw</span><span class="o">(</span><span class="n">canvas</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">buttonDrawable</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">buttonDrawable</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="n">getDrawableState</span><span class="o">());</span>
+</span><span class='line'>        <span class="kd">final</span> <span class="kt">int</span> <span class="n">verticalGravity</span> <span class="o">=</span> <span class="n">getGravity</span><span class="o">()</span> <span class="o">&amp;</span> <span class="n">Gravity</span><span class="o">.</span><span class="na">VERTICAL_GRAVITY_MASK</span><span class="o">;</span>
+</span><span class='line'>        <span class="kd">final</span> <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">buttonDrawable</span><span class="o">.</span><span class="na">getIntrinsicHeight</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">switch</span> <span class="o">(</span><span class="n">verticalGravity</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">case</span> <span class="n">Gravity</span><span class="o">.</span><span class="na">BOTTOM</span><span class="o">:</span>
+</span><span class='line'>                <span class="n">y</span> <span class="o">=</span> <span class="n">getHeight</span><span class="o">()</span> <span class="o">-</span> <span class="n">height</span><span class="o">;</span>
+</span><span class='line'>                <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>            <span class="k">case</span> <span class="n">Gravity</span><span class="o">.</span><span class="na">CENTER_VERTICAL</span><span class="o">:</span>
+</span><span class='line'>                <span class="n">y</span> <span class="o">=</span> <span class="o">(</span><span class="n">getHeight</span><span class="o">()</span> <span class="o">-</span> <span class="n">height</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+</span><span class='line'>                <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">buttonWidth</span> <span class="o">=</span> <span class="n">buttonDrawable</span><span class="o">.</span><span class="na">getIntrinsicWidth</span><span class="o">();</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">buttonLeft</span> <span class="o">=</span> <span class="o">(</span><span class="n">getWidth</span><span class="o">()</span> <span class="o">-</span> <span class="n">buttonWidth</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+</span><span class='line'>        <span class="n">buttonDrawable</span><span class="o">.</span><span class="na">setBounds</span><span class="o">(</span><span class="n">buttonLeft</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">buttonLeft</span><span class="o">+</span><span class="n">buttonWidth</span><span class="o">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">height</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">buttonDrawable</span><span class="o">.</span><span class="na">draw</span><span class="o">(</span><span class="n">canvas</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above fix was found via <a href="http://stackoverflow.com/questions/4407553/android-radiobutton-button-drawable-gravity">this post</a> in Stackoverflow.</p>
+
+<p>And this is how you use it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="c">&lt;!--Use inside a RadioGroup control--&gt;</span>
+</span><span class='line'><span class="nt">&lt;com.example.ui.control.HighlightedImageRadioButton</span>
+</span><span class='line'>                <span class="na">android:id=</span><span class="s">&quot;@+id/sports_topic_icon&quot;</span>
+</span><span class='line'>                <span class="na">custom:focusedDrawable=</span><span class="s">&quot;@drawable/sports_topic_icon_highlighted&quot;</span>
+</span><span class='line'>                <span class="na">custom:normalDrawable=</span><span class="s">&quot;@drawable/sports_topic_icon&quot;</span>
+</span><span class='line'>                <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span>
+</span><span class='line'>                <span class="na">android:layout_weight=</span><span class="s">&quot;1&quot;</span>
+</span><span class='line'>                <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span> <span class="nt">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Just like a simple radio button.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/09/27/phonelib-bug-regarding-cant-find-proto/" title="Previous Post: PhoneLib bug regarding cant find proto">&laquo; Previous: PhoneLib bug regarding cant find proto</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/10/20/install-ia32-libs-in-saucy-salamander-ubuntu-13-dot-10/" title="Next Post: Install ia32-libs in Saucy Salamander Ubuntu 13.10">Next: Install ia32-libs in Saucy Salamander Ubuntu 13.10 &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/mohitkanwal"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/creativepsyco"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+    <a href="https://linkedin.com/in/mskanwal"><img src="/images/glyphicons_social_17_linked_in.png"/></a>
+    
+
+    
+    <a href="mailto:mohit.kanwal+blog@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.mohitkanwal.com/blog/2013/10/02/making-a-custom-centre-aligned-radio-button-with-a-state-list-drawable/';
+        var disqus_url = 'http://blog.mohitkanwal.com/blog/2013/10/02/making-a-custom-centre-aligned-radio-button-with-a-state-list-drawable/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

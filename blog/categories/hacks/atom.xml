@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: hacks | creativepsyco's Blog]]></title>
+  <link href="http://blog.mohitkanwal.com/blog/categories/hacks/atom.xml" rel="self"/>
+  <link href="http://blog.mohitkanwal.com/"/>
+  <updated>2015-08-20T10:38:47+08:00</updated>
+  <id>http://blog.mohitkanwal.com/</id>
+  <author>
+    <name><![CDATA[Mohit Kanwal]]></name>
+    <email><![CDATA[mohit.kanwal+blog@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Blogging With Octopress From 2 Computers]]></title>
+    <link href="http://blog.mohitkanwal.com/blog/2014/03/26/blogging-with-octopress-from-2-computers/"/>
+    <updated>2014-03-26T00:47:03+08:00</updated>
+    <id>http://blog.mohitkanwal.com/blog/2014/03/26/blogging-with-octopress-from-2-computers</id>
+    <content type="html"><![CDATA[<p>I use Octopress to blog from multiple computers, work and home computers, sometimes Virtual Machines even. I don&rsquo;t have a track of where my latest post is going to be written from.</p>
+
+<p>However, recently while deploying I encountered this strange error:</p>
+
+<p>```bash</p>
+
+<h2>Pushing generated _deploy website</h2>
+
+<p>To git@github.com:creativepsyco/creativepsyco.github.com.git
+ ! [rejected]        master &ndash;> master (non-fast-forward)
+ error: failed to push some refs to &lsquo;git@github.com:creativepsyco/creativepsyco.github.com.git&rsquo;
+ hint: Updates were rejected because the tip of your current branch is behind
+ hint: its remote counterpart. Integrate the remote changes (e.g.
+ hint: &lsquo;git pull &hellip;&rsquo;) before pushing again.
+ hint: See the &lsquo;Note about fast-forwards&rsquo; in &lsquo;git push &mdash;help&rsquo; for details.
+```</p>
+
+<!--more-->
+
+
+<p>The reason is that Octopress only does a push to the <code>master</code> branch and not a pull. To resolve this, do this:</p>
+
+<p><code>bash
+msk@MathBook Pro ~/Projects/creativepsyco.github.com (source)$ cd _deploy
+msk@MathBook Pro ~/Projects/creativepsyco.github.com/_deploy (master)$ git push origin master -f
+Counting objects: 1313, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (702/702), done.
+Writing objects: 100% (861/861), 99.72 KiB | 0 bytes/s, done.
+Total 861 (delta 423), reused 0 (delta 0)
+To git@github.com:creativepsyco/creativepsyco.github.com.git
+ + 4647e10...aa94c85 master -&gt; master (forced update)
+</code></p>
+
+<p>After that all is well:</p>
+
+<p>```bash
+msk@MathBook Pro ~/Projects/creativepsyco.github.com/_deploy (master)$ cd ..
+msk@MathBook Pro ~/Projects/creativepsyco.github.com (source)$ rake gen_deploy</p>
+
+<h2>Generating Site with Jekyll</h2>
+
+<p>unchanged sass/screen.scss
+unchanged sass/styles.scss
+Configuration from /Users/msk/Projects/creativepsyco.github.com/<em>config.yml
+Building site: source &ndash;> public
+Configuration from /Users/msk/Projects/creativepsyco.github.com/</em>config.yml
+Configuration from /Users/msk/Projects/creativepsyco.github.com/<em>config.yml
+Configuration from /Users/msk/Projects/creativepsyco.github.com/</em>config.yml
+Configuration from /Users/msk/Projects/creativepsyco.github.com/_config.yml
+Successfully generated site: source &ndash;> public</p>
+
+<h2>Deploying branch to Github Pages</h2>
+
+<h2>Pulling any updates from Github Pages</h2>
+
+<p>cd _deploy
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details</p>
+
+<pre><code>git pull &lt;remote&gt; &lt;branch&gt;
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/&lt;branch&gt; master
+
+    cd -
+    rm -rf _deploy/about
+    rm -rf _deploy/assets
+    rm -rf _deploy/atom.xml
+    rm -rf _deploy/blog
+    rm -rf _deploy/docs
+    rm -rf _deploy/favicon.png
+    rm -rf _deploy/font
+    rm -rf _deploy/images
+    rm -rf _deploy/index.html
+    rm -rf _deploy/javascripts
+    rm -rf _deploy/portfolio
+    rm -rf _deploy/robots.txt
+    rm -rf _deploy/sitemap.xml
+    rm -rf _deploy/stylesheets
+    rm -rf _deploy/super-awesome
+</code></pre>
+
+<h2>Copying public to _deploy</h2>
+
+<p>cp -r public/. <em>deploy
+cd </em>deploy</p>
+
+<h2>Committing: Site updated at 2014-03-25 16:44:37 UTC</h2>
+
+<p>[master 88fada5] Site updated at 2014-03-25 16:44:37 UTC
+ 36 files changed, 36 insertions(+), 36 deletions(&ndash;)</p>
+
+<h2>Pushing generated _deploy website</h2>
+
+<p>Counting objects: 166, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (75/75), done.
+Writing objects: 100% (75/75), 9.29 KiB | 0 bytes/s, done.
+Total 75 (delta 37), reused 0 (delta 0)
+To git@github.com:creativepsyco/creativepsyco.github.com.git
+   aa94c85..88fada5  master &ndash;> master</p>
+
+<h2>Github Pages deploy complete</h2>
+
+<p>cd &ndash;
+```</p>
+
+<p>Cheers</p>
+
+<hr />
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WebView vulnerability in Facebook Android SDK: Embedded OAuth]]></title>
+    <link href="http://blog.mohitkanwal.com/blog/2014/02/02/webview-vulnerability-in-facebook-android-sdk-embedded-oauth/"/>
+    <updated>2014-02-02T04:24:00+08:00</updated>
+    <id>http://blog.mohitkanwal.com/blog/2014/02/02/webview-vulnerability-in-facebook-android-sdk-embedded-oauth</id>
+    <content type="html"><![CDATA[<p><em>Reposting this from my <a href="http://www.facebook.com/mohitkanwal">FB feed</a></em></p>
+
+<h2>TL;DR</h2>
+
+<p>Don&rsquo;t put your FB username and password within mobile apps when you don&rsquo;t have the native FB app installed!</p>
+
+<p>Today I learnt that the Facebook SDK for Android is very insecure. At first I thought Man in the Middle attacks on the SDK OAuth authentication process is not possible, but if you are embedding someone else&rsquo;s WebView within your own App via the SDK, you can very well control them, either via Reflection, or just by modifying the SDK code coz FB makes the SDK a public download which you then compile to link in your app. If the SDK does not find the FB app installed on a user&rsquo;s phone, it resorts to using the fallback mechanism of using an embedded WebView for authentication.</p>
+
+<!--more-->
+
+
+<p>That said, I hacked around to see if injecting Javascript on the WebView was possible and it was, with a bit of change I could actually get the user name and password of the victim by making him/her uninstall Facebook on their phone and use FB login in my app. This is bad, real bad. There is no way of telling if the username/password was stolen by the underlying app due to the FB login since only the developer of the app controls that. And he/she can modify the SDK to suit their evils needs. I wonder if there are any apps that do that already.</p>
+
+<p>The images below show: the embedded web view login (with the cross mark) and the intercepted username and password. The last image shows the native FB login provided by the Facebook Android App.</p>
+
+<p>If you are interested in reproducing this, apply this <a href="https://gist.github.com/creativepsyco/8663913">diff</a> to your FB SDK WebDialog.java and you will be pretty amused.</p>
+
+<p>An Embedded Web View OAuth Sign in procedure</p>
+
+<p><img src="https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-ash3/t1/1557490_10152184000028914_1756836245_n.jpg" alt="Web Login" /></p>
+
+<p>Injecting Javascript results in this:</p>
+
+<p><img src="https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-frc1/t1/1654397_10152183985258914_440664198_n.jpg" alt="WebView Hack" /></p>
+
+<p>Actual Android Login is supposed to look this:</p>
+
+<p><img src="https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-prn1/t1/1654221_10152183994608914_2045844282_n.jpg" alt="Native Login" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rooting Samsung Galaxy S3 GT-I9305 with CyanogenMod Jelly Bean 4.2.2]]></title>
+    <link href="http://blog.mohitkanwal.com/blog/2014/02/02/rooting-samsung-galaxy-s3-gt-i9305-with-cyanogenmod-jelly-bean-4-dot-2-2/"/>
+    <updated>2014-02-02T03:36:00+08:00</updated>
+    <id>http://blog.mohitkanwal.com/blog/2014/02/02/rooting-samsung-galaxy-s3-gt-i9305-with-cyanogenmod-jelly-bean-4-dot-2-2</id>
+    <content type="html"><![CDATA[<p>After getting the 4.3 update my Samsung Galaxy S3 started having <a href="http://au.ibtimes.com/articles/536399/20140129/galaxy-s4-s3-note-2-update.htm#.Uu1M9HeSxqs">weird battery problems</a>, it was a high I moved to a custom ROM since they were a lot stable than a few years back and offered a much better stock Android experience without any bloated software than device OEMs put inside.</p>
+
+<p>In this post, I shall roughly tell you how I installed a custom on my Samsung Phone.</p>
+
+<blockquote><p>Warning: Rooting voids the warranty of your device. We and the developers of these files are not responsible if anything happens to your device. Use this rooting guide at your own risk!</p></blockquote>
+
+<!--more-->
+
+
+<h2>Prerequisites</h2>
+
+<ul>
+<li>Need a Windows XP/Windows 7/Windows 8 PC</li>
+<li>Ample of charge on your phone battery</li>
+<li>The Galaxy S3 I9305 should be factory unlocked.</li>
+<li>Have a model number <em>I9305</em> phone, the international model of Samsung Galaxy 3 LTE.</li>
+<li>Do make a backup of the phone date, as everything will be erased.</li>
+</ul>
+
+
+<h2>Downloads</h2>
+
+<ul>
+<li><a href="http://download.chainfire.eu/232/CF-Root/CF-Auto-Root/CF-Auto-Root-m3-m3zh-gti9305.zip">ODIN + Auto Root File</a></li>
+<li><a href="http://techerrata.com/file/twrp2/i9305/openrecovery-twrp-2.5.0.0-i9305.tar">TWRP File</a>, only version 2.5.* works properly with the CyanogenMod ROM</li>
+<li><a href="http://download.cyanogenmod.org/?device=i9305&amp;type=stable">CyanogenMod ROM for 4.2.2</a></li>
+<li>Corresponding <a href="http://goo.im/gapps/gapps-jb-20130812-signed.zip">Google Apps package</a></li>
+</ul>
+
+
+<h2>Steps</h2>
+
+<ul>
+<li>Plug the S3 into your computer and make sure all drivers are installed correctly. If you run into problems, try a different USB cable or port. Then turn your device off.</li>
+<li>Put the S3 into Download Mode by holding in the Power, Home, and Volume Down buttons at the same time. Then push the Volume Up button once this screen pops up.</li>
+<li>Unzip and open the CF-Auto-Root folder and right click on Odin.exe, then click on “Run as Administrator”.</li>
+<li>Make sure there is a yellow box in the screen, if not then the USB drivers did not install correctly and you should try a different USB cable/port.</li>
+<li>Once you have the yellow box, click on PDA and then browse for the file that was downloaded with Odin, (CF-Auto-Root-i9305.tar.md5). Then click Start.</li>
+<li>Once you get a &ldquo;green&rdquo; box, means you have succeeded.</li>
+</ul>
+
+
+<p>Next we need to install TWRP:</p>
+
+<ul>
+<li>Put you device in Download mode, make sure its connected via USB</li>
+<li>Go back to Odin, and click PDA</li>
+<li>This time, get the openrecoveryXXX-twrp-2.5.x.tar file and flash it</li>
+<li>If you get a &ldquo;green&rdquo; box at the end, means you passed</li>
+</ul>
+
+
+<p>Now we need to transfer the Custom ROM + Google Apps package zip files to the Phone either via <code>adb</code> or via manual file transfer through Windows Explorer</p>
+
+<p>Once that&rsquo;s done we can launch the recovery mode to commence installing the custom ROM.</p>
+
+<ul>
+<li>Turn off your phone</li>
+<li>Hold in the Power, Volume Up, and Home buttons until “Recovery Booting” appears in the top left corner. Then release the power button but keep holding the Volume Up and the Home button until “TeamWin” appears on the screen.</li>
+<li>Click on Wipe – Advanced Wipe and select “Dalvik Cache”, “System”, and “Cache”. Then move the slider to complete the wipe.</li>
+<li>Go back and click on Install and scroll down to the location where you transfered the ROM zip file. Click on the zip file and then slide to install the ROM.</li>
+<li>After that do the same step to install Google Apps</li>
+<li>After move to Home and do a factory reset to delete useless App Data</li>
+</ul>
+
+
+<p>And you are done, Congratulations!</p>
+
+<h2>Known Issues</h2>
+
+<ul>
+<li>If your <a href="http://forum.cyanogenmod.com/topic/78601-unfortunately-android-keyboard-aosp-has-stopped-problem/">Google Apps don&rsquo;t work</a>, like the Keyboard crashes or something, make sure that you have the correct Google Apps package</li>
+<li>If you get assert failed error, you will need to try with different nightlies until you hit the one that succeeds.</li>
+<li>For some of the common problems, visit the <a href="http://wiki.cyanogenmod.org/w/Wiki_Problems">Wiki</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

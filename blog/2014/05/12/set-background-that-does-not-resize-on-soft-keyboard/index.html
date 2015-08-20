@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Set Background That Does Not Resize on Soft Keyboard - creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="Set Background That Does Not Resize on Soft Keyboard written May 12th, 2014 in Android Problem Here is an interesting problem. Let&rsquo;s say you &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.mohitkanwal.com/blog/2014/05/12/set-background-that-does-not-resize-on-soft-keyboard">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Set Background That Does Not Resize on Soft Keyboard</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-05-12T14:29:45+08:00" pubdate data-updated="true">May 12<span>th</span>, 2014</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>Android</a>
+  
+</span>
+
+
+        </div>
+        <h3>Problem</h3>
+
+<p>Here is an interesting problem. Let&rsquo;s say you are in a particular view, and you want to be able to set a background. You simple use the <code>View.setBackground(Drawable)</code> or <code>View.setBackgroundDrawable(Drawable)</code> call to do this. However once you do this, you realize that whenever the soft keyboard is opened it pushes your view to the top/resizes it such that your background looks squished.</p>
+
+<!--more-->
+
+
+<p>I encountered this while working on a chatting application. The resulting image looks something like this:</p>
+
+<p><img src="/images/flat_background.jpg" alt="Image" /></p>
+
+<h3>Solution</h3>
+
+<p>The solution is quite simple:</p>
+
+<ul>
+<li>In your Activity Manifest, declare the activity which houses the view to <code>android:windowSoftInputMode="adjustResize|stateHidden"</code></li>
+<li>Then follow this piece of code:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Bitmap</span> <span class="n">bmImg</span><span class="o">;</span>
+</span><span class='line'><span class="c1">// Load a bitmap into bmImg</span>
+</span><span class='line'><span class="n">BitmapDrawable</span> <span class="n">background</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BitmapDrawable</span><span class="o">(</span><span class="n">bmImg</span><span class="o">);</span>
+</span><span class='line'><span class="n">background</span><span class="o">.</span><span class="na">setGravity</span><span class="o">(</span><span class="n">Gravity</span><span class="o">.</span><span class="na">TOP</span><span class="o">);</span>
+</span><span class='line'><span class="k">this</span><span class="o">.</span><span class="na">setBackgroundDrawable</span><span class="o">(</span><span class="n">background</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will make sure that you set your background with the <code>Gravity.TOP</code> which will ensure it is always aligned with the top of the container view and is not affected by the Soft Keyboard display.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/03/26/blogging-with-octopress-from-2-computers/" title="Previous Post: Blogging With Octopress From 2 Computers">&laquo; Previous: Blogging With Octopress From 2 Computers</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/12/26/fixing-android-studio-startup-on-mac-a-valid-jvm-was-not-found-on-this-machine/" title="Next Post: Fixing Android Studio startup on Mac: A valid JVM was not found on this machine">Next: Fixing Android Studio startup on Mac: A valid JVM was not found on this machine &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/mohitkanwal"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/creativepsyco"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+    <a href="https://linkedin.com/in/mskanwal"><img src="/images/glyphicons_social_17_linked_in.png"/></a>
+    
+
+    
+    <a href="mailto:mohit.kanwal+blog@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.mohitkanwal.com/blog/2014/05/12/set-background-that-does-not-resize-on-soft-keyboard/';
+        var disqus_url = 'http://blog.mohitkanwal.com/blog/2014/05/12/set-background-that-does-not-resize-on-soft-keyboard/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

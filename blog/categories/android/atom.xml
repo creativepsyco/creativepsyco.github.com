@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: android | creativepsyco's Blog]]></title>
+  <link href="http://blog.mohitkanwal.com/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://blog.mohitkanwal.com/"/>
+  <updated>2015-08-20T10:38:47+08:00</updated>
+  <id>http://blog.mohitkanwal.com/</id>
+  <author>
+    <name><![CDATA[Mohit Kanwal]]></name>
+    <email><![CDATA[mohit.kanwal+blog@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[WebView vulnerability in Facebook Android SDK: Embedded OAuth]]></title>
+    <link href="http://blog.mohitkanwal.com/blog/2014/02/02/webview-vulnerability-in-facebook-android-sdk-embedded-oauth/"/>
+    <updated>2014-02-02T04:24:00+08:00</updated>
+    <id>http://blog.mohitkanwal.com/blog/2014/02/02/webview-vulnerability-in-facebook-android-sdk-embedded-oauth</id>
+    <content type="html"><![CDATA[<p><em>Reposting this from my <a href="http://www.facebook.com/mohitkanwal">FB feed</a></em></p>
+
+<h2>TL;DR</h2>
+
+<p>Don&rsquo;t put your FB username and password within mobile apps when you don&rsquo;t have the native FB app installed!</p>
+
+<p>Today I learnt that the Facebook SDK for Android is very insecure. At first I thought Man in the Middle attacks on the SDK OAuth authentication process is not possible, but if you are embedding someone else&rsquo;s WebView within your own App via the SDK, you can very well control them, either via Reflection, or just by modifying the SDK code coz FB makes the SDK a public download which you then compile to link in your app. If the SDK does not find the FB app installed on a user&rsquo;s phone, it resorts to using the fallback mechanism of using an embedded WebView for authentication.</p>
+
+<!--more-->
+
+
+<p>That said, I hacked around to see if injecting Javascript on the WebView was possible and it was, with a bit of change I could actually get the user name and password of the victim by making him/her uninstall Facebook on their phone and use FB login in my app. This is bad, real bad. There is no way of telling if the username/password was stolen by the underlying app due to the FB login since only the developer of the app controls that. And he/she can modify the SDK to suit their evils needs. I wonder if there are any apps that do that already.</p>
+
+<p>The images below show: the embedded web view login (with the cross mark) and the intercepted username and password. The last image shows the native FB login provided by the Facebook Android App.</p>
+
+<p>If you are interested in reproducing this, apply this <a href="https://gist.github.com/creativepsyco/8663913">diff</a> to your FB SDK WebDialog.java and you will be pretty amused.</p>
+
+<p>An Embedded Web View OAuth Sign in procedure</p>
+
+<p><img src="https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-ash3/t1/1557490_10152184000028914_1756836245_n.jpg" alt="Web Login" /></p>
+
+<p>Injecting Javascript results in this:</p>
+
+<p><img src="https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-frc1/t1/1654397_10152183985258914_440664198_n.jpg" alt="WebView Hack" /></p>
+
+<p>Actual Android Login is supposed to look this:</p>
+
+<p><img src="https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-prn1/t1/1654221_10152183994608914_2045844282_n.jpg" alt="Native Login" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rooting Samsung Galaxy S3 GT-I9305 with CyanogenMod Jelly Bean 4.2.2]]></title>
+    <link href="http://blog.mohitkanwal.com/blog/2014/02/02/rooting-samsung-galaxy-s3-gt-i9305-with-cyanogenmod-jelly-bean-4-dot-2-2/"/>
+    <updated>2014-02-02T03:36:00+08:00</updated>
+    <id>http://blog.mohitkanwal.com/blog/2014/02/02/rooting-samsung-galaxy-s3-gt-i9305-with-cyanogenmod-jelly-bean-4-dot-2-2</id>
+    <content type="html"><![CDATA[<p>After getting the 4.3 update my Samsung Galaxy S3 started having <a href="http://au.ibtimes.com/articles/536399/20140129/galaxy-s4-s3-note-2-update.htm#.Uu1M9HeSxqs">weird battery problems</a>, it was a high I moved to a custom ROM since they were a lot stable than a few years back and offered a much better stock Android experience without any bloated software than device OEMs put inside.</p>
+
+<p>In this post, I shall roughly tell you how I installed a custom on my Samsung Phone.</p>
+
+<blockquote><p>Warning: Rooting voids the warranty of your device. We and the developers of these files are not responsible if anything happens to your device. Use this rooting guide at your own risk!</p></blockquote>
+
+<!--more-->
+
+
+<h2>Prerequisites</h2>
+
+<ul>
+<li>Need a Windows XP/Windows 7/Windows 8 PC</li>
+<li>Ample of charge on your phone battery</li>
+<li>The Galaxy S3 I9305 should be factory unlocked.</li>
+<li>Have a model number <em>I9305</em> phone, the international model of Samsung Galaxy 3 LTE.</li>
+<li>Do make a backup of the phone date, as everything will be erased.</li>
+</ul>
+
+
+<h2>Downloads</h2>
+
+<ul>
+<li><a href="http://download.chainfire.eu/232/CF-Root/CF-Auto-Root/CF-Auto-Root-m3-m3zh-gti9305.zip">ODIN + Auto Root File</a></li>
+<li><a href="http://techerrata.com/file/twrp2/i9305/openrecovery-twrp-2.5.0.0-i9305.tar">TWRP File</a>, only version 2.5.* works properly with the CyanogenMod ROM</li>
+<li><a href="http://download.cyanogenmod.org/?device=i9305&amp;type=stable">CyanogenMod ROM for 4.2.2</a></li>
+<li>Corresponding <a href="http://goo.im/gapps/gapps-jb-20130812-signed.zip">Google Apps package</a></li>
+</ul>
+
+
+<h2>Steps</h2>
+
+<ul>
+<li>Plug the S3 into your computer and make sure all drivers are installed correctly. If you run into problems, try a different USB cable or port. Then turn your device off.</li>
+<li>Put the S3 into Download Mode by holding in the Power, Home, and Volume Down buttons at the same time. Then push the Volume Up button once this screen pops up.</li>
+<li>Unzip and open the CF-Auto-Root folder and right click on Odin.exe, then click on “Run as Administrator”.</li>
+<li>Make sure there is a yellow box in the screen, if not then the USB drivers did not install correctly and you should try a different USB cable/port.</li>
+<li>Once you have the yellow box, click on PDA and then browse for the file that was downloaded with Odin, (CF-Auto-Root-i9305.tar.md5). Then click Start.</li>
+<li>Once you get a &ldquo;green&rdquo; box, means you have succeeded.</li>
+</ul>
+
+
+<p>Next we need to install TWRP:</p>
+
+<ul>
+<li>Put you device in Download mode, make sure its connected via USB</li>
+<li>Go back to Odin, and click PDA</li>
+<li>This time, get the openrecoveryXXX-twrp-2.5.x.tar file and flash it</li>
+<li>If you get a &ldquo;green&rdquo; box at the end, means you passed</li>
+</ul>
+
+
+<p>Now we need to transfer the Custom ROM + Google Apps package zip files to the Phone either via <code>adb</code> or via manual file transfer through Windows Explorer</p>
+
+<p>Once that&rsquo;s done we can launch the recovery mode to commence installing the custom ROM.</p>
+
+<ul>
+<li>Turn off your phone</li>
+<li>Hold in the Power, Volume Up, and Home buttons until “Recovery Booting” appears in the top left corner. Then release the power button but keep holding the Volume Up and the Home button until “TeamWin” appears on the screen.</li>
+<li>Click on Wipe – Advanced Wipe and select “Dalvik Cache”, “System”, and “Cache”. Then move the slider to complete the wipe.</li>
+<li>Go back and click on Install and scroll down to the location where you transfered the ROM zip file. Click on the zip file and then slide to install the ROM.</li>
+<li>After that do the same step to install Google Apps</li>
+<li>After move to Home and do a factory reset to delete useless App Data</li>
+</ul>
+
+
+<p>And you are done, Congratulations!</p>
+
+<h2>Known Issues</h2>
+
+<ul>
+<li>If your <a href="http://forum.cyanogenmod.com/topic/78601-unfortunately-android-keyboard-aosp-has-stopped-problem/">Google Apps don&rsquo;t work</a>, like the Keyboard crashes or something, make sure that you have the correct Google Apps package</li>
+<li>If you get assert failed error, you will need to try with different nightlies until you hit the one that succeeds.</li>
+<li>For some of the common problems, visit the <a href="http://wiki.cyanogenmod.org/w/Wiki_Problems">Wiki</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android Activity: Problem with Posting Runnables]]></title>
+    <link href="http://blog.mohitkanwal.com/blog/2014/01/05/android-activity-problem-with-posting-runnables/"/>
+    <updated>2014-01-05T23:44:00+08:00</updated>
+    <id>http://blog.mohitkanwal.com/blog/2014/01/05/android-activity-problem-with-posting-runnables</id>
+    <content type="html"><![CDATA[<p>A lot of times in Android you end up writing code like this:</p>
+
+<p>```java
+//&mdash;&mdash; Normal Code above &mdash;&ndash;
+Runnable runnable  = new Runnable() {</p>
+
+<pre><code>@Override
+public void run() {
+    // Do something stupid
+}
+</code></pre>
+
+<p>}
+// Singleton Handler Manager &mdash; not an instance one, am I smart?
+HandlerManager.getInstance().postDelayed(runnable, 20000); // Run this after 20 seconds! Delay processing of data
+finish();
+```</p>
+
+<p>That is, cooking up a lot of <code>Runnables</code> and posting them on the Handler to be run after a period of time. It happens.</p>
+
+<p>As our role as developers trying to get a feature done in time, sometimes these Runnnables are the only hope. However, this <code>Runnable</code> introduces a potential memory leak.</p>
+
+<!--more-->
+
+
+<p>Android uses a Garbage Collection mechanism to reclaim allocated memory in which nodes are traversed from the root of the Collector and each node is checked for incoming references, if these references fall into a particular type of reference, <code>Final</code>, <code>Weak</code> or other types of finalized references, these nodes are freed and memory unallocated. However, if there any incoming references, then this node cannot be freed up. If you are developing a large app, you will definitely face this issue at some point or the other.</p>
+
+<p>Now you must be asking why the above code will cause a memory leak.</p>
+
+<p>It does as follows.</p>
+
+<ul>
+<li>When you created a Runnable, it ended up being an inner class, and all inner classes have outer class <a href="http://stackoverflow.com/questions/1816458/getting-hold-of-the-outer-class-object-from-the-inner-class-object">references</a>.</li>
+<li>Now your Runnable is queued in the Singleton Handler, which is always alive in Memory</li>
+<li>As such your Runnable is alive</li>
+<li>And so is your Activity</li>
+<li>When you call finish(), your activity is queued up to be destroyed, but the Garbage Collector finds that your Activity instance is referenced from your Runnable inner class instance and therefore does not collect its allocated memory.</li>
+</ul>
+
+
+<p>So hopefully, now you get it?</p>
+
+<blockquote><p>The solution is to use static inner classes so as to avoid initialization of the instance with the outer class instance.</p>
+
+<p>static inner classes use the class instance, not the instance reference and therefore are safe from these issues.</p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hide Keyboard for multiple Edit Boxes in a page]]></title>
+    <link href="http://blog.mohitkanwal.com/blog/2013/11/04/hide-keyboard-for-multiple-edit-boxes-in-a-page/"/>
+    <updated>2013-11-04T11:54:00+08:00</updated>
+    <id>http://blog.mohitkanwal.com/blog/2013/11/04/hide-keyboard-for-multiple-edit-boxes-in-a-page</id>
+    <content type="html"><![CDATA[<h1>How to hide Keyboard in the case of multiple Edit Text</h1>
+
+<p>One common problem faced by people working on Android input field forms is that many a times there is a need to show/hide the keyboard when the person touches on some other part of the screen, other than the edit box itself. However, since the focus is retained by the edit box, even if the keyboard is hidden, its hard to actually detect when and where should you be hiding the keyboard.</p>
+
+<h1>The Solution</h1>
+
+<p>One way to accomplish this to use the <code>dispatchTouchEvent</code> on the parent container. This is the first event that is called whenever there is a touch encountered on the surface. Only after this the rest of the touch listeners are invoked.</p>
+
+<p>We can first dispatch the touch and then check the <code>getCurrentFocus</code> view to see if the focus is retained by the <code>EditText</code>. If it is, then we simply hide the soft keyboard from the screen.</p>
+
+<p>Another thing to make sure is that the parent container view groups are labelled as <code>focusableInTouchMode</code>, <code>clickable</code> and <code>focusable</code></p>
+
+<p>Here is the gist that does this job from a custom view group that contains multiple <code>EditText</code> instances.</p>
+
+<p><div><script src='https://gist.github.com/creativepsyco/7229277.js'></script>
+<noscript><pre><code>// Very useful to capture the focus if there is a need to
+    // Currently this hides the keyboard from the view
+    // If the underlying view is not an EditText
+    // For this to work all the parent layouts
+    // must declare themselves as focusableinTouchMode
+    // Focusable and clickable
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View v = getActivity().getCurrentFocus();
+        boolean ret = super.dispatchTouchEvent(ev);
+
+        View w = getActivity().getCurrentFocus();
+        if (!(w instanceof EditText)) {
+            // Edit Text losing focus
+            // Hide the keyboard here or anything else that you wanna do.
+
+        }
+        return ret;
+    }
+</code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[PhoneLib bug regarding cant find proto]]></title>
+    <link href="http://blog.mohitkanwal.com/blog/2013/09/27/phonelib-bug-regarding-cant-find-proto/"/>
+    <updated>2013-09-27T10:30:00+08:00</updated>
+    <id>http://blog.mohitkanwal.com/blog/2013/09/27/phonelib-bug-regarding-cant-find-proto</id>
+    <content type="html"><![CDATA[<p>Do you make use of <a href="https://code.google.com/p/libphonenumber/">PhoneNumberUtils</a> in your android project?</p>
+
+<p>If so, have you ever encountered this exception before?</p>
+
+<p><code>java
+java.lang.RuntimeException: cannot load/parse metadata: /com/google/i18n/phonenumbers/data/PhoneNumberMetadataProto_MY at com.google.a.a.d.a(PhoneNumberUtil.java:619)
+</code></p>
+
+<p>If yes, chances are you are probably using [proguard][progaurd] to do the obfuscation of code. However, as <a href="https://code.google.com/p/libphonenumber/issues/detail?id=259&amp;can=1&amp;q=metadata">this</a> points out, proguard automatically also obfuscates the library files. However, the PhoneNumberUtils has a hardcoded path to the proto files. Therefore, one cannot rely on obfuscating the library&rsquo;s code.</p>
+
+<p>To resolve you must add the following lines in your <code>proguard</code> configuration file:</p>
+
+<p><code>
+-keep class com.google.i18n.phonenumbers.** { *; }
+</code></p>
+
+<p>This problem occurs in Android version Honeycomb and below it, as versions after Honeycomb have their own phonenumber util included which has a namespace of <code>com.google.android.i18n.phonenumbers</code>. If you are supporting version below honeycomb this can be an overlooked disaster.</p>
+]]></content>
+  </entry>
+  
+</feed>

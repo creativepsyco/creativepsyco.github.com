@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: octopress | creativepsyco's Blog]]></title>
+  <link href="http://blog.mohitkanwal.com/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://blog.mohitkanwal.com/"/>
+  <updated>2015-08-20T10:38:47+08:00</updated>
+  <id>http://blog.mohitkanwal.com/</id>
+  <author>
+    <name><![CDATA[Mohit Kanwal]]></name>
+    <email><![CDATA[mohit.kanwal+blog@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Blogging With Octopress From 2 Computers]]></title>
+    <link href="http://blog.mohitkanwal.com/blog/2014/03/26/blogging-with-octopress-from-2-computers/"/>
+    <updated>2014-03-26T00:47:03+08:00</updated>
+    <id>http://blog.mohitkanwal.com/blog/2014/03/26/blogging-with-octopress-from-2-computers</id>
+    <content type="html"><![CDATA[<p>I use Octopress to blog from multiple computers, work and home computers, sometimes Virtual Machines even. I don&rsquo;t have a track of where my latest post is going to be written from.</p>
+
+<p>However, recently while deploying I encountered this strange error:</p>
+
+<p>```bash</p>
+
+<h2>Pushing generated _deploy website</h2>
+
+<p>To git@github.com:creativepsyco/creativepsyco.github.com.git
+ ! [rejected]        master &ndash;> master (non-fast-forward)
+ error: failed to push some refs to &lsquo;git@github.com:creativepsyco/creativepsyco.github.com.git&rsquo;
+ hint: Updates were rejected because the tip of your current branch is behind
+ hint: its remote counterpart. Integrate the remote changes (e.g.
+ hint: &lsquo;git pull &hellip;&rsquo;) before pushing again.
+ hint: See the &lsquo;Note about fast-forwards&rsquo; in &lsquo;git push &mdash;help&rsquo; for details.
+```</p>
+
+<!--more-->
+
+
+<p>The reason is that Octopress only does a push to the <code>master</code> branch and not a pull. To resolve this, do this:</p>
+
+<p><code>bash
+msk@MathBook Pro ~/Projects/creativepsyco.github.com (source)$ cd _deploy
+msk@MathBook Pro ~/Projects/creativepsyco.github.com/_deploy (master)$ git push origin master -f
+Counting objects: 1313, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (702/702), done.
+Writing objects: 100% (861/861), 99.72 KiB | 0 bytes/s, done.
+Total 861 (delta 423), reused 0 (delta 0)
+To git@github.com:creativepsyco/creativepsyco.github.com.git
+ + 4647e10...aa94c85 master -&gt; master (forced update)
+</code></p>
+
+<p>After that all is well:</p>
+
+<p>```bash
+msk@MathBook Pro ~/Projects/creativepsyco.github.com/_deploy (master)$ cd ..
+msk@MathBook Pro ~/Projects/creativepsyco.github.com (source)$ rake gen_deploy</p>
+
+<h2>Generating Site with Jekyll</h2>
+
+<p>unchanged sass/screen.scss
+unchanged sass/styles.scss
+Configuration from /Users/msk/Projects/creativepsyco.github.com/<em>config.yml
+Building site: source &ndash;> public
+Configuration from /Users/msk/Projects/creativepsyco.github.com/</em>config.yml
+Configuration from /Users/msk/Projects/creativepsyco.github.com/<em>config.yml
+Configuration from /Users/msk/Projects/creativepsyco.github.com/</em>config.yml
+Configuration from /Users/msk/Projects/creativepsyco.github.com/_config.yml
+Successfully generated site: source &ndash;> public</p>
+
+<h2>Deploying branch to Github Pages</h2>
+
+<h2>Pulling any updates from Github Pages</h2>
+
+<p>cd _deploy
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details</p>
+
+<pre><code>git pull &lt;remote&gt; &lt;branch&gt;
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/&lt;branch&gt; master
+
+    cd -
+    rm -rf _deploy/about
+    rm -rf _deploy/assets
+    rm -rf _deploy/atom.xml
+    rm -rf _deploy/blog
+    rm -rf _deploy/docs
+    rm -rf _deploy/favicon.png
+    rm -rf _deploy/font
+    rm -rf _deploy/images
+    rm -rf _deploy/index.html
+    rm -rf _deploy/javascripts
+    rm -rf _deploy/portfolio
+    rm -rf _deploy/robots.txt
+    rm -rf _deploy/sitemap.xml
+    rm -rf _deploy/stylesheets
+    rm -rf _deploy/super-awesome
+</code></pre>
+
+<h2>Copying public to _deploy</h2>
+
+<p>cp -r public/. <em>deploy
+cd </em>deploy</p>
+
+<h2>Committing: Site updated at 2014-03-25 16:44:37 UTC</h2>
+
+<p>[master 88fada5] Site updated at 2014-03-25 16:44:37 UTC
+ 36 files changed, 36 insertions(+), 36 deletions(&ndash;)</p>
+
+<h2>Pushing generated _deploy website</h2>
+
+<p>Counting objects: 166, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (75/75), done.
+Writing objects: 100% (75/75), 9.29 KiB | 0 bytes/s, done.
+Total 75 (delta 37), reused 0 (delta 0)
+To git@github.com:creativepsyco/creativepsyco.github.com.git
+   aa94c85..88fada5  master &ndash;> master</p>
+
+<h2>Github Pages deploy complete</h2>
+
+<p>cd &ndash;
+```</p>
+
+<p>Cheers</p>
+
+<hr />
+]]></content>
+  </entry>
+  
+</feed>
