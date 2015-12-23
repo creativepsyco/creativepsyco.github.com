@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Troubleshooting Android Emulators on CircleCI - creativepsyco's Blog</title>
+  <meta name="author" content="Mohit Kanwal">
+
+  
+  <meta name="description" content="Troubleshooting Android Emulators on CircleCI written Dec 23rd, 2015 in Android, CircleCI, Espresso, Testing Troubleshooting Android Emulators on &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.mohitkanwal.com/blog/2015/12/23/troubleshooting-android-emulators-on-circleci">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36037120-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Troubleshooting Android Emulators on CircleCI</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-12-23T12:12:01+08:00" pubdate data-updated="true">Dec 23<span>rd</span>, 2015</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/circleci/'>CircleCI</a>, <a class='category' href='/blog/categories/espresso/'>Espresso</a>, <a class='category' href='/blog/categories/testing/'>Testing</a>
+  
+</span>
+
+
+        </div>
+        <h2>Troubleshooting Android Emulators on CircleCI</h2>
+
+<p><a href="https://circleci.com">CircleCI</a> is a very nifty cloud-hosted continuous integration tool. It allows you to write your code with the peace of mind that you have. You can setup testing for every push, every pull request, every git tag and so on. You can upload to <a href="http://hockeyapp.net">HockeyApp</a> or <a href="https://fabric.io">Fabric</a>. Everything gets tested, leaving you to write the best code possible.</p>
+
+<p>For device testing on CircleCI you will need to spin up an emulator, however, you can&rsquo;t really spin up <code>x86</code> images on the CircleCI containers because they cannot provide <a href="https://discuss.circleci.com/t/provide-kvm-in-container/1179">KVM</a>. As such you are left with ARM emulators which are notoriously extremely slow and end up causing flakiness in testing. Here are some tools which I regularly use to troubleshoot Android Emulators on CircleCI.</p>
+
+<h3>Getting screenshots via ADB</h3>
+
+<p>You definitely should get screenshots just after the emulator is started, to check if it is not unlocked.</p>
+
+<p>Here is a part of my <code>.circleci.yml</code> file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Other depedencies etc.</span>
+</span><span class='line'>- emulator -avd circleci-android22 -no-audio -no-window:
+</span><span class='line'>    background: <span class="nb">true</span>
+</span><span class='line'><span class="nb">    </span>parallel: <span class="nb">true</span>
+</span><span class='line'>- circle-android <span class="nb">wait</span>-for-boot
+</span><span class='line'>- sleep 30
+</span><span class='line'><span class="c"># Unlock the screen</span>
+</span><span class='line'>- adb shell input keyevent 82
+</span><span class='line'><span class="c"># Run espresso tests</span>
+</span><span class='line'>- ./gradlew :app:connectedDebugAndroidTest -PdisablePreDex;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And my espresso tests were failing because of:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>org.example.SignupTests &gt; testCheckSignupPageDisplayed<span class="o">[</span>circleci-android22<span class="o">(</span>AVD<span class="o">)</span> - 5.1<span class="o">]</span> FAILED
+</span><span class='line'>  java.lang.RuntimeException: Waited <span class="k">for </span>the root of the view hierarchy to have window focus and not be requesting
+</span><span class='line'>  layout <span class="k">for </span>over 10 seconds. If you specified a non default root matcher,
+</span><span class='line'>  it may be picking a root that never takes focus. Otherwise, something is seriously wrong. Selected Root:
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Clearly something was wrong.</p>
+
+<p>So I decided to start taking some screenshots before my emulator ran tests</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>adb shell screencap -p | sed <span class="s1">&#39;s/\r$//&#39;</span> &gt; screen.png
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Upload to <a href="http://askubuntu.com/a/544450">imgur</a> for immediate viewing.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Unlock emulator</span>
+</span><span class='line'>- adb shell input keyevent 82
+</span><span class='line'><span class="c"># First download the bash script</span>
+</span><span class='line'>- wget http://imgur.com/tools/imgurbash.sh
+</span><span class='line'>- chmod a+x imgurbash.sh
+</span><span class='line'>- adb shell screencap -p | sed <span class="s1">&#39;s/\r$//&#39;</span> &gt; bootscreen.png
+</span><span class='line'>- ./imgurbash.sh bootscreen.png
+</span><span class='line'><span class="c"># Continue running some more tests</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&rsquo;s what I obtained when this ran:</p>
+
+<p><img src="http://i.imgur.com/TzPDvyj.png" alt="warning" /></p>
+
+<p><strong>So more often than not the cause of failure was the system process ANR blocking the espresso tests from getting anywhere.</strong></p>
+
+<p>Essentially whenever the Espresso test fail you must check what the UI looked like at that point of time, the view hierarchy dumped by Espresso does not give a clear indication of what happens on the emulator.</p>
+
+<p>Hope this helps someone who struggled with running espresso tests on CircleCI.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        </section>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2015/03/07/styling-material-toolbar-in-android/" title="Previous Post: Styling Material Toolbar in Android">&laquo; Previous: Styling Material Toolbar in Android</a>
+        
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/mohitkanwal"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/creativepsyco"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+    <a href="https://linkedin.com/in/mskanwal"><img src="/images/glyphicons_social_17_linked_in.png"/></a>
+    
+
+    
+    <a href="mailto:mohit.kanwal+blog@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+      
+
+<script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.mohitkanwal.com/blog/2015/12/23/troubleshooting-android-emulators-on-circleci/';
+        var disqus_url = 'http://blog.mohitkanwal.com/blog/2015/12/23/troubleshooting-android-emulators-on-circleci/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+  </body>
+</html>

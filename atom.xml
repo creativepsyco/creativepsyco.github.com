@@ -4,7 +4,7 @@
   <title><![CDATA[creativepsyco's Blog]]></title>
   <link href="http://blog.mohitkanwal.com/atom.xml" rel="self"/>
   <link href="http://blog.mohitkanwal.com/"/>
-  <updated>2015-12-23T12:10:38+08:00</updated>
+  <updated>2015-12-23T15:04:34+08:00</updated>
   <id>http://blog.mohitkanwal.com/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -12,6 +12,101 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Troubleshooting Android Emulators on CircleCI]]></title>
+    <link href="http://blog.mohitkanwal.com/blog/2015/12/23/troubleshooting-android-emulators-on-circleci/"/>
+    <updated>2015-12-23T12:12:01+08:00</updated>
+    <id>http://blog.mohitkanwal.com/blog/2015/12/23/troubleshooting-android-emulators-on-circleci</id>
+    <content type="html"><![CDATA[<h2>Troubleshooting Android Emulators on CircleCI</h2>
+
+<p><a href="https://circleci.com">CircleCI</a> is a very nifty cloud-hosted continuous integration tool. It allows you to write your code with the peace of mind that you have. You can setup testing for every push, every pull request, every git tag and so on. You can upload to <a href="http://hockeyapp.net">HockeyApp</a> or <a href="https://fabric.io">Fabric</a>. Everything gets tested, leaving you to write the best code possible.</p>
+
+<p>For device testing on CircleCI you will need to spin up an emulator, however, you can&rsquo;t really spin up <code>x86</code> images on the CircleCI containers because they cannot provide <a href="https://discuss.circleci.com/t/provide-kvm-in-container/1179">KVM</a>. As such you are left with ARM emulators which are notoriously extremely slow and end up causing flakiness in testing. Here are some tools which I regularly use to troubleshoot Android Emulators on CircleCI.</p>
+
+<h3>Getting screenshots via ADB</h3>
+
+<p>You definitely should get screenshots just after the emulator is started, to check if it is not unlocked.</p>
+
+<p>Here is a part of my <code>.circleci.yml</code> file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Other depedencies etc.</span>
+</span><span class='line'>- emulator -avd circleci-android22 -no-audio -no-window:
+</span><span class='line'>    background: <span class="nb">true</span>
+</span><span class='line'><span class="nb">    </span>parallel: <span class="nb">true</span>
+</span><span class='line'>- circle-android <span class="nb">wait</span>-for-boot
+</span><span class='line'>- sleep 30
+</span><span class='line'><span class="c"># Unlock the screen</span>
+</span><span class='line'>- adb shell input keyevent 82
+</span><span class='line'><span class="c"># Run espresso tests</span>
+</span><span class='line'>- ./gradlew :app:connectedDebugAndroidTest -PdisablePreDex;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And my espresso tests were failing because of:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>org.example.SignupTests &gt; testCheckSignupPageDisplayed<span class="o">[</span>circleci-android22<span class="o">(</span>AVD<span class="o">)</span> - 5.1<span class="o">]</span> FAILED
+</span><span class='line'>  java.lang.RuntimeException: Waited <span class="k">for </span>the root of the view hierarchy to have window focus and not be requesting
+</span><span class='line'>  layout <span class="k">for </span>over 10 seconds. If you specified a non default root matcher,
+</span><span class='line'>  it may be picking a root that never takes focus. Otherwise, something is seriously wrong. Selected Root:
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Clearly something was wrong.</p>
+
+<p>So I decided to start taking some screenshots before my emulator ran tests</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>adb shell screencap -p | sed <span class="s1">&#39;s/\r$//&#39;</span> &gt; screen.png
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Upload to <a href="http://askubuntu.com/a/544450">imgur</a> for immediate viewing.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Unlock emulator</span>
+</span><span class='line'>- adb shell input keyevent 82
+</span><span class='line'><span class="c"># First download the bash script</span>
+</span><span class='line'>- wget http://imgur.com/tools/imgurbash.sh
+</span><span class='line'>- chmod a+x imgurbash.sh
+</span><span class='line'>- adb shell screencap -p | sed <span class="s1">&#39;s/\r$//&#39;</span> &gt; bootscreen.png
+</span><span class='line'>- ./imgurbash.sh bootscreen.png
+</span><span class='line'><span class="c"># Continue running some more tests</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&rsquo;s what I obtained when this ran:</p>
+
+<p><img src="http://i.imgur.com/TzPDvyj.png" alt="warning" /></p>
+
+<p><strong>So more often than not the cause of failure was the system process ANR blocking the espresso tests from getting anywhere.</strong></p>
+
+<p>Essentially whenever the Espresso test fail you must check what the UI looked like at that point of time, the view hierarchy dumped by Espresso does not give a clear indication of what happens on the emulator.</p>
+
+<p>Hope this helps someone who struggled with running espresso tests on CircleCI.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Styling Material Toolbar in Android]]></title>
@@ -1596,198 +1691,6 @@ public class HighlightedImageRadioButton extends RadioButton {
 <h3>Conclusion</h3>
 
 <p>Hopefully by the end of this guide, there is a working android development setup on your machine.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Deploying Rails on Nginx and Thin]]></title>
-    <link href="http://blog.mohitkanwal.com/blog/2013/04/10/deploying-rails-on-nginx-and-thin/"/>
-    <updated>2013-04-10T15:17:00+08:00</updated>
-    <id>http://blog.mohitkanwal.com/blog/2013/04/10/deploying-rails-on-nginx-and-thin</id>
-    <content type="html"><![CDATA[<p>I have been busy lately doing my Final Year Project which comprises of building a web based service for processing analysis jobs on patient data.</p>
-
-<p>I have developed the web service API using <a href="http://rubyonrails.org/">Rails</a> with MySQL being the backend database.</p>
-
-<p>For deployment purposes I had no idea which of the web servers to run as such I naturally googled online and found people talking about <a href="https://github.com/capistrano/capistrano">Capistrano</a>, a great way to have deployment scripts being run on the server.</p>
-
-<p>I needed something simple, I had seen the advantages of using SVN and <a href="http://nginx.com/">Nginx</a> as a means to deploy by SSH-ing to the server. This keeps things simple and lends us as much control as we need. So I explored.</p>
-
-<!--more-->
-
-
-<p>Here are instructions to setup a fresh copy of Ubuntu Precise Pangolin with the necessary goodies:</p>
-
-<h3>RVM</h3>
-
-<p>I highly recommend RVM to manage rubies and gems</p>
-
-<ul>
-<li>Install the pre-reqs</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion pkg-config
-</span><span class='line'>curl -L https://get.rvm.io | bash -s stable
-</span><span class='line'><span class="nb">exec</span> <span class="nv">$SHELL</span>
-</span><span class='line'>rvm install 1.9.3 --default
-</span><span class='line'>ruby -v
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Don&rsquo;t require rdoc and ri when installing gems:</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">echo</span> <span class="s2">&quot;gem: --no-ri --no-rdoc&quot;</span> &gt; ~/.gemrc
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>install the latest Rails (3.2.11):</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>gem i bundler rails
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Thin</h3>
-
-<p>Thin is a ruby server much like the default WebRIck that comes along packaged with the default version of rails.</p>
-
-<ul>
-<li>Install thin and make it have some sensible defaults</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>gem install thin
-</span><span class='line'>thin install
-</span><span class='line'>/usr/sbin/update-rc.d -f thin defaults <span class="c"># this updates the service to automatically start at login</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>Now assuming we have a rails app inisde the folder structure <code>/var/www/myapp.example.com</code> we now start the deployment process:</p></li>
-<li><p>Create a configuration</p></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>thin config -C /etc/thin/myapp.example.com -c /var/www/myapp.example.com --servers 3 -e development <span class="c"># or: -e production for caching, etc</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Nginx</h3>
-
-<p>Nginx is a Web Server and has better performance than Apache.</p>
-
-<ul>
-<li>Install Nginx</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install nginx
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Create a vHost. To do this, edit <code>/etc/nginx/sites-available/myapp.example.com</code></li>
-</ul>
-
-
-<p>This is a sample Nginx configuration for <code>myapp</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='nginx'><span class='line'><span class="k">upstream</span> <span class="s">myapp</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kn">server</span> <span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">3000</span><span class="p">;</span>
-</span><span class='line'>  <span class="kn">server</span> <span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">3001</span><span class="p">;</span>
-</span><span class='line'>  <span class="kn">server</span> <span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">3002</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="k">server</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kn">listen</span>   <span class="mi">80</span><span class="p">;</span>
-</span><span class='line'>  <span class="kn">server_name</span> <span class="s">.example.com</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kn">access_log</span> <span class="s">/var/www/myapp.example.com/log/access.log</span><span class="p">;</span>
-</span><span class='line'>  <span class="kn">error_log</span>  <span class="s">/var/www/myapp.example.com/log/error.log</span><span class="p">;</span>
-</span><span class='line'>  <span class="kn">root</span>     <span class="s">/var/www/myapp.example.com</span><span class="p">;</span>
-</span><span class='line'>  <span class="kn">index</span>    <span class="s">index.html</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kn">proxy_set_header</span>  <span class="s">X-Real-IP</span>  <span class="nv">$remote_addr</span><span class="p">;</span>
-</span><span class='line'>    <span class="kn">proxy_set_header</span>  <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
-</span><span class='line'>    <span class="kn">proxy_set_header</span>  <span class="s">Host</span> <span class="nv">$http_host</span><span class="p">;</span>
-</span><span class='line'>    <span class="kn">proxy_redirect</span>  <span class="no">off</span><span class="p">;</span>
-</span><span class='line'>    <span class="kn">try_files</span> <span class="s">/system/maintenance.html</span> <span class="nv">$uri</span> <span class="nv">$uri/index.html</span> <span class="nv">$uri.html</span> <span class="s">@ruby</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kn">location</span> <span class="s">@ruby</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kn">proxy_pass</span> <span class="s">http://myapp</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And make it enabled as well:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ln -nfs /etc/nginx/sites-available/myapp.example.com /etc/nginx/sites-enabled/myapp.example.com
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Switch the app Live</h3>
-
-<ul>
-<li>Restart the different daemons</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>/etc/init.d/thin restart
-</span><span class='line'>/etc/init.d/nginx reload
-</span><span class='line'>/etc/init.d/nginx restart
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now go visit <code>http://myapp</code> and it should show you the Rails page that you are supposed to see. Easy right?</p>
 ]]></content>
   </entry>
   
