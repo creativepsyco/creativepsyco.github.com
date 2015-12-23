@@ -9,6 +9,8 @@ categories: ["CircleCI", "Android", "Testing", "Espresso"]
 
 For device testing on CircleCI you will need to spin up an emulator, however, you can't really spin up `x86` images on the CircleCI containers because they cannot provide [KVM](https://discuss.circleci.com/t/provide-kvm-in-container/1179). As such you are left with ARM emulators which are notoriously extremely slow and end up causing flakiness in testing. Here are some tools which I regularly use to troubleshoot Android Emulators on CircleCI.
 
+<!--more-->
+
 ### Getting screenshots via ADB
 
 You definitely should get screenshots just after the emulator is started, to check if it is not unlocked.
