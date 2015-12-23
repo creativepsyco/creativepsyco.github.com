@@ -13,7 +13,7 @@
   <meta name="author" content="Mohit Kanwal">
 
   
-  <meta name="description" content="Troubleshooting Android Emulators on CircleCI written Dec 23rd, 2015 in Android, CircleCI, Espresso, Testing Troubleshooting Android Emulators on &hellip;">
+  <meta name="description" content="Troubleshooting Android Emulators on CircleCI written Dec 23rd, 2015 in Android, CircleCI, Espresso, Testing CircleCI is a very nifty cloud-hosted &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,9 +82,7 @@ in
 
 
         </div>
-        <h2>Troubleshooting Android Emulators on CircleCI</h2>
-
-<p><a href="https://circleci.com">CircleCI</a> is a very nifty cloud-hosted continuous integration tool. It allows you to write your code with the peace of mind that you have. You can setup testing for every push, every pull request, every git tag and so on. You can upload to <a href="http://hockeyapp.net">HockeyApp</a> or <a href="https://fabric.io">Fabric</a>. Everything gets tested, leaving you to write the best code possible.</p>
+        <p><a href="https://circleci.com">CircleCI</a> is a very nifty cloud-hosted continuous integration tool. It allows you to write your code with the peace of mind that you have. You can setup testing for every push, every pull request, every git tag and so on. You can upload to <a href="http://hockeyapp.net">HockeyApp</a> or <a href="https://fabric.io">Fabric</a>. Everything gets tested, leaving you to write the best code possible.</p>
 
 <p>For device testing on CircleCI you will need to spin up an emulator, however, you can&rsquo;t really spin up <code>x86</code> images on the CircleCI containers because they cannot provide <a href="https://discuss.circleci.com/t/provide-kvm-in-container/1179">KVM</a>. As such you are left with ARM emulators which are notoriously extremely slow and end up causing flakiness in testing. Here are some tools which I regularly use to troubleshoot Android Emulators on CircleCI.</p>
 

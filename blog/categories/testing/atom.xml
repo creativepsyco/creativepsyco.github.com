@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Testing | creativepsyco's Blog]]></title>
   <link href="http://blog.mohitkanwal.com/blog/categories/testing/atom.xml" rel="self"/>
   <link href="http://blog.mohitkanwal.com/"/>
-  <updated>2015-12-23T15:04:34+08:00</updated>
+  <updated>2015-12-23T15:05:33+08:00</updated>
   <id>http://blog.mohitkanwal.com/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -18,9 +18,7 @@
     <link href="http://blog.mohitkanwal.com/blog/2015/12/23/troubleshooting-android-emulators-on-circleci/"/>
     <updated>2015-12-23T12:12:01+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2015/12/23/troubleshooting-android-emulators-on-circleci</id>
-    <content type="html"><![CDATA[<h2>Troubleshooting Android Emulators on CircleCI</h2>
-
-<p><a href="https://circleci.com">CircleCI</a> is a very nifty cloud-hosted continuous integration tool. It allows you to write your code with the peace of mind that you have. You can setup testing for every push, every pull request, every git tag and so on. You can upload to <a href="http://hockeyapp.net">HockeyApp</a> or <a href="https://fabric.io">Fabric</a>. Everything gets tested, leaving you to write the best code possible.</p>
+    <content type="html"><![CDATA[<p><a href="https://circleci.com">CircleCI</a> is a very nifty cloud-hosted continuous integration tool. It allows you to write your code with the peace of mind that you have. You can setup testing for every push, every pull request, every git tag and so on. You can upload to <a href="http://hockeyapp.net">HockeyApp</a> or <a href="https://fabric.io">Fabric</a>. Everything gets tested, leaving you to write the best code possible.</p>
 
 <p>For device testing on CircleCI you will need to spin up an emulator, however, you can&rsquo;t really spin up <code>x86</code> images on the CircleCI containers because they cannot provide <a href="https://discuss.circleci.com/t/provide-kvm-in-container/1179">KVM</a>. As such you are left with ARM emulators which are notoriously extremely slow and end up causing flakiness in testing. Here are some tools which I regularly use to troubleshoot Android Emulators on CircleCI.</p>
 
