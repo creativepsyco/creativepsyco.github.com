@@ -5,8 +5,6 @@ date: 2015-12-23 12:12:01 +0800
 comments: true
 categories: ["CircleCI", "Android", "Testing", "Espresso"]
 ---
-## Troubleshooting Android Emulators on CircleCI
-
 [CircleCI][1] is a very nifty cloud-hosted continuous integration tool. It allows you to write your code with the peace of mind that you have. You can setup testing for every push, every pull request, every git tag and so on. You can upload to [HockeyApp][2] or [Fabric][3]. Everything gets tested, leaving you to write the best code possible.
 
 For device testing on CircleCI you will need to spin up an emulator, however, you can't really spin up `x86` images on the CircleCI containers because they cannot provide [KVM](https://discuss.circleci.com/t/provide-kvm-in-container/1179). As such you are left with ARM emulators which are notoriously extremely slow and end up causing flakiness in testing. Here are some tools which I regularly use to troubleshoot Android Emulators on CircleCI.
