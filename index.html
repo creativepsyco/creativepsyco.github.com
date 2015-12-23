@@ -108,110 +108,6 @@ Trolling you digitally about me I&#8217;m a software developer from India now li
 
 
 
-<h3>Getting screenshots via ADB</h3>
-
-
-
-
-<p>You definitely should get screenshots just after the emulator is started, to check if it is not unlocked.</p>
-
-
-
-
-<p>Here is a part of my <code>.circleci.yml</code> file:</p>
-
-
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Other depedencies etc.</span>
-</span><span class='line'>&ndash; emulator -avd circleci-android22 -no-audio -no-window:
-</span><span class='line'>    background: <span class="nb">true</span>
-</span><span class='line'><span class="nb">    </span>parallel: <span class="nb">true</span>
-</span><span class='line'>&ndash; circle-android <span class="nb">wait</span>-for-boot
-</span><span class='line'>&ndash; sleep 30
-</span><span class='line'><span class="c"># Unlock the screen</span>
-</span><span class='line'>&ndash; adb shell input keyevent 82
-</span><span class='line'><span class="c"># Run espresso tests</span>
-</span><span class='line'>&ndash; ./gradlew :app:connectedDebugAndroidTest -PdisablePreDex;
-</span></code></pre></td></tr></table></div></figure></p>
-
-<p>And my espresso tests were failing because of:</p>
-
-
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>org.example.SignupTests &gt; testCheckSignupPageDisplayed<span class="o">[</span>circleci-android22<span class="o">(</span>AVD<span class="o">)</span> &ndash; 5.1<span class="o">]</span> FAILED
-</span><span class='line'>  java.lang.RuntimeException: Waited <span class="k">for </span>the root of the view hierarchy to have window focus and not be requesting
-</span><span class='line'>  layout <span class="k">for </span>over 10 seconds. If you specified a non default root matcher,
-</span><span class='line'>  it may be picking a root that never takes focus. Otherwise, something is seriously wrong. Selected Root:
-</span></code></pre></td></tr></table></div></figure></p>
-
-<p>Clearly something was wrong.</p>
-
-
-
-
-<p>So I decided to start taking some screenshots before my emulator ran tests</p>
-
-
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>adb shell screencap -p | sed <span class="s1">&#39;s/\r$//&#39;</span> &gt; screen.png
-</span></code></pre></td></tr></table></div></figure></p>
-
-<p>Upload to <a href="http://askubuntu.com/a/544450">imgur</a> for immediate viewing.</p>
-
-
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Unlock emulator</span>
-</span><span class='line'>&ndash; adb shell input keyevent 82
-</span><span class='line'><span class="c"># First download the bash script</span>
-</span><span class='line'>&ndash; wget <a href="http://imgur.com/tools/imgurbash.sh">http://imgur.com/tools/imgurbash.sh</a>
-</span><span class='line'>&ndash; chmod a+x imgurbash.sh
-</span><span class='line'>&ndash; adb shell screencap -p | sed <span class="s1">&#39;s/\r$//&#39;</span> &gt; bootscreen.png
-</span><span class='line'>&ndash; ./imgurbash.sh bootscreen.png
-</span><span class='line'><span class="c"># Continue running some more tests</span>
-</span></code></pre></td></tr></table></div></figure></p>
-
-<p>Here&rsquo;s what I obtained when this ran:</p>
-
-
-
-
-<p><img src="http://i.imgur.com/TzPDvyj.png" alt="warning" /></p>
-
-
-
-
-<p><strong>So more often than not the cause of failure was the system process ANR blocking the espresso tests from getting anywhere.</strong></p>
-
-
-
-
-<p>Essentially whenever the Espresso test fail you must check what the UI looked like at that point of time, the view hierarchy dumped by Espresso does not give a clear indication of what happens on the emulator.</p>
-
-
-
-
-<p>Hope this helps someone who struggled with running espresso tests on CircleCI.</p>
-
-
   </p>
   <span class="meta">
     written 
@@ -240,6 +136,8 @@ in
 
   </span>
 
+  
+    <a class="full-article-link pull-right" rel="full-article" href="/blog/2015/12/23/troubleshooting-android-emulators-on-circleci/">Read on &rarr;</a>
   
 </article>
 

@@ -70,83 +70,9 @@
   <h2><a href="/blog/2015/12/23/troubleshooting-android-emulators-on-circleci/">Troubleshooting Android Emulators on CircleCI</a></h2>
   
   <p>
-    <p><a href="https://circleci.com">CircleCI</a> is a very nifty cloud-hosted continuous integration tool. It allows you to write your code with the peace of mind that you have. You can setup testing for every push, every pull request, every git tag and so on. You can upload to <a href="http://hockeyapp.net">HockeyApp</a> or <a href="https://fabric.io">Fabric</a>. Everything gets tested, leaving you to write the best code possible.</p>
+    <p>[CircleCI][1] is a very nifty cloud-hosted continuous integration tool. It allows you to write your code with the peace of mind that you have. You can setup testing for every push, every pull request, every git tag and so on. You can upload to [HockeyApp][2] or [Fabric][3]. Everything gets tested, leaving you to write the best code possible.</p>
 
 <p>For device testing on CircleCI you will need to spin up an emulator, however, you can&rsquo;t really spin up <code>x86</code> images on the CircleCI containers because they cannot provide <a href="https://discuss.circleci.com/t/provide-kvm-in-container/1179">KVM</a>. As such you are left with ARM emulators which are notoriously extremely slow and end up causing flakiness in testing. Here are some tools which I regularly use to troubleshoot Android Emulators on CircleCI.</p>
-
-<h3>Getting screenshots via ADB</h3>
-
-<p>You definitely should get screenshots just after the emulator is started, to check if it is not unlocked.</p>
-
-<p>Here is a part of my <code>.circleci.yml</code> file:</p>
-
-<p>``` bash</p>
-
-<h1>Other depedencies etc.</h1>
-
-<ul>
-<li>emulator -avd circleci-android22 -no-audio -no-window:
-  background: true
-  parallel: true</li>
-<li>circle-android wait-for-boot</li>
-<li>sleep 30
-
-<h1>Unlock the screen</h1></li>
-<li>adb shell input keyevent 82
-
-<h1>Run espresso tests</h1></li>
-<li>./gradlew :app:connectedDebugAndroidTest -PdisablePreDex;
-```</li>
-</ul>
-
-
-<p>And my espresso tests were failing because of:
-```
-org.example.SignupTests > testCheckSignupPageDisplayed[circleci-android22(AVD) &ndash; 5.1] FAILED</p>
-
-<pre><code>java.lang.RuntimeException: Waited for the root of the view hierarchy to have window focus and not be requesting
-</code></pre>
-
-<p>  layout for over 10 seconds. If you specified a non default root matcher,
-  it may be picking a root that never takes focus. Otherwise, something is seriously wrong. Selected Root:
-```</p>
-
-<p>Clearly something was wrong.</p>
-
-<p>So I decided to start taking some screenshots before my emulator ran tests
-<code>
-adb shell screencap -p | sed 's/\r$//' &gt; screen.png
-</code></p>
-
-<p>Upload to <a href="http://askubuntu.com/a/544450">imgur</a> for immediate viewing.
-``` bash</p>
-
-<h1>Unlock emulator</h1>
-
-<ul>
-<li>adb shell input keyevent 82
-
-<h1>First download the bash script</h1></li>
-<li>wget <a href="http://imgur.com/tools/imgurbash.sh">http://imgur.com/tools/imgurbash.sh</a></li>
-<li>chmod a+x imgurbash.sh</li>
-<li>adb shell screencap -p | sed &rsquo;s/\r$//&lsquo; > bootscreen.png</li>
-<li>./imgurbash.sh bootscreen.png
-
-<h1>Continue running some more tests</h1>
-
-<p>```</p></li>
-</ul>
-
-
-<p>Here&rsquo;s what I obtained when this ran:</p>
-
-<p><img src="http://i.imgur.com/TzPDvyj.png" alt="warning" /></p>
-
-<p><strong>So more often than not the cause of failure was the system process ANR blocking the espresso tests from getting anywhere.</strong></p>
-
-<p>Essentially whenever the Espresso test fail you must check what the UI looked like at that point of time, the view hierarchy dumped by Espresso does not give a clear indication of what happens on the emulator.</p>
-
-<p>Hope this helps someone who struggled with running espresso tests on CircleCI.</p>
 
   </p>
   <span class="meta">
@@ -176,6 +102,8 @@ in
 
   </span>
 
+  
+    <a class="full-article-link pull-right" rel="full-article" href="/blog/2015/12/23/troubleshooting-android-emulators-on-circleci/">Read on &rarr;</a>
   
 </article>
 
