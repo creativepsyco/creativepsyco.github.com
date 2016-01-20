@@ -4,7 +4,7 @@
   <title><![CDATA[creativepsyco's Blog]]></title>
   <link href="http://blog.mohitkanwal.com/atom.xml" rel="self"/>
   <link href="http://blog.mohitkanwal.com/"/>
-  <updated>2015-12-23T15:06:27+08:00</updated>
+  <updated>2016-01-20T12:12:23+08:00</updated>
   <id>http://blog.mohitkanwal.com/</id>
   <author>
     <name><![CDATA[Mohit Kanwal]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Troubleshooting Android Emulators on CircleCI]]></title>
+    <title type="html"><![CDATA[Troubleshooting Android emulators on CircleCI]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2015/12/23/troubleshooting-android-emulators-on-circleci/"/>
     <updated>2015-12-23T12:12:01+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2015/12/23/troubleshooting-android-emulators-on-circleci</id>
@@ -226,7 +226,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Fixing Android Studio Startup on Mac: A Valid JVM Was Not Found on This Machine]]></title>
+    <title type="html"><![CDATA[Fixing Android Studio startup on Mac: A valid JVM was not found on this machine]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2014/12/26/fixing-android-studio-startup-on-mac-a-valid-jvm-was-not-found-on-this-machine/"/>
     <updated>2014-12-26T02:25:02+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2014/12/26/fixing-android-studio-startup-on-mac-a-valid-jvm-was-not-found-on-this-machine</id>
@@ -274,7 +274,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Set Background That Does Not Resize on Soft Keyboard]]></title>
+    <title type="html"><![CDATA[Set Background that does not resize on Soft Keyboard]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2014/05/12/set-background-that-does-not-resize-on-soft-keyboard/"/>
     <updated>2014-05-12T14:29:45+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2014/05/12/set-background-that-does-not-resize-on-soft-keyboard</id>
@@ -504,7 +504,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[WebView Vulnerability in Facebook Android SDK: Embedded OAuth]]></title>
+    <title type="html"><![CDATA[WebView vulnerability in Facebook Android SDK: Embedded OAuth]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2014/02/02/webview-vulnerability-in-facebook-android-sdk-embedded-oauth/"/>
     <updated>2014-02-02T04:24:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2014/02/02/webview-vulnerability-in-facebook-android-sdk-embedded-oauth</id>
@@ -540,7 +540,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Rooting Samsung Galaxy S3 GT-I9305 With CyanogenMod Jelly Bean 4.2.2]]></title>
+    <title type="html"><![CDATA[Rooting Samsung Galaxy S3 GT-I9305 with CyanogenMod Jelly Bean 4.2.2]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2014/02/02/rooting-samsung-galaxy-s3-gt-i9305-with-cyanogenmod-jelly-bean-4-dot-2-2/"/>
     <updated>2014-02-02T03:36:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2014/02/02/rooting-samsung-galaxy-s3-gt-i9305-with-cyanogenmod-jelly-bean-4-dot-2-2</id>
@@ -624,7 +624,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Doing a Proper Github Pull Request]]></title>
+    <title type="html"><![CDATA[Doing a proper Github pull request]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2014/01/24/doing-a-proper-github-pull-request/"/>
     <updated>2014-01-24T16:16:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2014/01/24/doing-a-proper-github-pull-request</id>
@@ -707,7 +707,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Android Activity: Problem With Posting Runnables]]></title>
+    <title type="html"><![CDATA[Android Activity: Problem with Posting Runnables]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2014/01/05/android-activity-problem-with-posting-runnables/"/>
     <updated>2014-01-05T23:44:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2014/01/05/android-activity-problem-with-posting-runnables</id>
@@ -767,7 +767,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Optimizing Google Protocol Buffers With Wire]]></title>
+    <title type="html"><![CDATA[Optimizing Google Protocol Buffers with Wire]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2013/12/31/optimizing-google-protocol-buffers-with-wire/"/>
     <updated>2013-12-31T02:10:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2013/12/31/optimizing-google-protocol-buffers-with-wire</id>
@@ -827,7 +827,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Open Source Is an Ideology Not a Verb]]></title>
+    <title type="html"><![CDATA[Open Source is an ideology not a verb]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2013/11/05/open-source-is-an-ideology/"/>
     <updated>2013-11-05T10:30:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2013/11/05/open-source-is-an-ideology</id>
@@ -850,7 +850,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Hide Keyboard for Multiple Edit Boxes in a Page]]></title>
+    <title type="html"><![CDATA[Hide Keyboard for multiple Edit Boxes in a page]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2013/11/04/hide-keyboard-for-multiple-edit-boxes-in-a-page/"/>
     <updated>2013-11-04T11:54:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2013/11/04/hide-keyboard-for-multiple-edit-boxes-in-a-page</id>
@@ -894,7 +894,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Install Ia32-libs in Saucy Salamander Ubuntu 13.10]]></title>
+    <title type="html"><![CDATA[Install ia32-libs in Saucy Salamander Ubuntu 13.10]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2013/10/20/install-ia32-libs-in-saucy-salamander-ubuntu-13-dot-10/"/>
     <updated>2013-10-20T23:55:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2013/10/20/install-ia32-libs-in-saucy-salamander-ubuntu-13-dot-10</id>
@@ -947,7 +947,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Android Programming Tip#1: Making a Custom Centre Aligned Radio Button With a State List Drawable]]></title>
+    <title type="html"><![CDATA[Android Programming Tip#1: Making a Custom Centre Aligned Radio Button with a State List Drawable]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2013/10/02/making-a-custom-centre-aligned-radio-button-with-a-state-list-drawable/"/>
     <updated>2013-10-02T19:10:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2013/10/02/making-a-custom-centre-aligned-radio-button-with-a-state-list-drawable</id>
@@ -1173,7 +1173,7 @@ public class HighlightedImageRadioButton extends RadioButton {
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[PhoneLib Bug Regarding Cant Find Proto]]></title>
+    <title type="html"><![CDATA[PhoneLib bug regarding cant find proto]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2013/09/27/phonelib-bug-regarding-cant-find-proto/"/>
     <updated>2013-09-27T10:30:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2013/09/27/phonelib-bug-regarding-cant-find-proto</id>
@@ -1200,7 +1200,7 @@ public class HighlightedImageRadioButton extends RadioButton {
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Finding a Perfect Dev Environment]]></title>
+    <title type="html"><![CDATA[Finding a perfect dev environment]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2013/07/04/finding-a-perfect-dev-environment/"/>
     <updated>2013-07-04T13:51:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2013/07/04/finding-a-perfect-dev-environment</id>
@@ -1532,7 +1532,7 @@ public class HighlightedImageRadioButton extends RadioButton {
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[My Final Year Project - a Web App Hosting for Apps]]></title>
+    <title type="html"><![CDATA[My Final Year Project - A web app hosting for apps]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2013/05/21/my-final-year-project-a-web-app-hosting-for-apps/"/>
     <updated>2013-05-21T21:53:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2013/05/21/my-final-year-project-a-web-app-hosting-for-apps</id>
@@ -1552,7 +1552,7 @@ public class HighlightedImageRadioButton extends RadioButton {
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Making Sense of Vacations - Geek Style]]></title>
+    <title type="html"><![CDATA[Making sense of vacations - Geek Style]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2013/05/21/making-sense-of-vacations-geek-style/"/>
     <updated>2013-05-21T21:44:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2013/05/21/making-sense-of-vacations-geek-style</id>
@@ -1577,7 +1577,7 @@ public class HighlightedImageRadioButton extends RadioButton {
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Android Development Within a Virtual Machine]]></title>
+    <title type="html"><![CDATA[Android Development within a Virtual Machine]]></title>
     <link href="http://blog.mohitkanwal.com/blog/2013/04/23/android-development-within-a-virtual-machine/"/>
     <updated>2013-04-23T17:30:00+08:00</updated>
     <id>http://blog.mohitkanwal.com/blog/2013/04/23/android-development-within-a-virtual-machine</id>

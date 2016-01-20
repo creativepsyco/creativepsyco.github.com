@@ -1,88 +1,41 @@
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>Solving Cross Origin Resource Sharing Policies Sinatra and BackboneJS - creativepsyco's Blog</title>
-  <meta name="author" content="Mohit Kanwal">
+	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta charset="utf-8">
+	<title>Solving Cross Origin Resource Sharing policies Sinatra and BackboneJS | creativepsyco's Blog</title>
 
-  
-  <meta name="description" content="Solving Cross Origin Resource Sharing Policies Sinatra and BackboneJS written Oct 22nd, 2012 in BackboneJS Admit it. There are so many times you &hellip;">
-  
+	<meta name="author" content="Mohit Kanwal">
+	
+	<meta name="description" content="A Blog of all things digital">
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="HandheldFriendly" content="True" />
+	<meta name="MobileOptimized" content="320" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  
-  <link rel="canonical" href="http://blog.mohitkanwal.com/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-36037120-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
+	<link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic|Open+Sans:700,400" />
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/.min.css" />
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 </head>
 
-  <body>
-    <a href="/" class="home-icon">
-      <img src="/images/home.png"/>
-    </a>
 
-    <article role="article" class="full-single-article">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <h1>Solving Cross Origin Resource Sharing Policies Sinatra and BackboneJS</h1>
-        <div class="meta">
-          written 
-
-
-
-
-
-
-
-
+<body class="post-template">
+  <main class="content" role="main"><article class="post">
   
+	<header class="post-header">
+		<a id="blog-logo" href="/">creativepsyco's Blog</a>
+	</header>
+	<span class="post-meta">22 Oct 2012</span>
+	<h1 class="post-title">Solving Cross Origin Resource Sharing Policies Sinatra and BackboneJS</h1>
 
-
-
-<time datetime="2012-10-22T22:57:00+08:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2012</time>
-          
-
-in
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/backbonejs/'>BackboneJS</a>
-  
-</span>
-
-
-        </div>
-        <p>Admit it. There are so many times you wish that the localhost-ed version of the application that you are developing in BacboneJS just works. But it doesn&rsquo;t. And there is only one reason why it doesn&rsquo;t work.</p>
+	<section class="post-content">
+		<p>Admit it. There are so many times you wish that the localhost-ed version of the application that you are developing in BacboneJS just works. But it doesn&rsquo;t. And there is only one reason why it doesn&rsquo;t work.</p>
 
 <h2>Cross Origin Resource Sharing</h2>
 
@@ -101,77 +54,69 @@ in
 
 <p>This snippet will add a header to the response that will allow cross-origin javascript coming specifically from localhost to be able to call the server and get a response.</p>
 
+	</section>
 
-        <hr class="divider-short"/>
-
-        
-        <section>
-          <h1>Comments</h1>
-          <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-        </section>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-<hr class="divider-short"/>
-
-<div class="archive-link">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        
-          <a class="pull-left" href="/blog/2012/10/22/node-js-script-to-run-a-web-server-for-backbone-etc/" title="Previous Post: Node JS Script to run a web server for Backbone etc">&laquo; Previous: Node JS Script to run a web server for Backbone etc</a>
-        
-
-        
-          <a class="pull-right" href="/blog/2012/11/02/new-technologies-galore/" title="Next Post: New Technologies Galore">Next: New Technologies Galore &raquo;</a>
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-    <footer id="footer" class="her-row">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-1">
-  <a href="/"><h4>Home</h4></a>
-</div>
-
-<div class="col-md-2">
-  <div class="social-icon-list">
-    
-    <a href="https://twitter.com/mohitkanwal"><img src="/images/glyphicons_social_31_twitter.png"/></a>
-    
-
-    
-    <a href="https://github.com/creativepsyco"><img src="/images/glyphicons_social_21_github.png"/></a>
-    
-
-    
-    <a href="https://linkedin.com/in/mskanwal"><img src="/images/glyphicons_social_17_linked_in.png"/></a>
-    
-
-    
-    <a href="mailto:mohit.kanwal+blog@gmail.com"><img src="/images/glyphicons_social_39_e-mail.png"/></a>
-    
-  </div>
-</div>
-
-<div class="pull-right">
-  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
-</div>
-
-
-    </div>
-  </div>
+  <footer class="post-footer">
+  <section class="author">
+    <h4>Mohit Kanwal</h4>
+    <p></p>
+  </section>
+  <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=Solving Cross Origin Resource Sharing policies Sinatra and BackboneJS&amp;url=http://blog.mohitkanwal.com/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.mohitkanwal.com/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://blog.mohitkanwal.com/blog/2012/10/22/solving-cross-origin-resource-sharing-policies-sinatra-and-backbonejs/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+    </a>
+  </section>
 </footer>
+  <hr>
+  
+    <div class="share">
+</div>
 
-    
-      
+  
+  
+  <section id="comment">
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+  
+</article></main>
+  <footer class="site-footer"><a class="subscribe icon-feed" href="http://blog.mohitkanwal.com/atom.xml"><span class="tooltip">Subscribe!</span></a>
+
+
+<div class="inner">
+
+
+Follow me on
+
+
+
+<a class="social twitter" href="http://twitter.com/mohitkanwal" title="Twitter">Twitter</a>
+
+
+
+<a class="social github" href="http://github.com/creativepsyco" title="GitHub">GitHub</a>
+
+
+
+
+<section class="copyright">All content copyright <a href="/">Mohit Kanwal</a> © 2016 • All rights reserved.</section>
+
+<section class="poweredby">Casper theme by <a class="icon-ghost" href="http://tryghost.org">Ghost</a> &amp; Published with <a href="http://octopress.org">Octopress</a></section>
+
+</div>
+</footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+
+
 
 <script type="text/javascript">
       var disqus_shortname = 'creativepyscoblog';
@@ -184,12 +129,25 @@ in
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
 
 
-    
-  </body>
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-36037120-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</body>
 </html>
