@@ -63,6 +63,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 # ----------------------- #
 
 # Github repositories
+# 9uANZ3cTCf
 github_user: creativepsyco
 github_repo_count: 6
 github_show_profile_link: true
@@ -105,3 +106,6 @@ facebook_like: true
 
 # Linkedin
 linkedin_user: mskanwal
+
+# HighlightJS
+highlight_js_color_theme: solarized_dark

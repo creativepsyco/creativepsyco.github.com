@@ -1,3 +1,9 @@
 [submodule ".themes/MediumFox"]
 	path = .themes/MediumFox
 	url = https://github.com/sevenadrian/MediumFox
+[submodule ".themes/object"]
+	path = .themes/object
+	url = https://github.com/gluttony/object-octopress-theme.git
+[submodule ".themes/casper"]
+	path = .themes/casper
+	url = https://github.com/jkrmr/casper.git

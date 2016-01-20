@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 group :development do
 #  gem 'rake', '~> 0.9'
-  gem 'rake'
+  gem 'rake', '~>10.3.2'
   gem 'jekyll', '~> 0.12'
   gem 'rdiscount', '~> 2.0.7'
   gem 'pygments.rb', '~> 0.3.4'
@@ -19,5 +19,4 @@ group :development do
 end
 
 gem 'sinatra', '~> 1.4.2'
-
 gem 'execjs'

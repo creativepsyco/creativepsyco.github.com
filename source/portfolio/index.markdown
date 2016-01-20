@@ -2,7 +2,7 @@
 layout: page
 title: "portfolio"
 date: 2012-11-02 01:50
-comments: true
+comments: false
 sharing: true
 footer: true
 ---
@@ -19,13 +19,13 @@ Here's a detailed list of the stuff I have done or been involved in doing over t
 
 ## Recent Past
 
-#### Automated Cloud Testing Portal 
+#### Automated Cloud Testing Portal
 
 That's me at work. Ha Ha!
 
 <img src="https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-ash3/558406_4185892927612_1772865225_n.jpg" width="350px" />
 
-#### Hacks@Mozilla 
+#### Hacks@Mozilla
 
 #### Google Summer of Code 2011
 

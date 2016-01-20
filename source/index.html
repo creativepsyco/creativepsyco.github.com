@@ -2,37 +2,36 @@
 layout: default
 ---
 
-<div class="home-page">
-  <div class="hero">
-    {% include custom/hero.html %}
-  </div>
+{% assign index = true %}
+{% assign is_first_post = true %}
 
-  <div class="home-field">
-    <div class="home-landing her-row">
-      <div class="container">
-        <div class="row">
-          {% include custom/home_landing_row.html %}
-        </div>
-      </div>
-    </div>
+{% for post in paginator.posts %}
+  {% assign content = post.content %}
+    <article class="post">
+      {% include article.html %}
+    </article>
+{% endfor %}
 
-    <div class="article-list">
-      <div class="container">
-        {% for post in paginator.posts %}
-          {% assign content = post.content %}
-          <div class="row">
-            <div class="col-md-offset-2 col-md-8">
-              {% include article_listing.html %}
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
+<nav class="pagination" role="pagination">
+  {% if paginator.previous_page %}
+    {% assign url = site.paginate_directory | append:'/' | append:paginator.previous_page %}
 
-    <hr class="divider-short"/>
+    {% if paginator.previous_page == 1 %}
+      {% assign url = "/" %}
+    {% endif %}
 
-    <div class="archive-link">
-      <h3><a href="/posts/">All Posts</a></h3>
-    </div>
-  </div>
-</div>
+    <a class="newer-posts" href="{{ url }}"> ← Newer Posts </a>
+  {% endif %}
+
+  <span class="page-number">
+    Page {{ paginator.page }} of {{ paginator.total_pages }}
+  </span>
+
+  {% if paginator.next_page %}
+    <a class="older-posts"
+        href="{{ site.paginate_directory }}/{{ paginator.next_page }}">
+      Older Posts →
+    </a>
+  {% endif %}
+</nav>
+
