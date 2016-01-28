@@ -200,7 +200,9 @@ grep -E &amp;quot;^setenv&amp;quot; /etc/launchd.conf | xargs -t -L 1 launchctl
       <pubDate>Mon, 12 May 2014 00:00:00 +0000</pubDate>
       
       <guid>https://creativepsyco.github.io/blog/2014/05/12/set-background-that-does-not-resize-on-soft-keyboard/</guid>
-      <description>&lt;p&gt;###Problem&lt;/p&gt;
+      <description>
+
+&lt;h3 id=&#34;problem:487b7e36c9c5aaa574f82f8967de7948&#34;&gt;Problem&lt;/h3&gt;
 
 &lt;p&gt;Here is an interesting problem. Let&amp;rsquo;s say you are in a particular view, and you want to be able to set a background. You simple use the &lt;code&gt;View.setBackground(Drawable)&lt;/code&gt; or &lt;code&gt;View.setBackgroundDrawable(Drawable)&lt;/code&gt; call to do this. However once you do this, you realize that whenever the soft keyboard is opened it pushes your view to the top/resizes it such that your background looks squished.&lt;/p&gt;
 
@@ -208,7 +210,7 @@ grep -E &amp;quot;^setenv&amp;quot; /etc/launchd.conf | xargs -t -L 1 launchctl
 
 &lt;p&gt;&lt;img src=&#34;https://creativepsyco.github.io/images/flat_background.jpg&#34; alt=&#34;Image&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;###Solution&lt;/p&gt;
+&lt;h3 id=&#34;solution:487b7e36c9c5aaa574f82f8967de7948&#34;&gt;Solution&lt;/h3&gt;
 
 &lt;p&gt;The solution is quite simple:&lt;/p&gt;
 
