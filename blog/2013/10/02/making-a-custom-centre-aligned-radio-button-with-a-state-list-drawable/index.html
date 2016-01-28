@@ -1,43 +1,94 @@
-
-<!DOCTYPE HTML>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<meta charset="utf-8">
-	<title>Android Programming Tip#1: Making a Custom Centre Aligned Radio Button with a State List Drawable | creativepsyco's Blog</title>
-
-	<meta name="author" content="Mohit Kanwal">
-	
-	<meta name="description" content="A Blog of all things digital">
-
-	<meta name="HandheldFriendly" content="True" />
-	<meta name="MobileOptimized" content="320" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-	<link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
-	<link rel="canonical" href="">
-	<link href="/favicon.png" rel="shortcut icon">
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic|Open+Sans:700,400" />
-	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css" />
-	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-</head>
-
-
-<body class="post-template">
-  <main class="content" role="main"><article class="post">
+<!DOCTYPE html>
+<html lang="en-us">
+<head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <meta property="og:title" content=" making a custom centre aligned radio button with a state list drawable &middot;  creativepsyco&#39;s blog" />
   
-	<header class="post-header">
-		<a id="blog-logo" href="/">creativepsyco's Blog</a>
-	</header>
-	<span class="post-meta">02 Oct 2013</span>
-	<h1 class="post-title">Android Programming Tip#1: Making a Custom Centre Aligned Radio Button With a State List Drawable</h1>
+  <meta property="og:site_name" content="creativepsyco&#39;s blog" />
+  <meta property="og:url" content="https://creativepsyco.github.io/blog/2013/10/02/making-a-custom-centre-aligned-radio-button-with-a-state-list-drawable/" />
+  
+  
+  <meta property="og:type" content="article" />
+  
+  <meta property="og:article:published_time" content="2013-10-02T00:00:00Z" />
+  
+  
 
-	<section class="post-content">
-		<h3>Custom Widgets</h3>
+  <title>
+     making a custom centre aligned radio button with a state list drawable &middot;  creativepsyco&#39;s blog
+  </title>
 
-<p>These days I have been working extensively on apps for the Android Platform. And one thing keeps coming back to me: Resuse of components and widgets. Although most of the time when you are doing simple apps, you don&rsquo;t really pay much attention to the type of design and navigation strategies (<code>SINGLE_TOP</code> activities vs <code>SINGLE_TASK</code> blah.. blah) but when you are faced with putting different kinds of components in a single view then you probably have shuddered to think whether you were better off accomplishing this as a separate widget of its own. As can be seen from Romain Guy&rsquo;s <a href="http://www.youtube.com/watch?v=NYtB6mlu7vA">Google IO Talk</a>, developing custom views has its own significant advantages.</p>
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/main.css" />
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/highlight.css" />
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/animate.css" />
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/font-awesome.min.css" />
+  <link rel="shortcut icon" href="https://creativepsyco.github.io/images/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://creativepsyco.github.io/images/apple-touch-icon.png" />
+  
+</head>
+<body>
+    <header class="global-header">
+    <section class="header-text">
+      <h1><a href="https://creativepsyco.github.io/" onmouseover="this.className+='animated pulse'">creativepsyco&#39;s blog</a></h1>
+	  
+      <div class="tag-line">
+        Random thoughts on Android, software and life
+      </div>
+      
+      <div class="sns-links hidden-print">
+  
+  <a href="mailto:mohit.kanwal@gmail.com">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+  
+  
+  
+  
+  
+  <a href="https://github.com/creativepsyco" target="_blank">
+    <i class="fa fa-github"></i>
+  </a>
+  
+  
+  
+  
+</div>
+
+      
+      <a href="https://creativepsyco.github.io/" class="btn-header btn-back hidden-xs">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        &nbsp;Home
+      </a>
+      
+      
+    </section>
+  </header>
+  <main class="container">
+
+
+<article>
+  <header>
+    <h1 class="text-primary">making a custom centre aligned radio button with a state list drawable</h1>
+    <div class="post-meta clearfix">
+      <div class="post-date pull-left">
+        Posted on
+        <time datetime="2013-10-02T00:00:00Z">
+          Oct 2, 2013
+        </time>
+      </div>
+      <div class="pull-right">
+        
+      </div>
+    </div>
+  </header>
+  <section>
+    
+
+<p>###Custom Widgets
+These days I have been working extensively on apps for the Android Platform. And one thing keeps coming back to me: Resuse of components and widgets. Although most of the time when you are doing simple apps, you don&rsquo;t really pay much attention to the type of design and navigation strategies (<code>SINGLE_TOP</code> activities vs <code>SINGLE_TASK</code> blah.. blah) but when you are faced with putting different kinds of components in a single view then you probably have shuddered to think whether you were better off accomplishing this as a separate widget of its own. As can be seen from Romain Guy&rsquo;s <a href="http://www.youtube.com/watch?v=NYtB6mlu7vA">Google IO Talk</a>, developing custom views has its own significant advantages.</p>
 
 <p>Some of the advantages are as follows:</p>
 
@@ -48,77 +99,33 @@
 <li>Other general advantages due to code reuse</li>
 </ul>
 
-
 <p>So let&rsquo;s dive into how I managed to make a custom widget for one of the apps.</p>
 
-<!--more-->
-
-
-<h2>The Problem</h2>
+<h2 id="the-problem:c1ec964d32ef99bcc8f6772118889848">The Problem</h2>
 
 <p>Develop a custom control that behaves like a radio button but has a custom icon instead of the ordinary radio button icon and also has two drawable states to show when in highlighted mode as well as normal mode</p>
 
-<h2>The Solution</h2>
+<h2 id="the-solution:c1ec964d32ef99bcc8f6772118889848">The Solution</h2>
 
 <p>Once you know how to create custom widgets its very easy.</p>
 
 <p>First start by creating the attibutes your control will have in <code>attrs.xml</code></p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'> <span class="nt">&lt;declare-styleable</span> <span class="na">name=</span><span class="s">&quot;HighlightedImageRadioButton&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;attr</span> <span class="na">name=</span><span class="s">&quot;focusedDrawable&quot;</span> <span class="na">format=</span><span class="s">&quot;reference&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;attr</span> <span class="na">name=</span><span class="s">&quot;normalDrawable&quot;</span> <span class="na">format=</span><span class="s">&quot;reference&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'> <span class="nt">&lt;/declare-styleable&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<pre><code class="language-xml"> &lt;declare-styleable name=&quot;HighlightedImageRadioButton&quot;&gt;
+        &lt;attr name=&quot;focusedDrawable&quot; format=&quot;reference&quot;/&gt;
+        &lt;attr name=&quot;normalDrawable&quot; format=&quot;reference&quot; /&gt;
+ &lt;/declare-styleable&gt;
+</code></pre>
 
 <p>Here we have 2 drawables that will function as our highlighted and normal state drawables respectively</p>
 
 <p>Then, create your custom radio button by extending from <code>RadioButton</code></p>
 
-<div><script src='https://gist.github.com/creativepsyco/6821592.js'></script>
-<noscript><pre><code>
-public class HighlightedImageRadioButton extends RadioButton {
+<p>{% gist 6821592 %}</p>
 
+<p>There&rsquo;s is a trick though, you need to center align the drawable since the default <code>RadioButton</code> is left aligned and has a text on the right side. To do this you need to override the <code>onDraw</code> method:</p>
 
-    private Drawable buttonDrawable;
-
-    public HighlightedImageRadioButton(Context context) {
-        super(context);
-    }
-
-    public HighlightedImageRadioButton(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initHighlightedImageRadioButton(context, attrs, 0);
-    }
-
-    public HighlightedImageRadioButton(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-
-        initHighlightedImageRadioButton(context, attrs, defStyle);
-    }
-
-    private void initHighlightedImageRadioButton(Context context, AttributeSet attrs, int defStyle) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HighlightedImageRadioButton, defStyle, 0);
-        if (a == null) return;
-        Drawable normalDrawable = a.getDrawable(R.styleable.HighlightedImageRadioButton_normalDrawable);
-        Drawable focusedDrawable = a.getDrawable(R.styleable.HighlightedImageRadioButton_focusedDrawable);
-
-        StateListDrawable stateListDrawable = new StateListDrawable();
-        stateListDrawable.addState(new int[]{android.R.attr.state_enabled, android.R.attr.state_focused}, focusedDrawable);
-        stateListDrawable.addState(new int[]{android.R.attr.state_checked, android.R.attr.state_enabled}, focusedDrawable);
-        stateListDrawable.addState(new int[]{android.R.attr.state_enabled, android.R.attr.state_pressed}, focusedDrawable);
-        stateListDrawable.addState(new int[]{android.R.attr.state_enabled, android.R.attr.state_selected}, focusedDrawable);
-        stateListDrawable.addState(new int[]{android.R.attr.state_enabled}, normalDrawable);
-
-        buttonDrawable = stateListDrawable;
-        setButtonDrawable(R.drawable.beetalk_common_buzz_transparent_bg);
-    }
-
-    /**
+<pre><code class="language-java">	/**
      * Fix for putting the drawable in the center
      * notice that we put the background color of the drawable to transparent
      *
@@ -127,14 +134,14 @@ public class HighlightedImageRadioButton extends RadioButton {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
+ 
         if (buttonDrawable != null) {
             buttonDrawable.setState(getDrawableState());
             final int verticalGravity = getGravity() &amp; Gravity.VERTICAL_GRAVITY_MASK;
             final int height = buttonDrawable.getIntrinsicHeight();
-
+ 
             int y = 0;
-
+ 
             switch (verticalGravity) {
                 case Gravity.BOTTOM:
                     y = getHeight() - height;
@@ -143,211 +150,118 @@ public class HighlightedImageRadioButton extends RadioButton {
                     y = (getHeight() - height) / 2;
                     break;
             }
-
+ 
             int buttonWidth = buttonDrawable.getIntrinsicWidth();
             int buttonLeft = (getWidth() - buttonWidth) / 2;
             buttonDrawable.setBounds(buttonLeft, y, buttonLeft+buttonWidth, y + height);
             buttonDrawable.draw(canvas);
         }
     }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-
-        buttonDrawable = null;
-    }
-}</code></pre></noscript></div>
-
-
-<p>There&rsquo;s is a trick though, you need to center align the drawable since the default <code>RadioButton</code> is left aligned and has a text on the right side. To do this you need to override the <code>onDraw</code> method:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="cm">/**</span>
-</span><span class='line'><span class="cm"> * Fix for putting the drawable in the center</span>
-</span><span class='line'><span class="cm"> * notice that we put the background color of the drawable to transparent</span>
-</span><span class='line'><span class="cm"> *</span>
-</span><span class='line'><span class="cm"> * @param canvas</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onDraw</span><span class="o">(</span><span class="n">Canvas</span> <span class="n">canvas</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">super</span><span class="o">.</span><span class="na">onDraw</span><span class="o">(</span><span class="n">canvas</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">buttonDrawable</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">buttonDrawable</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="n">getDrawableState</span><span class="o">());</span>
-</span><span class='line'>        <span class="kd">final</span> <span class="kt">int</span> <span class="n">verticalGravity</span> <span class="o">=</span> <span class="n">getGravity</span><span class="o">()</span> <span class="o">&amp;</span> <span class="n">Gravity</span><span class="o">.</span><span class="na">VERTICAL_GRAVITY_MASK</span><span class="o">;</span>
-</span><span class='line'>        <span class="kd">final</span> <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">buttonDrawable</span><span class="o">.</span><span class="na">getIntrinsicHeight</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">switch</span> <span class="o">(</span><span class="n">verticalGravity</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="k">case</span> <span class="n">Gravity</span><span class="o">.</span><span class="na">BOTTOM</span><span class="o">:</span>
-</span><span class='line'>                <span class="n">y</span> <span class="o">=</span> <span class="n">getHeight</span><span class="o">()</span> <span class="o">-</span> <span class="n">height</span><span class="o">;</span>
-</span><span class='line'>                <span class="k">break</span><span class="o">;</span>
-</span><span class='line'>            <span class="k">case</span> <span class="n">Gravity</span><span class="o">.</span><span class="na">CENTER_VERTICAL</span><span class="o">:</span>
-</span><span class='line'>                <span class="n">y</span> <span class="o">=</span> <span class="o">(</span><span class="n">getHeight</span><span class="o">()</span> <span class="o">-</span> <span class="n">height</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
-</span><span class='line'>                <span class="k">break</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">buttonWidth</span> <span class="o">=</span> <span class="n">buttonDrawable</span><span class="o">.</span><span class="na">getIntrinsicWidth</span><span class="o">();</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">buttonLeft</span> <span class="o">=</span> <span class="o">(</span><span class="n">getWidth</span><span class="o">()</span> <span class="o">-</span> <span class="n">buttonWidth</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
-</span><span class='line'>        <span class="n">buttonDrawable</span><span class="o">.</span><span class="na">setBounds</span><span class="o">(</span><span class="n">buttonLeft</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">buttonLeft</span><span class="o">+</span><span class="n">buttonWidth</span><span class="o">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">height</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">buttonDrawable</span><span class="o">.</span><span class="na">draw</span><span class="o">(</span><span class="n">canvas</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</code></pre>
 
 <p>The above fix was found via <a href="http://stackoverflow.com/questions/4407553/android-radiobutton-button-drawable-gravity">this post</a> in Stackoverflow.</p>
 
 <p>And this is how you use it:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="c">&lt;!--Use inside a RadioGroup control--&gt;</span>
-</span><span class='line'><span class="nt">&lt;com.example.ui.control.HighlightedImageRadioButton</span>
-</span><span class='line'>                <span class="na">android:id=</span><span class="s">&quot;@+id/sports_topic_icon&quot;</span>
-</span><span class='line'>                <span class="na">custom:focusedDrawable=</span><span class="s">&quot;@drawable/sports_topic_icon_highlighted&quot;</span>
-</span><span class='line'>                <span class="na">custom:normalDrawable=</span><span class="s">&quot;@drawable/sports_topic_icon&quot;</span>
-</span><span class='line'>                <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span>
-</span><span class='line'>                <span class="na">android:layout_weight=</span><span class="s">&quot;1&quot;</span>
-</span><span class='line'>                <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span> <span class="nt">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<pre><code class="language-xml">&lt;!--Use inside a RadioGroup control--&gt;
+&lt;com.example.ui.control.HighlightedImageRadioButton
+                android:id=&quot;@+id/sports_topic_icon&quot;
+                custom:focusedDrawable=&quot;@drawable/sports_topic_icon_highlighted&quot;
+                custom:normalDrawable=&quot;@drawable/sports_topic_icon&quot;
+                android:layout_height=&quot;match_parent&quot;
+                android:layout_weight=&quot;1&quot;
+                android:layout_width=&quot;wrap_content&quot; /&gt;
+</code></pre>
 
 <p>Just like a simple radio button.</p>
 
-	</section>
-
-  <footer class="post-footer">
-  <section class="author">
-    <h4>Mohit Kanwal</h4>
-    <p></p>
   </section>
-  <section class="share">
-    <h4>Share this post</h4>
-    <a class="icon-twitter" href="http://twitter.com/share?text=Android Programming Tip#1: Making a Custom Centre Aligned Radio Button with a State List Drawable&amp;url=http://blog.mohitkanwal.com/blog/2013/10/02/making-a-custom-centre-aligned-radio-button-with-a-state-list-drawable/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-      <span class="hidden">Twitter</span>
-    </a>
-    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.mohitkanwal.com/blog/2013/10/02/making-a-custom-centre-aligned-radio-button-with-a-state-list-drawable/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-      <span class="hidden">Facebook</span>
-    </a>
-    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://blog.mohitkanwal.com/blog/2013/10/02/making-a-custom-centre-aligned-radio-button-with-a-state-list-drawable/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-      <span class="hidden">Google+</span>
-    </a>
-  </section>
-</footer>
-  <hr>
-  
-    <div class="share">
-</div>
-
-  
-  
-  <section id="comment">
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-  
-</article></main>
-  <footer class="site-footer"><a class="subscribe icon-feed" href="http://blog.mohitkanwal.com/atom.xml"><span class="tooltip">Subscribe!</span></a>
-
-
-<div class="inner">
-
-
-Follow me on
-
-
-
-<a class="social twitter" href="http://twitter.com/mohitkanwal" title="Twitter">Twitter</a>
-
-
-
-<a class="social github" href="http://github.com/creativepsyco" title="GitHub">GitHub</a>
-
-
-
-
-<section class="copyright">All content copyright <a href="/">Mohit Kanwal</a> © 2016 • All rights reserved.</section>
-
-<section class="poweredby">Casper theme by <a class="icon-ghost" href="http://tryghost.org">Ghost</a> &amp; Published with <a href="http://octopress.org">Octopress</a></section>
-
-</div>
-</footer>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
-
-
-
-<script type="text/javascript">
-      var disqus_shortname = 'creativepyscoblog';
-      
+  <footer>
+    <section class="author-info row">
+      <div class="author-avatar col-md-2">
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://blog.mohitkanwal.com/blog/2013/10/02/making-a-custom-centre-aligned-radio-button-with-a-state-list-drawable/';
-        var disqus_url = 'http://blog.mohitkanwal.com/blog/2013/10/02/making-a-custom-centre-aligned-radio-button-with-a-state-list-drawable/';
-        var disqus_script = 'embed.js';
+        <img alt="Author Avatar" src="/images/avatar.jpg" />
+        
+      </div>
+      <div class="author-meta col-md-6">
+        
+        
+        <div class="author-bio">Android Developer</div>
+        
+      </div>
       
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
+      <div class="author-contact col-md-4">
+        <a href="mailto:mohit.kanwal@gmail.com">
+          <i class="fa fa-envelope-o" aria-hidden="true"></i>
+          &nbsp;Contact me
+        </a>
+      </div>
+      
+    </section>
+    
+    <hr/>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+    <ul class="pager">
+      
+      <li class="previous"><a href="https://creativepsyco.github.io/blog/2013/09/27/phonelib-bug-regarding-cant-find-proto/"><span aria-hidden="true">&larr;</span> Older</a></li>
+      
+      
+      <li class="next"><a href="https://creativepsyco.github.io/blog/2013/10/20/install-ia32-libs-in-saucy-salamander-ubuntu-13-dot-10/">Newer <span aria-hidden="true">&rarr;</span></a></li>
+      
+    </ul>
+  </footer>
+</article>
 
+  </main>
+  <footer class="container global-footer">
+    <div class="copyright-note pull-left">
+      
+    </div>
+    <div class="sns-links hidden-print">
+  
+  <a href="mailto:mohit.kanwal@gmail.com">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+  
+  
+  
+  
+  
+  <a href="https://github.com/creativepsyco" target="_blank">
+    <i class="fa fa-github"></i>
+  </a>
+  
+  
+  
+  
+</div>
 
+  </footer>
 
-	<script type="text/javascript">
-		var _gaq = _gaq || [];
-		_gaq.push(['_setAccount', 'UA-36037120-1']);
-		_gaq.push(['_trackPageview']);
-
-		(function() {
-			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		})();
-	</script>
-
-
+  <script src="https://creativepsyco.github.io/js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-36037120-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+  
 </body>
 </html>
+

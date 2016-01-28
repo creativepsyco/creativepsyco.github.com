@@ -1,0 +1,833 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on creativepsyco&#39;s blog</title>
+    <link>https://creativepsyco.github.io/blog/</link>
+    <description>Recent content in Blogs on creativepsyco&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 23 Dec 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://creativepsyco.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>troubleshooting android emulators on circleci</title>
+      <link>https://creativepsyco.github.io/blog/2015/12/23/troubleshooting-android-emulators-on-circleci/</link>
+      <pubDate>Wed, 23 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2015/12/23/troubleshooting-android-emulators-on-circleci/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://circleci.com&#34;&gt;CircleCI&lt;/a&gt; is a very nifty cloud-hosted continuous integration tool. It allows you to write your code with the peace of mind that you have. You can setup testing for every push, every pull request, every git tag and so on. You can upload to &lt;a href=&#34;http://hockeyapp.net&#34;&gt;HockeyApp&lt;/a&gt; or &lt;a href=&#34;https://fabric.io&#34;&gt;Fabric&lt;/a&gt;. Everything gets tested, leaving you to write the best code possible.&lt;/p&gt;
+
+&lt;p&gt;For device testing on CircleCI you will need to spin up an emulator, however, you can&amp;rsquo;t really spin up &lt;code&gt;x86&lt;/code&gt; images on the CircleCI containers because they cannot provide &lt;a href=&#34;https://discuss.circleci.com/t/provide-kvm-in-container/1179&#34;&gt;KVM&lt;/a&gt;. As such you are left with ARM emulators which are notoriously extremely slow and end up causing flakiness in testing. Here are some tools which I regularly use to troubleshoot Android Emulators on CircleCI.&lt;/p&gt;
+
+&lt;h3 id=&#34;getting-screenshots-via-adb:ad280b8d54f47610d7fe35ab29974028&#34;&gt;Getting screenshots via ADB&lt;/h3&gt;
+
+&lt;p&gt;You definitely should get screenshots just after the emulator is started, to check if it is not unlocked.&lt;/p&gt;
+
+&lt;p&gt;Here is a part of my &lt;code&gt;.circleci.yml&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Other depedencies etc.
+- emulator -avd circleci-android22 -no-audio -no-window:
+    background: true
+    parallel: true
+- circle-android wait-for-boot
+- sleep 30
+# Unlock the screen
+- adb shell input keyevent 82
+# Run espresso tests
+- ./gradlew :app:connectedDebugAndroidTest -PdisablePreDex;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And my espresso tests were failing because of:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;org.example.SignupTests &amp;gt; testCheckSignupPageDisplayed[circleci-android22(AVD) - 5.1] FAILED
+	java.lang.RuntimeException: Waited for the root of the view hierarchy to have window focus and not be requesting
+  layout for over 10 seconds. If you specified a non default root matcher,
+  it may be picking a root that never takes focus. Otherwise, something is seriously wrong. Selected Root:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Clearly something was wrong.&lt;/p&gt;
+
+&lt;p&gt;So I decided to start taking some screenshots before my emulator ran tests&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;adb shell screencap -p | sed &#39;s/\r$//&#39; &amp;gt; screen.png
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Upload to &lt;a href=&#34;http://askubuntu.com/a/544450&#34;&gt;imgur&lt;/a&gt; for immediate viewing.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Unlock emulator
+- adb shell input keyevent 82
+# First download the bash script
+- wget http://imgur.com/tools/imgurbash.sh
+- chmod a+x imgurbash.sh
+- adb shell screencap -p | sed &#39;s/\r$//&#39; &amp;gt; bootscreen.png
+- ./imgurbash.sh bootscreen.png
+# Continue running some more tests
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here&amp;rsquo;s what I obtained when this ran:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://i.imgur.com/TzPDvyj.png&#34; alt=&#34;warning&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So more often than not the cause of failure was the system process ANR blocking the espresso tests from getting anywhere.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Essentially whenever the Espresso test fail you must check what the UI looked like at that point of time, the view hierarchy dumped by Espresso does not give a clear indication of what happens on the emulator.&lt;/p&gt;
+
+&lt;p&gt;Hope this helps someone who struggled with running espresso tests on CircleCI.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>styling material toolbar in android</title>
+      <link>https://creativepsyco.github.io/blog/2015/03/07/styling-material-toolbar-in-android/</link>
+      <pubDate>Sat, 07 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2015/03/07/styling-material-toolbar-in-android/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.android.com/versions/lollipop-5-0/&#34;&gt;Android Lollipop&lt;/a&gt; was released back in Google I/O reflecting the new Material Design philosophy. It was followed soon by the AppCompat Library updating to &lt;a href=&#34;http://android-developers.blogspot.sg/2014/10/appcompat-v21-material-design-for-pre.html&#34;&gt;&lt;code&gt;v21&lt;/code&gt;&lt;/a&gt;. The Library brought in a new Action Bar pattern called &lt;code&gt;Toolbar&lt;/code&gt; which behaves more like a custom view with a promise to customize the look and feel of it instead of the quirks of the &lt;a href=&#34;http://cyrilmottier.com/2013/05/24/pushing-the-actionbar-to-the-next-level/&#34;&gt;ActionBar&lt;/a&gt;. The Action Bar was both less customizable and hard to style. With Toolbar some of it goes away as the Toolbar behaves more like a view group and you can initialize it with various different views which previously you could not.&lt;/p&gt;
+
+&lt;p&gt;However, I still found a lot of inconsistent quirks when styling the Toolbar for use in &lt;a href=&#34;https://www.pie.co&#34;&gt;Pie&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;###The Action Button Styles
+This is how you are supposed to style the Toolbar:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;android.support.v7.widget.Toolbar
+    android:layout_height=”wrap_content”
+    android:layout_width=”match_parent”
+    android:minHeight=”@dimen/triple_height_toolbar”
+    app:theme=&amp;quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&amp;quot;
+    app:popupTheme=&amp;quot;@style/ThemeOverlay.AppCompat.Light&amp;quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;However, you soon begin to realize that not everything works with this style, especially the ripple effect in the navigation button is inconsistent with the rounded ripple effect, it gets cut off at the navigation button boundaries. The problem happens because when Toolbar is used as a stand alone widget instead of the normal way of using it as an Action Bar styles start breaking up. So how do we fix it? The way to go is to basically make the theme that you apply on the &lt;code&gt;Toolbar&lt;/code&gt; to inherit from &lt;code&gt;Widget.AppCompat.Toolbar&lt;/code&gt; theme like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;style name=&amp;quot;ActionBarTheme&amp;quot; parent=&amp;quot;Widget.AppCompat.Toolbar&amp;quot;&amp;gt;
+        &amp;lt;!-- Define custom attributes here --&amp;gt;
+&amp;lt;/style&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;However, that still does not properly fix it. In order to rectify, we need to provide additional properties, namely: the &lt;code&gt;actionButtonStyle&lt;/code&gt; and the &lt;code&gt;selectableItemBackground&lt;/code&gt;. So here&amp;rsquo;s the complete fix:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;style name=&amp;quot;ActionBarTheme&amp;quot; parent=&amp;quot;Widget.AppCompat.Toolbar&amp;quot;&amp;gt;
+        &amp;lt;item name=&amp;quot;android:textColorPrimary&amp;quot;&amp;gt;@color/white&amp;lt;/item&amp;gt;
+        &amp;lt;item name=&amp;quot;colorControlNormal&amp;quot;&amp;gt;?actionBarIconColor&amp;lt;/item&amp;gt;
+        &amp;lt;item name=&amp;quot;actionButtonStyle&amp;quot;&amp;gt;@style/ActionBar.ActionButton&amp;lt;/item&amp;gt;
+        &amp;lt;item name=&amp;quot;selectableItemBackground&amp;quot;&amp;gt;?android:selectableItemBackground&amp;lt;/item&amp;gt;
+        &amp;lt;item name=&amp;quot;selectableItemBackgroundBorderless&amp;quot;&amp;gt;?android:selectableItemBackground&amp;lt;/item&amp;gt;
+        &amp;lt;item name=&amp;quot;colorControlHighlight&amp;quot;&amp;gt;@color/colorSecondary&amp;lt;/item&amp;gt;
+&amp;lt;/style&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that for the Button Style we are using the ActionBar button style because the Toolbar does not define one, and if you are inheriting the theme from Toolbar then you will need to do this.&lt;/p&gt;
+
+&lt;p&gt;Also to customize the ripple colors, you can change the &lt;code&gt;colorControlHighlight&lt;/code&gt; property. Also notice that none of the properties are using the &lt;code&gt;android:&lt;/code&gt; prefix because these are not defined by the framework instead they are part of the &lt;code&gt;AppCompat&lt;/code&gt; library.&lt;/p&gt;
+
+&lt;p&gt;This way you can continue to use the Toolbar as an independent view but still inherit some styles from the ActionBar action button styles which comes in really handy.&lt;/p&gt;
+
+&lt;p&gt;###Providing Drop Shadow for compatibility
+Lollipop introduced really cool &lt;code&gt;elevation&lt;/code&gt; properties which provide crispy, papery feel to the entire app UX. However, there is no compatible method for older devices to simulate the effect. Shadows seems to be the hardest thing to achieve on the Android platform. There are various ways to simulate the effect on pre-21 devices. However the most credible way to do it is to wrap the content layout in a &lt;a href=&#34;http://goo.gl/ANIhgr&#34;&gt;&lt;code&gt;DrawShadowFrameLayout&lt;/code&gt;&lt;/a&gt;. It is used by the Google Official I/O App, the source for which is available on &lt;a href=&#34;https://github.com/google/iosched&#34;&gt;Github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;However, this still requires the resulting content layout to be wrapped inside another layout, which might be a bit too much for being against flattening the UI view hierarchy. I am still searching if this can be done without wrapping the content layout in another layout, perhaps by drawing the 9-patch drawable directly after all the views have been drawn, up &amp;amp; over them. Currently, it causes me to write code like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;@Override
+protected View _createContentView(Context context) {
+    View view = super._createContentView(context);
+    if (!VersionUtils.isLollipopAndAbove()) {
+        DrawShadowFrameLayout frameLayout = new DrawShadowFrameLayout(context);
+        frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                              ViewGroup.LayoutParams.MATCH_PARENT));
+        frameLayout.addView(view, ViewGroup.LayoutParams.MATCH_PARENT,
+                                  ViewGroup.LayoutParams.MATCH_PARENT);
+        frameLayout.setDefaultShadowDrawable(AppResources.getDrawable(R.drawable.header_shadow), true);
+        frameLayout.setShadowVisible(true, false);
+        return frameLayout;
+    }
+    return view;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But the good thing, it works perfectly fine. But you can&amp;rsquo;t really animate the shadow regions alongwith the Toolbar, for example if you wanted to gently bring down the action bar when the user launches the app. The shadow is drawn on the content layout therefore does not travel with the action bar. For example something like this effect&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.dropbox.com/s/gag8nh7uubgw5km/ezgif.com-gif-maker.gif?dl=0&amp;amp;raw=1&#34; alt=&#34;Gif&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;There were more quirks I had to put in while making &lt;a href=&#34;https://www.pie.co&#34;&gt;Pie&lt;/a&gt; I can&amp;rsquo;t seem to remember them right now. But I will write future posts on the various amount of small fixes in the coming weeks. Perhaps something about setting the status bar color correctly. It seems really small but finding the right way of doing things tests your Android knowledge to the limits. And in the end when Stack Overflow turns up nothing about the issue you have, you start to look and debug as to why this really happens. And that&amp;rsquo;s when the fun really begins :)&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>fixing android studio startup on mac a valid jvm was not found on this machine</title>
+      <link>https://creativepsyco.github.io/blog/2014/12/26/fixing-android-studio-startup-on-mac-a-valid-jvm-was-not-found-on-this-machine/</link>
+      <pubDate>Fri, 26 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2014/12/26/fixing-android-studio-startup-on-mac-a-valid-jvm-was-not-found-on-this-machine/</guid>
+      <description>&lt;p&gt;###Android Studio on Mac OSX Yosemite
+I recently migrated to Mac OSX Yosemite and discovered that when I booted Android Studio I could not start it up since a JVM was not found on the machine. I was running 1.0RC3 version of Android Studio, and did not have this problem before, on Mavericks. I knew I had a JVM installed.&lt;/p&gt;
+
+&lt;p&gt;I did some search and stumbled upon this &lt;a href=&#34;http://stackoverflow.com/questions/27369269/android-studio-was-unable-to-find-a-valid-jvm-related-to-mac-os&#34;&gt;thread&lt;/a&gt; on stackoverflow. From RC3 onwards Android Studio requires a &lt;code&gt;STUDIO_JDK&lt;/code&gt; &lt;a href=&#34;http://tools.android.com/recent/androidstudio1rc3_releasecandidate3released&#34;&gt;environment variable&lt;/a&gt; to be able to run correctly. I found the resulting applescript as discussed in the answer a bit of an overkill. Here&amp;rsquo;s what I did:&lt;/p&gt;
+
+&lt;p&gt;First find out the correct version of Java installed in your machine. As provided in the comments, you can use this command to find it out&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;echo $(find /Library/Java/JavaVirtualMachines -depth 1|tail -n1)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It will print something like&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;depending on your Java version&lt;/p&gt;
+
+&lt;p&gt;Open your &lt;code&gt;/etc/launchd.conf&lt;/code&gt; on your mac using the terminal and add the lines from the &lt;code&gt;echo&lt;/code&gt; command (&lt;code&gt;launchd.conf&lt;/code&gt; might not exist on your machine):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;setenv STUDIO_JDK /Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now open your &lt;code&gt;~/.bashrc&lt;/code&gt; file and add the following lines:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk
+grep -E &amp;quot;^setenv&amp;quot; /etc/launchd.conf | xargs -t -L 1 launchctl
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will set the correct environment variable during startup. And you can continue to launch Android Studio properly. To see immediate effect, type &lt;code&gt;source ~/.bashrc&lt;/code&gt; in your terminal to refresh the environment variables.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>set background that does not resize on soft keyboard</title>
+      <link>https://creativepsyco.github.io/blog/2014/05/12/set-background-that-does-not-resize-on-soft-keyboard/</link>
+      <pubDate>Mon, 12 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2014/05/12/set-background-that-does-not-resize-on-soft-keyboard/</guid>
+      <description>&lt;p&gt;###Problem&lt;/p&gt;
+
+&lt;p&gt;Here is an interesting problem. Let&amp;rsquo;s say you are in a particular view, and you want to be able to set a background. You simple use the &lt;code&gt;View.setBackground(Drawable)&lt;/code&gt; or &lt;code&gt;View.setBackgroundDrawable(Drawable)&lt;/code&gt; call to do this. However once you do this, you realize that whenever the soft keyboard is opened it pushes your view to the top/resizes it such that your background looks squished.&lt;/p&gt;
+
+&lt;p&gt;I encountered this while working on a chatting application. The resulting image looks something like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://creativepsyco.github.io/images/flat_background.jpg&#34; alt=&#34;Image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;###Solution&lt;/p&gt;
+
+&lt;p&gt;The solution is quite simple:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In your Activity Manifest, declare the activity which houses the view to &lt;code&gt;android:windowSoftInputMode=&amp;quot;adjustResize|stateHidden&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Then follow this piece of code:
+&lt;code&gt;java
+	Bitmap bmImg;
+	// Load a bitmap into bmImg
+	BitmapDrawable background = new BitmapDrawable(bmImg);
+	background.setGravity(Gravity.TOP);
+	this.setBackgroundDrawable(background);
+&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This will make sure that you set your background with the &lt;code&gt;Gravity.TOP&lt;/code&gt; which will ensure it is always aligned with the top of the container view and is not affected by the Soft Keyboard display.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>blogging with octopress from 2 computers</title>
+      <link>https://creativepsyco.github.io/blog/2014/03/26/blogging-with-octopress-from-2-computers/</link>
+      <pubDate>Wed, 26 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2014/03/26/blogging-with-octopress-from-2-computers/</guid>
+      <description>&lt;p&gt;I use Octopress to blog from multiple computers, work and home computers, sometimes Virtual Machines even. I don&amp;rsquo;t have a track of where my latest post is going to be written from.&lt;/p&gt;
+
+&lt;p&gt;However, recently while deploying I encountered this strange error:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;## Pushing generated _deploy website
+To git@github.com:creativepsyco/creativepsyco.github.com.git
+ ! [rejected]        master -&amp;gt; master (non-fast-forward)
+ error: failed to push some refs to &#39;git@github.com:creativepsyco/creativepsyco.github.com.git&#39;
+ hint: Updates were rejected because the tip of your current branch is behind
+ hint: its remote counterpart. Integrate the remote changes (e.g.
+ hint: &#39;git pull ...&#39;) before pushing again.
+ hint: See the &#39;Note about fast-forwards&#39; in &#39;git push --help&#39; for details.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The reason is that Octopress only does a push to the &lt;code&gt;master&lt;/code&gt; branch and not a pull. To resolve this, do this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;msk@MathBook Pro ~/Projects/creativepsyco.github.com (source)$ cd _deploy
+msk@MathBook Pro ~/Projects/creativepsyco.github.com/_deploy (master)$ git push origin master -f
+Counting objects: 1313, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (702/702), done.
+Writing objects: 100% (861/861), 99.72 KiB | 0 bytes/s, done.
+Total 861 (delta 423), reused 0 (delta 0)
+To git@github.com:creativepsyco/creativepsyco.github.com.git
+ + 4647e10...aa94c85 master -&amp;gt; master (forced update)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After that all is well:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;msk@MathBook Pro ~/Projects/creativepsyco.github.com/_deploy (master)$ cd ..
+msk@MathBook Pro ~/Projects/creativepsyco.github.com (source)$ rake gen_deploy
+## Generating Site with Jekyll
+unchanged sass/screen.scss
+unchanged sass/styles.scss
+Configuration from /Users/msk/Projects/creativepsyco.github.com/_config.yml
+Building site: source -&amp;gt; public
+Configuration from /Users/msk/Projects/creativepsyco.github.com/_config.yml
+Configuration from /Users/msk/Projects/creativepsyco.github.com/_config.yml
+Configuration from /Users/msk/Projects/creativepsyco.github.com/_config.yml
+Configuration from /Users/msk/Projects/creativepsyco.github.com/_config.yml
+Successfully generated site: source -&amp;gt; public
+## Deploying branch to Github Pages
+## Pulling any updates from Github Pages
+cd _deploy
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details
+
+    git pull &amp;lt;remote&amp;gt; &amp;lt;branch&amp;gt;
+
+    If you wish to set tracking information for this branch you can do so with:
+
+        git branch --set-upstream-to=origin/&amp;lt;branch&amp;gt; master
+
+        cd -
+        rm -rf _deploy/about
+        rm -rf _deploy/assets
+        rm -rf _deploy/atom.xml
+        rm -rf _deploy/blog
+        rm -rf _deploy/docs
+        rm -rf _deploy/favicon.png
+        rm -rf _deploy/font
+        rm -rf _deploy/images
+        rm -rf _deploy/index.html
+        rm -rf _deploy/javascripts
+        rm -rf _deploy/portfolio
+        rm -rf _deploy/robots.txt
+        rm -rf _deploy/sitemap.xml
+        rm -rf _deploy/stylesheets
+        rm -rf _deploy/super-awesome
+
+## Copying public to _deploy
+cp -r public/. _deploy
+cd _deploy
+
+## Committing: Site updated at 2014-03-25 16:44:37 UTC
+[master 88fada5] Site updated at 2014-03-25 16:44:37 UTC
+ 36 files changed, 36 insertions(+), 36 deletions(-)
+
+## Pushing generated _deploy website
+Counting objects: 166, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (75/75), done.
+Writing objects: 100% (75/75), 9.29 KiB | 0 bytes/s, done.
+Total 75 (delta 37), reused 0 (delta 0)
+To git@github.com:creativepsyco/creativepsyco.github.com.git
+   aa94c85..88fada5  master -&amp;gt; master
+
+## Github Pages deploy complete
+cd -
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cheers&lt;/p&gt;
+
+&lt;p&gt;+++&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>rooting samsung galaxy s3 gt i9305 with cyanogenmod jelly bean 4 dot 2 2</title>
+      <link>https://creativepsyco.github.io/blog/2014/02/02/rooting-samsung-galaxy-s3-gt-i9305-with-cyanogenmod-jelly-bean-4-dot-2-2/</link>
+      <pubDate>Sun, 02 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2014/02/02/rooting-samsung-galaxy-s3-gt-i9305-with-cyanogenmod-jelly-bean-4-dot-2-2/</guid>
+      <description>
+
+&lt;p&gt;After getting the 4.3 update my Samsung Galaxy S3 started having &lt;a href=&#34;http://au.ibtimes.com/articles/536399/20140129/galaxy-s4-s3-note-2-update.htm#.Uu1M9HeSxqs&#34;&gt;weird battery problems&lt;/a&gt;, it was a high I moved to a custom ROM since they were a lot stable than a few years back and offered a much better stock Android experience without any bloated software than device OEMs put inside.&lt;/p&gt;
+
+&lt;p&gt;In this post, I shall roughly tell you how I installed a custom on my Samsung Phone.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Warning: Rooting voids the warranty of your device. We and the developers of these files are not responsible if anything happens to your device. Use this rooting guide at your own risk!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;prerequisites:49b620c2b59c9471bbb0e15dd1401ed6&#34;&gt;Prerequisites&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Need a Windows XP/Windows 7/Windows 8 PC&lt;/li&gt;
+&lt;li&gt;Ample of charge on your phone battery&lt;/li&gt;
+&lt;li&gt;The Galaxy S3 I9305 should be factory unlocked.&lt;/li&gt;
+&lt;li&gt;Have a model number &lt;em&gt;I9305&lt;/em&gt; phone, the international model of Samsung Galaxy 3 LTE.&lt;/li&gt;
+&lt;li&gt;Do make a backup of the phone date, as everything will be erased.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;downloads:49b620c2b59c9471bbb0e15dd1401ed6&#34;&gt;Downloads&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://download.chainfire.eu/232/CF-Root/CF-Auto-Root/CF-Auto-Root-m3-m3zh-gti9305.zip&#34;&gt;ODIN + Auto Root File&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://techerrata.com/file/twrp2/i9305/openrecovery-twrp-2.5.0.0-i9305.tar&#34;&gt;TWRP File&lt;/a&gt;, only version 2.5.* works properly with the CyanogenMod ROM&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://download.cyanogenmod.org/?device=i9305&amp;amp;type=stable&#34;&gt;CyanogenMod ROM for 4.2.2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Corresponding &lt;a href=&#34;http://goo.im/gapps/gapps-jb-20130812-signed.zip&#34;&gt;Google Apps package&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;steps:49b620c2b59c9471bbb0e15dd1401ed6&#34;&gt;Steps&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Plug the S3 into your computer and make sure all drivers are installed correctly. If you run into problems, try a different USB cable or port. Then turn your device off.&lt;/li&gt;
+&lt;li&gt;Put the S3 into Download Mode by holding in the Power, Home, and Volume Down buttons at the same time. Then push the Volume Up button once this screen pops up.&lt;/li&gt;
+&lt;li&gt;Unzip and open the CF-Auto-Root folder and right click on Odin.exe, then click on “Run as Administrator”.&lt;/li&gt;
+&lt;li&gt;Make sure there is a yellow box in the screen, if not then the USB drivers did not install correctly and you should try a different USB cable/port.&lt;/li&gt;
+&lt;li&gt;Once you have the yellow box, click on PDA and then browse for the file that was downloaded with Odin, (CF-Auto-Root-i9305.tar.md5). Then click Start.&lt;/li&gt;
+&lt;li&gt;Once you get a &amp;ldquo;green&amp;rdquo; box, means you have succeeded.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Next we need to install TWRP:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Put you device in Download mode, make sure its connected via USB&lt;/li&gt;
+&lt;li&gt;Go back to Odin, and click PDA&lt;/li&gt;
+&lt;li&gt;This time, get the openrecoveryXXX-twrp-2.5.x.tar file and flash it&lt;/li&gt;
+&lt;li&gt;If you get a &amp;ldquo;green&amp;rdquo; box at the end, means you passed&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now we need to transfer the Custom ROM + Google Apps package zip files to the Phone either via &lt;code&gt;adb&lt;/code&gt; or via manual file transfer through Windows Explorer&lt;/p&gt;
+
+&lt;p&gt;Once that&amp;rsquo;s done we can launch the recovery mode to commence installing the custom ROM.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Turn off your phone&lt;/li&gt;
+&lt;li&gt;Hold in the Power, Volume Up, and Home buttons until “Recovery Booting” appears in the top left corner. Then release the power button but keep holding the Volume Up and the Home button until “TeamWin” appears on the screen.&lt;/li&gt;
+&lt;li&gt;Click on Wipe – Advanced Wipe and select “Dalvik Cache”, “System”, and “Cache”. Then move the slider to complete the wipe.&lt;/li&gt;
+&lt;li&gt;Go back and click on Install and scroll down to the location where you transfered the ROM zip file. Click on the zip file and then slide to install the ROM.&lt;/li&gt;
+&lt;li&gt;After that do the same step to install Google Apps&lt;/li&gt;
+&lt;li&gt;After move to Home and do a factory reset to delete useless App Data&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And you are done, Congratulations!&lt;/p&gt;
+
+&lt;h2 id=&#34;known-issues:49b620c2b59c9471bbb0e15dd1401ed6&#34;&gt;Known Issues&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If your &lt;a href=&#34;http://forum.cyanogenmod.com/topic/78601-unfortunately-android-keyboard-aosp-has-stopped-problem/&#34;&gt;Google Apps don&amp;rsquo;t work&lt;/a&gt;, like the Keyboard crashes or something, make sure that you have the correct Google Apps package&lt;/li&gt;
+&lt;li&gt;If you get assert failed error, you will need to try with different nightlies until you hit the one that succeeds.&lt;/li&gt;
+&lt;li&gt;For some of the common problems, visit the &lt;a href=&#34;http://wiki.cyanogenmod.org/w/Wiki_Problems&#34;&gt;Wiki&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>webview vulnerability in facebook android sdk embedded oauth</title>
+      <link>https://creativepsyco.github.io/blog/2014/02/02/webview-vulnerability-in-facebook-android-sdk-embedded-oauth/</link>
+      <pubDate>Sun, 02 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2014/02/02/webview-vulnerability-in-facebook-android-sdk-embedded-oauth/</guid>
+      <description>&lt;p&gt;&lt;em&gt;Reposting this from my &lt;a href=&#34;http://www.facebook.com/mohitkanwal&#34;&gt;FB feed&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;##TL;DR
+Don&amp;rsquo;t put your FB username and password within mobile apps when you don&amp;rsquo;t have the native FB app installed!&lt;/p&gt;
+
+&lt;p&gt;Today I learnt that the Facebook SDK for Android is very insecure. At first I thought Man in the Middle attacks on the SDK OAuth authentication process is not possible, but if you are embedding someone else&amp;rsquo;s WebView within your own App via the SDK, you can very well control them, either via Reflection, or just by modifying the SDK code coz FB makes the SDK a public download which you then compile to link in your app. If the SDK does not find the FB app installed on a user&amp;rsquo;s phone, it resorts to using the fallback mechanism of using an embedded WebView for authentication.&lt;/p&gt;
+
+&lt;p&gt;That said, I hacked around to see if injecting Javascript on the WebView was possible and it was, with a bit of change I could actually get the user name and password of the victim by making him/her uninstall Facebook on their phone and use FB login in my app. This is bad, real bad. There is no way of telling if the username/password was stolen by the underlying app due to the FB login since only the developer of the app controls that. And he/she can modify the SDK to suit their evils needs. I wonder if there are any apps that do that already.&lt;/p&gt;
+
+&lt;p&gt;The images below show: the embedded web view login (with the cross mark) and the intercepted username and password. The last image shows the native FB login provided by the Facebook Android App.&lt;/p&gt;
+
+&lt;p&gt;If you are interested in reproducing this, apply this &lt;a href=&#34;https://gist.github.com/creativepsyco/8663913&#34;&gt;diff&lt;/a&gt; to your FB SDK WebDialog.java and you will be pretty amused.&lt;/p&gt;
+
+&lt;p&gt;An Embedded Web View OAuth Sign in procedure&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-ash3/t1/1557490_10152184000028914_1756836245_n.jpg&#34; alt=&#34;Web Login&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Injecting Javascript results in this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-frc1/t1/1654397_10152183985258914_440664198_n.jpg&#34; alt=&#34;WebView Hack&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Actual Android Login is supposed to look this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-prn1/t1/1654221_10152183994608914_2045844282_n.jpg&#34; alt=&#34;Native Login&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>doing a proper github pull request</title>
+      <link>https://creativepsyco.github.io/blog/2014/01/24/doing-a-proper-github-pull-request/</link>
+      <pubDate>Fri, 24 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2014/01/24/doing-a-proper-github-pull-request/</guid>
+      <description>
+
+&lt;p&gt;While there may be different kind of development strategies floating around the merge vs rebase git model, one thing is for sure, you would at the end of the day want a clean merge from the contributors so that it can be tracked tested and cherry-picked if it needs to. This is where pull-requests are so effective.&lt;/p&gt;
+
+&lt;h2 id=&#34;what-is-a-pull-request:5b8f1cbfeee9b0492484fb1331403a95&#34;&gt;What is a pull-request?&lt;/h2&gt;
+
+&lt;p&gt;From the &lt;a href=&#34;https://help.github.com/articles/using-pull-requests&#34;&gt;Official Github Guide&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Pull requests let you tell others about changes you&amp;rsquo;ve pushed to a GitHub repository. Once a pull request is sent, interested parties can review the set of changes, discuss potential modifications, and even push follow-up commits if necessary.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Pull requests are useful in the shared repository model where contributors can work on different topic branches and then file a pull request to be able to initiate discussion about potential changes which does not need to affect the rest of the project.&lt;/p&gt;
+
+&lt;h2 id=&#34;example:5b8f1cbfeee9b0492484fb1331403a95&#34;&gt;Example&lt;/h2&gt;
+
+&lt;p&gt;Here is an &lt;a href=&#34;https://github.com/square/wire/pull/81&#34;&gt;example&lt;/a&gt; of a pull request I filed for Square&amp;rsquo;s Wire open source project.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-a-pull-request:5b8f1cbfeee9b0492484fb1331403a95&#34;&gt;Creating a pull request&lt;/h2&gt;
+
+&lt;p&gt;These steps create a topic branch off the &lt;code&gt;master&lt;/code&gt; branch.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git pull origin master
+git checkout -b pull-request-demo
+git push origin pull-request-demo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After that you can work on the branch and do indvidual commits. At this point if you need to update your local copy of the source you should not in any case do a&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git pull origin master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will screw up your commits by merging the two branches and will cause issues when your topic branch will is merged with &lt;code&gt;master&lt;/code&gt;. Instead do a &lt;code&gt;rebase&lt;/code&gt;. In short this will preserve the order of your commits and keeps the git history linear. To understand why please refer to &lt;a href=&#34;https://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/&#34;&gt;this&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git rebase origin master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Never rebase already pushed branches. Rebase should only be applied to your local working branch about no one needs to know. This way we can always force push our changes to Github so that the pull request is bettter as we will see in the next step.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;filing-up-a-pull-request:5b8f1cbfeee9b0492484fb1331403a95&#34;&gt;Filing up a pull request&lt;/h2&gt;
+
+&lt;p&gt;You will need to use the browser to visit the repository web page and file one. More details &lt;a href=&#34;http://yangsu.github.io/pull-request-tutorial/&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://github-images.s3.amazonaws.com/help/pull_requests/pull-request-review-page.png =800x400&#34; alt=&#34;Pull Request Page&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;modifying-code-after-discussions:5b8f1cbfeee9b0492484fb1331403a95&#34;&gt;Modifying Code after discussions&lt;/h2&gt;
+
+&lt;p&gt;Once the pull request has been filed you can start discussing with the maintainer of the project about the potential changes that need to be made. For example, style fixes etc.&lt;/p&gt;
+
+&lt;p&gt;You can push more commits to the the topic branch and the pull request will get updated. Once the pull request is sort of approved by the maintainer, he/she will probably ask you submit only one single commit for your changes. This is very important as merging any contributed can be tracked.&lt;/p&gt;
+
+&lt;p&gt;You would need to squash your commits for this. You can do this by:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git rebase -i HEAD~5
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will allow you to pick the commits that you want to keep or squash them altogether. The disadvantage of squashing commits is that you lose your git history. However, if you want you can have a dirty branch to move the commits to in case you want the history to remain.&lt;/p&gt;
+
+&lt;p&gt;And force push your changes&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git push origin pull-request-demo --force
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Your changes will appear on the filed pull request page. And if all goes will be merged with the main project branch :)&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>android activity problem with posting runnables</title>
+      <link>https://creativepsyco.github.io/blog/2014/01/05/android-activity-problem-with-posting-runnables/</link>
+      <pubDate>Sun, 05 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2014/01/05/android-activity-problem-with-posting-runnables/</guid>
+      <description>&lt;p&gt;A lot of times in Android you end up writing code like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;//---- Normal Code above ---
+Runnable runnable  = new Runnable() {
+    @Override
+    public void run() {
+        // Do something stupid
+    }
+}
+// Singleton Handler Manager -- not an instance one, am I smart?
+HandlerManager.getInstance().postDelayed(runnable, 20000); // Run this after 20 seconds! Delay processing of data
+finish();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That is, cooking up a lot of &lt;code&gt;Runnables&lt;/code&gt; and posting them on the Handler to be run after a period of time. It happens.&lt;/p&gt;
+
+&lt;p&gt;As our role as developers trying to get a feature done in time, sometimes these Runnnables are the only hope. However, this &lt;code&gt;Runnable&lt;/code&gt; introduces a potential memory leak.&lt;/p&gt;
+
+&lt;p&gt;Android uses a Garbage Collection mechanism to reclaim allocated memory in which nodes are traversed from the root of the Collector and each node is checked for incoming references, if these references fall into a particular type of reference, &lt;code&gt;Final&lt;/code&gt;, &lt;code&gt;Weak&lt;/code&gt; or other types of finalized references, these nodes are freed and memory unallocated. However, if there any incoming references, then this node cannot be freed up. If you are developing a large app, you will definitely face this issue at some point or the other.&lt;/p&gt;
+
+&lt;p&gt;Now you must be asking why the above code will cause a memory leak.&lt;/p&gt;
+
+&lt;p&gt;It does as follows.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;When you created a Runnable, it ended up being an inner class, and all inner classes have outer class &lt;a href=&#34;http://stackoverflow.com/questions/1816458/getting-hold-of-the-outer-class-object-from-the-inner-class-object&#34;&gt;references&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Now your Runnable is queued in the Singleton Handler, which is always alive in Memory&lt;/li&gt;
+&lt;li&gt;As such your Runnable is alive&lt;/li&gt;
+&lt;li&gt;And so is your Activity&lt;/li&gt;
+&lt;li&gt;When you call finish(), your activity is queued up to be destroyed, but the Garbage Collector finds that your Activity instance is referenced from your Runnable inner class instance and therefore does not collect its allocated memory.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So hopefully, now you get it?
+&amp;gt;
+The solution is to use static inner classes so as to avoid initialization of the instance with the outer class instance.
+&amp;gt;
+static inner classes use the class instance, not the instance reference and therefore are safe from these issues.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>optimizing google protocol buffers with wire</title>
+      <link>https://creativepsyco.github.io/blog/2013/12/31/optimizing-google-protocol-buffers-with-wire/</link>
+      <pubDate>Tue, 31 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2013/12/31/optimizing-google-protocol-buffers-with-wire/</guid>
+      <description>&lt;p&gt;The concept of &lt;a href=&#34;https://code.google.com/p/protobuf/&#34;&gt;Protocol Buffers&lt;/a&gt; by Google is amazing.&lt;/p&gt;
+
+&lt;p&gt;###Why should you use it&lt;/p&gt;
+
+&lt;p&gt;Protocol Buffers is a serialization strategy, much like XML or JSON. A lot of mobile apps and web services make use of JSON for passing information. However, protocol buffers are inherently compressed formats and not intented for the human eye (readability wise). You should definitely take a look at it if you feel that you are using a lot of the mobile data or if the primary target group of your app is the domain of mobile. It however, makes sense to use them for internal RPC related APIs and communication channels.&lt;/p&gt;
+
+&lt;p&gt;###Why should you not use it&lt;/p&gt;
+
+&lt;p&gt;Having worked with protocol buffers extensively during the development of one of my company&amp;rsquo;s Android apps, I can say that Protocol Buffers definitely can have their own problems. In an agile environment where requirements can change extensively during development, it makes no sense to actually use protocol buffers without breaking the schema. And according to Google you might not wanna change the structure of Enums. I will just summarize what &lt;a href=&#34;http://blakesmith.me/2012/09/05/a-primer-on-protocol-buffers.html&#34;&gt;Blake Smith&lt;/a&gt; has to say about the anti-pattern:&lt;/p&gt;
+
+&lt;p&gt;Don&amp;rsquo;t use Protocol Buffers &lt;strong&gt;IF&lt;/strong&gt;:
+&amp;gt;
+* You need &lt;strong&gt;dynamic message&lt;/strong&gt; schemas
+* You’re sending a lot of data directly to the browser
+* You need wide-spread language support as the ability to generate protocol buffer code files is only for a limited set of languages
+* You require direct human readability&lt;/p&gt;
+
+&lt;p&gt;###Google Protocol Buffers on Android&lt;/p&gt;
+
+&lt;p&gt;On Android there is an option to use the pure &lt;a href=&#34;https://code.google.com/p/protobuf/downloads/list&#34;&gt;Java version&lt;/a&gt; or a lite version (included within the original jar) or a &lt;a href=&#34;https://code.google.com/p/protobuf-j2me/&#34;&gt;Java ME version&lt;/a&gt; which reduces the generated code size. However, there is a big issue with the usage of Protocol Buffer on Android. The Android Dalvik VM only allows 60K public methods to be exposed during runtime due to the limitation of the size of the DEX class file that it cam store in memory, for Android Gingerbread, this is about 7MBs. This limit is strictly enforced on Gingerbread (Android 2.3.3) and if it is the minimum version of Android that you want to support then you are in pretty bad luck. For each attribute on the protocol buffer message file there are about 9 public methods generated and this increases for optional/repeated fields. As such a lot of code is generated which won&amp;rsquo;t be used by large anyways in your app. On the other hand, due to the amount of public methods exposed, you run the risk of not being able to ship your app on Gingerbread.&lt;/p&gt;
+
+&lt;p&gt;###With Wire&lt;/p&gt;
+
+&lt;p&gt;I used the Java Me version and the lite version of the protocol buffers but without any significant gains in application public method size. Then came &lt;a href=&#34;https://github.com/square/wire&#34;&gt;Wire&lt;/a&gt; by Square (the company is obsessed with Android.. &lt;a href=&#34;http://square.github.io/&#34;&gt;check out their open source contributions&lt;/a&gt;). Wire allowed me to reduce the number of public methods exposed in the application. The generated code definition files became so sleek that for once I could actually read them (with Google protobuf implementation, there were simply and quite literally thousands and thousands of lines to go over). The rest of the code did not need much change, just a few rewiring here and there and it was done.&lt;/p&gt;
+
+&lt;p&gt;###A note about proguard&lt;/p&gt;
+
+&lt;p&gt;In addition you need the following proguard rules:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;-keep public class * extends com.squareup.wire.**{*;}
+
+# Keep methods with Wire annotations (e.g. @ProtoField)
+-keepclassmembers class ** {
+    @com.squareup.wire.ProtoField public *;
+    @com.squareup.wire.ProtoEnum public *;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cheers&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>open source is an ideology</title>
+      <link>https://creativepsyco.github.io/blog/2013/11/05/open-source-is-an-ideology/</link>
+      <pubDate>Tue, 05 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2013/11/05/open-source-is-an-ideology/</guid>
+      <description>&lt;p&gt;###Extracts From a software about-me page&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;MyAwesomeSauce is created by @me and &lt;strong&gt;open-sourced&lt;/strong&gt; on Github&lt;/p&gt;
+
+&lt;p&gt;Our library has been &lt;strong&gt;open-sourced&lt;/strong&gt; and served under the GPL License v2 to facilitate ease of use among developers&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Seriously? Are you trying to market your creation or genuinely serving the interests of the open source community&lt;/p&gt;
+
+&lt;p&gt;From &lt;a href=&#34;http://ben.balter.com/2012/10/15/open-source-is-not-a-verb/&#34;&gt;Ben Balter&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;To say “hey, we’ve got something decent here, let’s take this closed-sourced project and just hit publish” misses the mark. Your motivation can’t be to seek free labor, as in “hey, if developers want to give us their time, great, let’s put this out there and see what happens we have nothing to lose”, or about sporadically seeking to garner good will from a niche community of dedicated fans. Trust me, an open source developer can smell astroturf a mile a way, and that’s exactly how far they’ll stay.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Open source is a philosophy, not something that you get to choose between waterfall, agile or open source (if there is such a thing). Its not about the code you write but rather, the procedure and democracy of how that code was written, reviewed and published.&lt;/p&gt;
+
+&lt;p&gt;So save yourself the trouble to say something to be open-source when you actually mean it in terms of the processes and the people involved. Don&amp;rsquo;t get trapped in the danger zone :-)&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>hide keyboard for multiple edit boxes in a page</title>
+      <link>https://creativepsyco.github.io/blog/2013/11/04/hide-keyboard-for-multiple-edit-boxes-in-a-page/</link>
+      <pubDate>Mon, 04 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2013/11/04/hide-keyboard-for-multiple-edit-boxes-in-a-page/</guid>
+      <description>
+
+&lt;h1 id=&#34;how-to-hide-keyboard-in-the-case-of-multiple-edit-text:c71f254a225824f259a3f72cfe3f46fc&#34;&gt;How to hide Keyboard in the case of multiple Edit Text&lt;/h1&gt;
+
+&lt;p&gt;One common problem faced by people working on Android input field forms is that many a times there is a need to show/hide the keyboard when the person touches on some other part of the screen, other than the edit box itself. However, since the focus is retained by the edit box, even if the keyboard is hidden, its hard to actually detect when and where should you be hiding the keyboard.&lt;/p&gt;
+
+&lt;h1 id=&#34;the-solution:c71f254a225824f259a3f72cfe3f46fc&#34;&gt;The Solution&lt;/h1&gt;
+
+&lt;p&gt;One way to accomplish this to use the &lt;code&gt;dispatchTouchEvent&lt;/code&gt; on the parent container. This is the first event that is called whenever there is a touch encountered on the surface. Only after this the rest of the touch listeners are invoked.&lt;/p&gt;
+
+&lt;p&gt;We can first dispatch the touch and then check the &lt;code&gt;getCurrentFocus&lt;/code&gt; view to see if the focus is retained by the &lt;code&gt;EditText&lt;/code&gt;. If it is, then we simply hide the soft keyboard from the screen.&lt;/p&gt;
+
+&lt;p&gt;Another thing to make sure is that the parent container view groups are labelled as &lt;code&gt;focusableInTouchMode&lt;/code&gt;, &lt;code&gt;clickable&lt;/code&gt; and &lt;code&gt;focusable&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Here is the gist that does this job from a custom view group that contains multiple &lt;code&gt;EditText&lt;/code&gt; instances.&lt;/p&gt;
+
+&lt;p&gt;{% gist 7229277 %}&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>install ia32 libs in saucy salamander ubuntu 13 dot 10</title>
+      <link>https://creativepsyco.github.io/blog/2013/10/20/install-ia32-libs-in-saucy-salamander-ubuntu-13-dot-10/</link>
+      <pubDate>Sun, 20 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2013/10/20/install-ia32-libs-in-saucy-salamander-ubuntu-13-dot-10/</guid>
+      <description>&lt;p&gt;With the official release of Saucy Salamander 13.10 now available, I found myself installing it cleanly on my machine.&lt;/p&gt;
+
+&lt;p&gt;However, when I went ahead to install the &lt;code&gt;ia32-libs&lt;/code&gt; package for the Android 32-bit shared libraries supplied with the SDK. I had a shock. I could not install and the terminal returned this error message:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;output$ sudo apt-get install ia32-libs
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Package ia32-libs is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+However the following packages replace it:
+  lib32z1 lib32ncurses5 lib32bz2-1.0
+
+E: Package &#39;ia32-libs&#39; has no installation candidate
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Fortunately there is a solution.&lt;/p&gt;
+
+&lt;p&gt;According to this &lt;a href=&#34;http://askubuntu.com/questions/107230/what-happened-to-the-ia32-libs-package&#34;&gt;thread&lt;/a&gt; all you gotta do is use the &lt;code&gt;i386&lt;/code&gt; code behind the package name&lt;/p&gt;
+
+&lt;p&gt;So you can install the package as follow:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install ia32-libs:i386
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;####Update
+According to Rick below, the above method may not work. In that case, perhaps check out this &lt;a href=&#34;http://wiki.phoenixviewer.com/ia32-libs-in-ubuntu-13-10&#34;&gt;Link&lt;/a&gt;. This should definitely resolve the issue, although it might end up screwing up your package management. But you gotta try what you gotta try, right?&lt;/p&gt;
+
+&lt;p&gt;Cheers&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>making a custom centre aligned radio button with a state list drawable</title>
+      <link>https://creativepsyco.github.io/blog/2013/10/02/making-a-custom-centre-aligned-radio-button-with-a-state-list-drawable/</link>
+      <pubDate>Wed, 02 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2013/10/02/making-a-custom-centre-aligned-radio-button-with-a-state-list-drawable/</guid>
+      <description>
+
+&lt;p&gt;###Custom Widgets
+These days I have been working extensively on apps for the Android Platform. And one thing keeps coming back to me: Resuse of components and widgets. Although most of the time when you are doing simple apps, you don&amp;rsquo;t really pay much attention to the type of design and navigation strategies (&lt;code&gt;SINGLE_TOP&lt;/code&gt; activities vs &lt;code&gt;SINGLE_TASK&lt;/code&gt; blah.. blah) but when you are faced with putting different kinds of components in a single view then you probably have shuddered to think whether you were better off accomplishing this as a separate widget of its own. As can be seen from Romain Guy&amp;rsquo;s &lt;a href=&#34;http://www.youtube.com/watch?v=NYtB6mlu7vA&#34;&gt;Google IO Talk&lt;/a&gt;, developing custom views has its own significant advantages.&lt;/p&gt;
+
+&lt;p&gt;Some of the advantages are as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A piece of highly reusable component will be at your disposal&lt;/li&gt;
+&lt;li&gt;you will have fine-grained control over the lifecycle of the control/widget that you are developing, (For example, you can decide whether to load images from the network or display a dummy error image in a custom &lt;code&gt;ImageView&lt;/code&gt; see &lt;code&gt;volley&lt;/code&gt; &lt;a href=&#34;https://android.googlesource.com/platform/frameworks/volley/+/d62a616ebca5bfa4f9ec5517208e13f2d501b69a/src/com/android/volley/toolbox/NetworkImageView.java&#34;&gt;&lt;code&gt;NetworkImageView&lt;/code&gt;&lt;/a&gt; for details)&lt;/li&gt;
+&lt;li&gt;Custom views prevent cluttering of code in a single view thereby making abstraction more powerful&lt;/li&gt;
+&lt;li&gt;Other general advantages due to code reuse&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So let&amp;rsquo;s dive into how I managed to make a custom widget for one of the apps.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-problem:c1ec964d32ef99bcc8f6772118889848&#34;&gt;The Problem&lt;/h2&gt;
+
+&lt;p&gt;Develop a custom control that behaves like a radio button but has a custom icon instead of the ordinary radio button icon and also has two drawable states to show when in highlighted mode as well as normal mode&lt;/p&gt;
+
+&lt;h2 id=&#34;the-solution:c1ec964d32ef99bcc8f6772118889848&#34;&gt;The Solution&lt;/h2&gt;
+
+&lt;p&gt;Once you know how to create custom widgets its very easy.&lt;/p&gt;
+
+&lt;p&gt;First start by creating the attibutes your control will have in &lt;code&gt;attrs.xml&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt; &amp;lt;declare-styleable name=&amp;quot;HighlightedImageRadioButton&amp;quot;&amp;gt;
+        &amp;lt;attr name=&amp;quot;focusedDrawable&amp;quot; format=&amp;quot;reference&amp;quot;/&amp;gt;
+        &amp;lt;attr name=&amp;quot;normalDrawable&amp;quot; format=&amp;quot;reference&amp;quot; /&amp;gt;
+ &amp;lt;/declare-styleable&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here we have 2 drawables that will function as our highlighted and normal state drawables respectively&lt;/p&gt;
+
+&lt;p&gt;Then, create your custom radio button by extending from &lt;code&gt;RadioButton&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;{% gist 6821592 %}&lt;/p&gt;
+
+&lt;p&gt;There&amp;rsquo;s is a trick though, you need to center align the drawable since the default &lt;code&gt;RadioButton&lt;/code&gt; is left aligned and has a text on the right side. To do this you need to override the &lt;code&gt;onDraw&lt;/code&gt; method:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;	/**
+     * Fix for putting the drawable in the center
+     * notice that we put the background color of the drawable to transparent
+     *
+     * @param canvas
+     */
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+ 
+        if (buttonDrawable != null) {
+            buttonDrawable.setState(getDrawableState());
+            final int verticalGravity = getGravity() &amp;amp; Gravity.VERTICAL_GRAVITY_MASK;
+            final int height = buttonDrawable.getIntrinsicHeight();
+ 
+            int y = 0;
+ 
+            switch (verticalGravity) {
+                case Gravity.BOTTOM:
+                    y = getHeight() - height;
+                    break;
+                case Gravity.CENTER_VERTICAL:
+                    y = (getHeight() - height) / 2;
+                    break;
+            }
+ 
+            int buttonWidth = buttonDrawable.getIntrinsicWidth();
+            int buttonLeft = (getWidth() - buttonWidth) / 2;
+            buttonDrawable.setBounds(buttonLeft, y, buttonLeft+buttonWidth, y + height);
+            buttonDrawable.draw(canvas);
+        }
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The above fix was found via &lt;a href=&#34;http://stackoverflow.com/questions/4407553/android-radiobutton-button-drawable-gravity&#34;&gt;this post&lt;/a&gt; in Stackoverflow.&lt;/p&gt;
+
+&lt;p&gt;And this is how you use it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;!--Use inside a RadioGroup control--&amp;gt;
+&amp;lt;com.example.ui.control.HighlightedImageRadioButton
+                android:id=&amp;quot;@+id/sports_topic_icon&amp;quot;
+                custom:focusedDrawable=&amp;quot;@drawable/sports_topic_icon_highlighted&amp;quot;
+                custom:normalDrawable=&amp;quot;@drawable/sports_topic_icon&amp;quot;
+                android:layout_height=&amp;quot;match_parent&amp;quot;
+                android:layout_weight=&amp;quot;1&amp;quot;
+                android:layout_width=&amp;quot;wrap_content&amp;quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Just like a simple radio button.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>phonelib bug regarding cant find proto</title>
+      <link>https://creativepsyco.github.io/blog/2013/09/27/phonelib-bug-regarding-cant-find-proto/</link>
+      <pubDate>Fri, 27 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://creativepsyco.github.io/blog/2013/09/27/phonelib-bug-regarding-cant-find-proto/</guid>
+      <description>&lt;p&gt;Do you make use of &lt;a href=&#34;https://code.google.com/p/libphonenumber/&#34;&gt;PhoneNumberUtils&lt;/a&gt; in your android project?&lt;/p&gt;
+
+&lt;p&gt;If so, have you ever encountered this exception before?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;java.lang.RuntimeException: cannot load/parse metadata: /com/google/i18n/phonenumbers/data/PhoneNumberMetadataProto_MY at com.google.a.a.d.a(PhoneNumberUtil.java:619)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If yes, chances are you are probably using [proguard][progaurd] to do the obfuscation of code. However, as &lt;a href=&#34;https://code.google.com/p/libphonenumber/issues/detail?id=259&amp;amp;can=1&amp;amp;q=metadata&#34;&gt;this&lt;/a&gt; points out, proguard automatically also obfuscates the library files. However, the PhoneNumberUtils has a hardcoded path to the proto files. Therefore, one cannot rely on obfuscating the library&amp;rsquo;s code.&lt;/p&gt;
+
+&lt;p&gt;To resolve you must add the following lines in your &lt;code&gt;proguard&lt;/code&gt; configuration file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;-keep class com.google.i18n.phonenumbers.** { *; }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This problem occurs in Android version Honeycomb and below it, as versions after Honeycomb have their own phonenumber util included which has a namespace of &lt;code&gt;com.google.android.i18n.phonenumbers&lt;/code&gt;. If you are supporting version below honeycomb this can be an overlooked disaster.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

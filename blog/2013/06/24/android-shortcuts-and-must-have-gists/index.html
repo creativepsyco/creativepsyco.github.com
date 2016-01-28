@@ -1,335 +1,287 @@
-
-<!DOCTYPE HTML>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<meta charset="utf-8">
-	<title>Android Shortcuts and Must-have Gists | creativepsyco's Blog</title>
-
-	<meta name="author" content="Mohit Kanwal">
-	
-	<meta name="description" content="A Blog of all things digital">
-
-	<meta name="HandheldFriendly" content="True" />
-	<meta name="MobileOptimized" content="320" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-	<link href="/atom.xml" rel="alternate" title="creativepsyco's Blog" type="application/atom+xml">
-	<link rel="canonical" href="">
-	<link href="/favicon.png" rel="shortcut icon">
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic|Open+Sans:700,400" />
-	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css" />
-	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-</head>
-
-
-<body class="post-template">
-  <main class="content" role="main"><article class="post">
+<!DOCTYPE html>
+<html lang="en-us">
+<head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <meta property="og:title" content=" android shortcuts and must have gists &middot;  creativepsyco&#39;s blog" />
   
-	<header class="post-header">
-		<a id="blog-logo" href="/">creativepsyco's Blog</a>
-	</header>
-	<span class="post-meta">24 Jun 2013</span>
-	<h1 class="post-title">Android Shortcuts and Must-have Gists</h1>
+  <meta property="og:site_name" content="creativepsyco&#39;s blog" />
+  <meta property="og:url" content="https://creativepsyco.github.io/blog/2013/06/24/android-shortcuts-and-must-have-gists/" />
+  
+  
+  <meta property="og:type" content="article" />
+  
+  <meta property="og:article:published_time" content="2013-06-24T00:00:00Z" />
+  
+  
 
-	<section class="post-content">
-		<h3>Making use of shared preferences for storing information</h3>
+  <title>
+     android shortcuts and must have gists &middot;  creativepsyco&#39;s blog
+  </title>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">getStoredLoginState</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">prefs</span> <span class="o">=</span> <span class="n">getSharedPreferences</span><span class="o">(</span><span class="n">PREF_NAME</span><span class="o">,</span> <span class="n">MODE_PRIVATE</span><span class="o">);</span>
-</span><span class='line'>        <span class="kt">boolean</span> <span class="n">state</span> <span class="o">=</span> <span class="n">prefs</span><span class="o">.</span><span class="na">getBoolean</span><span class="o">(</span><span class="n">B_LOGGED_IN_STATE</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">state</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLoggedInState</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">isLoggedIn</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">prefs</span> <span class="o">=</span> <span class="n">getSharedPreferences</span><span class="o">(</span><span class="n">PREF_NAME</span><span class="o">,</span> <span class="n">MODE_PRIVATE</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">SharedPreferences</span><span class="o">.</span><span class="na">Editor</span> <span class="n">editor</span> <span class="o">=</span> <span class="n">prefs</span><span class="o">.</span><span class="na">edit</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">editor</span><span class="o">.</span><span class="na">putBoolean</span><span class="o">(</span><span class="n">B_LOGGED_IN_STATE</span><span class="o">,</span> <span class="n">isLoggedIn</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">editor</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/main.css" />
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/highlight.css" />
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/animate.css" />
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/font-awesome.min.css" />
+  <link rel="shortcut icon" href="https://creativepsyco.github.io/images/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://creativepsyco.github.io/images/apple-touch-icon.png" />
+  
+</head>
+<body>
+    <header class="global-header">
+    <section class="header-text">
+      <h1><a href="https://creativepsyco.github.io/" onmouseover="this.className+='animated pulse'">creativepsyco&#39;s blog</a></h1>
+	  
+      <div class="tag-line">
+        Random thoughts on Android, software and life
+      </div>
+      
+      <div class="sns-links hidden-print">
+  
+  <a href="mailto:mohit.kanwal@gmail.com">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+  
+  
+  
+  
+  
+  <a href="https://github.com/creativepsyco" target="_blank">
+    <i class="fa fa-github"></i>
+  </a>
+  
+  
+  
+  
+</div>
+
+      
+      <a href="https://creativepsyco.github.io/" class="btn-header btn-back hidden-xs">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        &nbsp;Home
+      </a>
+      
+      
+    </section>
+  </header>
+  <main class="container">
 
 
-<h3>Making use of the redirection trick</h3>
+<article>
+  <header>
+    <h1 class="text-primary">android shortcuts and must have gists</h1>
+    <div class="post-meta clearfix">
+      <div class="post-date pull-left">
+        Posted on
+        <time datetime="2013-06-24T00:00:00Z">
+          Jun 24, 2013
+        </time>
+      </div>
+      <div class="pull-right">
+        
+      </div>
+    </div>
+  </header>
+  <section>
+    <p>###Making use of shared preferences for storing information</p>
+
+<pre><code class="language-java">
+    public boolean getStoredLoginState() {
+        prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        boolean state = prefs.getBoolean(B_LOGGED_IN_STATE, false);
+        return state;
+    }
+
+    public void setLoggedInState(boolean isLoggedIn) {
+        prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putBoolean(B_LOGGED_IN_STATE, isLoggedIn);
+        editor.commit();
+    }
+</code></pre>
+
+<p>###Making use of the redirection trick</p>
 
 <p>Let&rsquo;s say you want to make sure the user is logged in before giving him access to a particular activity view. What you can do is to check the status of the login token through a shared preference and send back an intent with the intent that the current view was invoked with via an extra Intent parameter</p>
 
 <p>This is the code for the invoker:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">detail_view</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">getStoredLoginState</span><span class="o">()</span> <span class="o">==</span> <span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getIntent</span><span class="o">();</span>
-</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;DetailView onCreate recd position of item: &quot;</span> <span class="o">+</span> <span class="n">intent</span><span class="o">.</span><span class="na">getIntExtra</span><span class="o">(</span><span class="n">ITEM_ID</span><span class="o">,</span> <span class="mi">10</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">intent</span><span class="o">.</span><span class="na">getIntExtra</span><span class="o">(</span><span class="n">ITEM_ID</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="c1">// Set the text</span>
-</span><span class='line'>            <span class="n">TextView</span> <span class="n">textView</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">textView1</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="n">textView</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">pos</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class='line'>            <span class="c1">// not logged in</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getIntent</span><span class="o">();</span>
-</span><span class='line'>            <span class="n">Intent</span> <span class="n">newIntent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">LoginActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'>            <span class="n">newIntent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">REDIRECT_INTENT</span><span class="o">,</span> <span class="n">intent</span><span class="o">);</span>
-</span><span class='line'><span class="c1">//            newIntent.setAction(Intent.ACTION_MAIN);</span>
-</span><span class='line'>            <span class="n">newIntent</span><span class="o">.</span><span class="na">setFlags</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">FLAG_ACTIVITY_NO_HISTORY</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="n">startActivity</span><span class="o">(</span><span class="n">newIntent</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<pre><code class="language-java">  public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.detail_view);
 
+        if (getStoredLoginState() == true) {
+            Intent intent = this.getIntent();
+            Log.i(TAG, &quot;DetailView onCreate recd position of item: &quot; + intent.getIntExtra(ITEM_ID, 10));
+
+            int pos = intent.getIntExtra(ITEM_ID, 10);
+
+            // Set the text
+            TextView textView = (TextView) findViewById(R.id.textView1);
+
+            textView.setText(&quot; &quot; + pos);
+        } else {
+            // not logged in
+
+            Intent intent = this.getIntent();
+            Intent newIntent = new Intent(this, LoginActivity.class);
+            newIntent.putExtra(REDIRECT_INTENT, intent);
+//            newIntent.setAction(Intent.ACTION_MAIN);
+            newIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+            startActivity(newIntent);
+        }
+    }
+</code></pre>
 
 <p>And this is the login view code. Note that in the invoker&rsquo;s code we use the <code>Intent.FLAG_ACTIVITY_NO_HISTORY</code> to make sure that the call does not stay in the stack since login is something we need to ensure out of navigation:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;LoginActivity onCreate() hit&quot;</span><span class="o">);</span>
-</span><span class='line'>        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">main</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Login State: &quot;</span> <span class="o">+</span> <span class="n">getStoredLoginState</span><span class="o">());</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">// Check for a redirect</span>
-</span><span class='line'>        <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">();</span>
-</span><span class='line'>        <span class="n">redirect_intent</span> <span class="o">=</span> <span class="n">intent</span><span class="o">.</span><span class="na">getParcelableExtra</span><span class="o">(</span><span class="n">REDIRECT_INTENT</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">redirect_intent</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;LoginActivity : this is a redirect intent &quot;</span> <span class="o">+</span> <span class="n">redirect_intent</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onBtnSubmitClicked</span><span class="o">(</span><span class="n">View</span> <span class="n">view</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">TextView</span> <span class="n">username</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">editText</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">TextView</span> <span class="n">password</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">editText1</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">isValidLogin</span><span class="o">(</span><span class="n">username</span><span class="o">.</span><span class="na">getText</span><span class="o">().</span><span class="na">toString</span><span class="o">(),</span> <span class="n">password</span><span class="o">.</span><span class="na">getText</span><span class="o">().</span><span class="na">toString</span><span class="o">()))</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">isLoggedIn</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;LoginActivity onBtnSubmitClicked() Username Password match&quot;</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">isLoggedIn</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-</span><span class='line'>            <span class="k">new</span> <span class="n">AlertDialog</span><span class="o">.</span><span class="na">Builder</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
-</span><span class='line'>                    <span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="s">&quot;Wrong username/password&quot;</span><span class="o">)</span>
-</span><span class='line'>                    <span class="o">.</span><span class="na">setMessage</span><span class="o">(</span><span class="s">&quot;You have entered wrong username/password&quot;</span><span class="o">)</span>
-</span><span class='line'>                    <span class="o">.</span><span class="na">setPositiveButton</span><span class="o">(</span><span class="s">&quot;Ok&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">DialogInterface</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>                        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">DialogInterface</span> <span class="n">dialog</span><span class="o">,</span> <span class="kt">int</span> <span class="n">which</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                            <span class="c1">// continue with delete</span>
-</span><span class='line'>                        <span class="o">}</span>
-</span><span class='line'>                    <span class="o">})</span>
-</span><span class='line'>                    <span class="o">.</span><span class="na">show</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">setLoggedInState</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">isLoggedIn</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;LoginActivity onBtnSubmitClicked starting List View Activity&quot;</span><span class="o">);</span>
-</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">redirect_intent</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                <span class="c1">// this will make the activity pop up back from the Task stack</span>
-</span><span class='line'>                <span class="n">redirect_intent</span><span class="o">.</span><span class="na">addFlags</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">FLAG_ACTIVITY_CLEAR_TOP</span><span class="o">);</span>
-</span><span class='line'>                <span class="n">startActivity</span><span class="o">(</span><span class="n">redirect_intent</span><span class="o">);</span>
-</span><span class='line'>            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">ListActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'>                <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<pre><code class="language-java">@Override
+    public void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, &quot;LoginActivity onCreate() hit&quot;);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        Log.i(TAG, &quot;Login State: &quot; + getStoredLoginState());
 
+        // Check for a redirect
+        Intent intent = getIntent();
+        redirect_intent = intent.getParcelableExtra(REDIRECT_INTENT);
+
+        if (redirect_intent != null) {
+            Log.i(TAG, &quot;LoginActivity : this is a redirect intent &quot; + redirect_intent);
+        }
+    }
+
+    public void onBtnSubmitClicked(View view) {
+        TextView username = (TextView) findViewById(R.id.editText);
+        TextView password = (TextView) findViewById(R.id.editText1);
+
+        if (isValidLogin(username.getText().toString(), password.getText().toString())) {
+            isLoggedIn = true;
+            Log.i(TAG, &quot;LoginActivity onBtnSubmitClicked() Username Password match&quot;);
+        } else {
+            isLoggedIn = false;
+            new AlertDialog.Builder(this)
+                    .setTitle(&quot;Wrong username/password&quot;)
+                    .setMessage(&quot;You have entered wrong username/password&quot;)
+                    .setPositiveButton(&quot;Ok&quot;, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                        }
+                    })
+                    .show();
+        }
+
+        setLoggedInState();
+
+        if (isLoggedIn) {
+            Log.i(TAG, &quot;LoginActivity onBtnSubmitClicked starting List View Activity&quot;);
+            if (redirect_intent != null) {
+                // this will make the activity pop up back from the Task stack
+                redirect_intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(redirect_intent);
+            } else {
+                Intent intent = new Intent(this, ListActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
+</code></pre>
 
 <p>More information available at the <a href="http://developer.android.com/guide/components/tasks-and-back-stack.html">Android Documentation</a></p>
 
 <p>Cheers</p>
 
-	</section>
-
-  <footer class="post-footer">
-  <section class="author">
-    <h4>Mohit Kanwal</h4>
-    <p></p>
   </section>
-  <section class="share">
-    <h4>Share this post</h4>
-    <a class="icon-twitter" href="http://twitter.com/share?text=Android Shortcuts and Must-have Gists&amp;url=http://blog.mohitkanwal.com/blog/2013/06/24/android-shortcuts-and-must-have-gists/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-      <span class="hidden">Twitter</span>
-    </a>
-    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.mohitkanwal.com/blog/2013/06/24/android-shortcuts-and-must-have-gists/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-      <span class="hidden">Facebook</span>
-    </a>
-    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://blog.mohitkanwal.com/blog/2013/06/24/android-shortcuts-and-must-have-gists/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-      <span class="hidden">Google+</span>
-    </a>
-  </section>
-</footer>
-  <hr>
-  
-    <div class="share">
-</div>
-
-  
-  
-  <section id="comment">
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-  
-</article></main>
-  <footer class="site-footer"><a class="subscribe icon-feed" href="http://blog.mohitkanwal.com/atom.xml"><span class="tooltip">Subscribe!</span></a>
-
-
-<div class="inner">
-
-
-Follow me on
-
-
-
-<a class="social twitter" href="http://twitter.com/mohitkanwal" title="Twitter">Twitter</a>
-
-
-
-<a class="social github" href="http://github.com/creativepsyco" title="GitHub">GitHub</a>
-
-
-
-
-<section class="copyright">All content copyright <a href="/">Mohit Kanwal</a> © 2016 • All rights reserved.</section>
-
-<section class="poweredby">Casper theme by <a class="icon-ghost" href="http://tryghost.org">Ghost</a> &amp; Published with <a href="http://octopress.org">Octopress</a></section>
-
-</div>
-</footer>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
-
-
-
-<script type="text/javascript">
-      var disqus_shortname = 'creativepyscoblog';
-      
+  <footer>
+    <section class="author-info row">
+      <div class="author-avatar col-md-2">
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://blog.mohitkanwal.com/blog/2013/06/24/android-shortcuts-and-must-have-gists/';
-        var disqus_url = 'http://blog.mohitkanwal.com/blog/2013/06/24/android-shortcuts-and-must-have-gists/';
-        var disqus_script = 'embed.js';
+        <img alt="Author Avatar" src="/images/avatar.jpg" />
+        
+      </div>
+      <div class="author-meta col-md-6">
+        
+        
+        <div class="author-bio">Android Developer</div>
+        
+      </div>
       
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
+      <div class="author-contact col-md-4">
+        <a href="mailto:mohit.kanwal@gmail.com">
+          <i class="fa fa-envelope-o" aria-hidden="true"></i>
+          &nbsp;Contact me
+        </a>
+      </div>
+      
+    </section>
+    
+    <hr/>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'creativepyscoblog';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+    <ul class="pager">
+      
+      <li class="previous"><a href="https://creativepsyco.github.io/blog/2013/05/21/making-sense-of-vacations-geek-style/"><span aria-hidden="true">&larr;</span> Older</a></li>
+      
+      
+      <li class="next"><a href="https://creativepsyco.github.io/blog/2013/07/04/finding-a-perfect-dev-environment/">Newer <span aria-hidden="true">&rarr;</span></a></li>
+      
+    </ul>
+  </footer>
+</article>
 
+  </main>
+  <footer class="container global-footer">
+    <div class="copyright-note pull-left">
+      
+    </div>
+    <div class="sns-links hidden-print">
+  
+  <a href="mailto:mohit.kanwal@gmail.com">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+  
+  
+  
+  
+  
+  <a href="https://github.com/creativepsyco" target="_blank">
+    <i class="fa fa-github"></i>
+  </a>
+  
+  
+  
+  
+</div>
 
+  </footer>
 
-	<script type="text/javascript">
-		var _gaq = _gaq || [];
-		_gaq.push(['_setAccount', 'UA-36037120-1']);
-		_gaq.push(['_trackPageview']);
-
-		(function() {
-			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		})();
-	</script>
-
-
+  <script src="https://creativepsyco.github.io/js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-36037120-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+  
 </body>
 </html>
+

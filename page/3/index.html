@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <meta property="og:title" content=" creativepsyco&#39;s blog" />
+  
+  <meta property="og:site_name" content="creativepsyco&#39;s blog" />
+  <meta property="og:url" content="https://creativepsyco.github.io/" />
+  
+  
+  <meta property="og:type" content="website" />
+  
+
+  <title>
+     creativepsyco&#39;s blog
+  </title>
+
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/main.css" />
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/highlight.css" />
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/animate.css" />
+  <link rel="stylesheet" href="https://creativepsyco.github.io/css/font-awesome.min.css" />
+  <link rel="shortcut icon" href="https://creativepsyco.github.io/images/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://creativepsyco.github.io/images/apple-touch-icon.png" />
+  
+  <link href="https://creativepsyco.github.io/index.xml" rel="alternate" type="application/rss+xml" title="creativepsyco&#39;s blog" />
+  
+</head>
+<body>
+    <header class="global-header">
+    <section class="header-text">
+      <h1><a href="https://creativepsyco.github.io/" onmouseover="this.className+='animated pulse'">creativepsyco&#39;s blog</a></h1>
+	  
+      <div class="tag-line">
+        Random thoughts on Android, software and life
+      </div>
+      
+      <div class="sns-links hidden-print">
+  
+  <a href="mailto:mohit.kanwal@gmail.com">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+  
+  
+  
+  
+  
+  <a href="https://github.com/creativepsyco" target="_blank">
+    <i class="fa fa-github"></i>
+  </a>
+  
+  
+  
+  
+</div>
+
+      
+      
+      <a href="https://creativepsyco.github.io/index.xml" class="btn-header btn-subscribe hidden-xs">
+        <i class="fa fa-rss" aria-hidden="true"></i>
+        &nbsp;Subscribe
+      </a>
+      
+    </section>
+  </header>
+  <main class="container">
+
+<div class="article-list">
+  
+  
+  <article>
+  <header>
+    <h2><a href="https://creativepsyco.github.io/blog/2013/04/10/deploying-rails-on-nginx-and-thin/">deploying rails on nginx and thin</a></h2>
+    <div class="post-meta clearfix">
+      <div class="post-date pull-left">
+        Posted on
+        <time datetime="2013-04-10T00:00:00Z">
+          Apr 10, 2013
+        </time>
+      </div>
+    </div>
+  </header>
+  <div>
+    <p>I have been busy lately doing my Final Year Project which comprises of building a web based service for processing analysis jobs on patient data.</p>
+
+<p>I have developed the web service API using [Rails][rails] with MySQL being the backend database.</p>
+
+<p>For deployment purposes I had no idea which of the web servers to run as such I naturally googled online and found people talking about [Capistrano][caps], a great way to have deployment scripts being run on the server.</p>
+
+<p>I needed something simple, I had seen the advantages of using SVN and [Nginx][nginx] as a means to deploy by SSH-ing to the server. This keeps things simple and lends us as much control as we need. So I explored.</p>
+
+  </div>
+  
+  <footer>
+    <ul class="pager">
+      <li class="next"><a href="https://creativepsyco.github.io/blog/2013/04/10/deploying-rails-on-nginx-and-thin/">Read more <span aria-hidden="true">&raquo;</span></a></li>
+    </ul>
+  </footer>
+  
+</article>
+
+  
+  
+  <hr/>
+  
+  <article>
+  <header>
+    <h2><a href="https://creativepsyco.github.io/blog/2013/02/09/singleton-in-python/">singleton in python</a></h2>
+    <div class="post-meta clearfix">
+      <div class="post-date pull-left">
+        Posted on
+        <time datetime="2013-02-09T00:00:00Z">
+          Feb 9, 2013
+        </time>
+      </div>
+    </div>
+  </header>
+  <div>
+    <p>In my current Final Year Project (FYP) for my undergraduate degree I needed to spawn processes and be able to store their state in the memory so that they can be started/re-started or stopped. I had previously gone about doing the same kind of operation in Java with a Singleton <code>ProcessManager</code> Class so I was pretty sure that such a pattern would exist in Python as well. Turns out, it is a [bad practice][link1] to do so.</p>
+
+<p>Anyways, I could not figure out a better way to do this, so I stuck with Singletons. Moreover it got me the job done.</p>
+
+  </div>
+  
+  <footer>
+    <ul class="pager">
+      <li class="next"><a href="https://creativepsyco.github.io/blog/2013/02/09/singleton-in-python/">Read more <span aria-hidden="true">&raquo;</span></a></li>
+    </ul>
+  </footer>
+  
+</article>
+
+  
+  
+  <hr/>
+  
+  <article>
+  <header>
+    <h2><a href="https://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms/">django dynamic forms</a></h2>
+    <div class="post-meta clearfix">
+      <div class="post-date pull-left">
+        Posted on
+        <time datetime="2013-02-02T00:00:00Z">
+          Feb 2, 2013
+        </time>
+      </div>
+    </div>
+  </header>
+  <div>
+    Here is an example of how to do a dynamic form in Django. I am loving this framework, it&rsquo;s so simple class ServiceStartForm(forms.Form): serviceList = service.models.Service.objects.all() print serviceList.count() b = {} for aService in serviceList: b[aService.id] = aService.name c = b.items() print &quot;Within the form, &quot;, serviceList.count() serviceChoice = forms.ChoiceField(choices=c, widget=forms.Select()) input_directory = forms.CharField(max_length=200) output_directory = forms.CharField(max_length=200) def __init__(self, *args, **kwargs): super(ServiceStartForm, self).__init__(*args, **kwargs) serviceList = service.models.Service.objects.all() b = {}
+  </div>
+  
+  <footer>
+    <ul class="pager">
+      <li class="next"><a href="https://creativepsyco.github.io/blog/2013/02/02/django-dynamic-forms/">Read more <span aria-hidden="true">&raquo;</span></a></li>
+    </ul>
+  </footer>
+  
+</article>
+
+  
+  
+  <hr/>
+  
+  <article>
+  <header>
+    <h2><a href="https://creativepsyco.github.io/blog/2013/01/27/django-and-travis/">django and travis</a></h2>
+    <div class="post-meta clearfix">
+      <div class="post-date pull-left">
+        Posted on
+        <time datetime="2013-01-27T00:00:00Z">
+          Jan 27, 2013
+        </time>
+      </div>
+    </div>
+  </header>
+  <div>
+    A sample .travis file to allow you to run and test on the Travis CI. language: python python: # - &quot;2.6&quot; - &quot;2.7&quot; services: mysql env: # - DJANGO=1.2.7 # - DJANGO=1.3.1 - DJANGO=1.4.3 DJANGO_SETTINGS_MODULE=&quot;mysite.travis_settings&quot; install: - pip install -q Django==$DJANGO --use-mirrors - pip install pep8 --use-mirrors - pip install mysql-python --use-mirrors # - pip install https://github.com/dcramer/pyflakes/tarball/master # - pip install -q -e . --use-mirrors before_script: # - &quot;pep8 --exclude=migrations
+  </div>
+  
+  <footer>
+    <ul class="pager">
+      <li class="next"><a href="https://creativepsyco.github.io/blog/2013/01/27/django-and-travis/">Read more <span aria-hidden="true">&raquo;</span></a></li>
+    </ul>
+  </footer>
+  
+</article>
+
+  
+  
+  <hr/>
+  
+  <article>
+  <header>
+    <h2><a href="https://creativepsyco.github.io/blog/2013/01/24/django-fun/">django fun</a></h2>
+    <div class="post-meta clearfix">
+      <div class="post-date pull-left">
+        Posted on
+        <time datetime="2013-01-24T00:00:00Z">
+          Jan 24, 2013
+        </time>
+      </div>
+    </div>
+  </header>
+  <div>
+    Here&rsquo;s how to install python on your web server :) ###Log in using SSH access This process may change from different kind of hosts to different machines so find out first. ###Install Python 2.7.2 mkdir ~/python cd ~/python wget http://www.python.org/ftp/python/2.7.2/Python-2.7.2.tgz tar zxfv Python-2.7.2.tgz rm -rf Python-2.7.2.tgz find ~/python -type d | xargs chmod 0755 cd Python-2.7.2 ./configure --prefix=$HOME/python make make install cd .. rm -rf Python-2.7.2 ###Modify ~/.bashrc vim ~/.bashrc # Press i and enter the following: export PATH=$HOME/python/bin:$PATH # press &lt;escape&gt;:wq&lt;enter&gt; source ~/.bashrc # Whenever you want to work using Python 2.7 in the # console you will need to enter this Test your Python install python -V # This should output &quot;Python 2.7.2&quot; ###Install setuptools wget http://pypi.python.org/packages/source/s/setuptools/setuptools-0.6c11.tar.gz tar xzvf setuptools-0.6c11.tar.gz rm setuptools-0.6c11.tar.gz cd setuptools-0.6c11 python setup.py install cd ..
+  </div>
+  
+  <footer>
+    <ul class="pager">
+      <li class="next"><a href="https://creativepsyco.github.io/blog/2013/01/24/django-fun/">Read more <span aria-hidden="true">&raquo;</span></a></li>
+    </ul>
+  </footer>
+  
+</article>
+
+  
+  
+  <hr/>
+  
+  <article>
+  <header>
+    <h2><a href="https://creativepsyco.github.io/blog/2013/01/11/essential-mozilla-command-line/">essential mozilla command line</a></h2>
+    <div class="post-meta clearfix">
+      <div class="post-date pull-left">
+        Posted on
+        <time datetime="2013-01-11T00:00:00Z">
+          Jan 11, 2013
+        </time>
+      </div>
+    </div>
+  </header>
+  <div>
+    This is a reference of some of the very important mozilla commands that I use in daily Terminal Life ###Requirements Set up Hg, Autoconf using Brew. Look up the instructions at the official website. ###Setting up of Source Directory Mozilla Code can be checked out from http://hg.mozilla.org. To set up a Thunderbird and Calendar clone on your local machine checkout the source code as bash$ hg clone http://hg.mozilla.org/comm-central This will create a comm-central directory in your local machine Now comm-central depends on a number of submodules which can be fetched by the following commands bash$ cd comm-central bash$ python client.py checkout This will fetch the submodules.
+  </div>
+  
+  <footer>
+    <ul class="pager">
+      <li class="next"><a href="https://creativepsyco.github.io/blog/2013/01/11/essential-mozilla-command-line/">Read more <span aria-hidden="true">&raquo;</span></a></li>
+    </ul>
+  </footer>
+  
+</article>
+
+  
+  
+  <hr/>
+  
+  <article>
+  <header>
+    <h2><a href="https://creativepsyco.github.io/blog/2013/01/10/creating-an-api-with-net-mvc4/">creating an api with net mvc4</a></h2>
+    <div class="post-meta clearfix">
+      <div class="post-date pull-left">
+        Posted on
+        <time datetime="2013-01-10T00:00:00Z">
+          Jan 10, 2013
+        </time>
+      </div>
+    </div>
+  </header>
+  <div>
+    ##Gist Recently while working on a vacation assigment I had to create an API in ASP .NET MVC. This was in order to create a booking system on top of the Google Calendar Event storage. Google provides 50000 calls per day free of chrage for the API so we thought this might work. But it also required some form of authentication to prevent the API facade from being misused. ##OpenId Well when you can&rsquo;t store the authentication result you need to think of some third party based authentication mechanism and OpenId is one those means.
+  </div>
+  
+  <footer>
+    <ul class="pager">
+      <li class="next"><a href="https://creativepsyco.github.io/blog/2013/01/10/creating-an-api-with-net-mvc4/">Read more <span aria-hidden="true">&raquo;</span></a></li>
+    </ul>
+  </footer>
+  
+</article>
+
+  
+  
+  <hr/>
+  
+  <article>
+  <header>
+    <h2><a href="https://creativepsyco.github.io/blog/2012/12/11/a-home-called-india/">a home called india</a></h2>
+    <div class="post-meta clearfix">
+      <div class="post-date pull-left">
+        Posted on
+        <time datetime="2012-12-11T00:00:00Z">
+          Dec 11, 2012
+        </time>
+      </div>
+    </div>
+  </header>
+  <div>
+    And now some random philosphical thoughts on what I think of India: my home I am an Indian from India. For most of us, the buck stop right there. I grew up just like the rest of the kids in my colony: I thought we as a Nation are huge, the best in the world. Buoyed by my sense of patriotism I even wrote a story about an army related incursion in Kashmir which got published in Champak.I knew I had a passion for writing.
+  </div>
+  
+  <footer>
+    <ul class="pager">
+      <li class="next"><a href="https://creativepsyco.github.io/blog/2012/12/11/a-home-called-india/">Read more <span aria-hidden="true">&raquo;</span></a></li>
+    </ul>
+  </footer>
+  
+</article>
+
+  
+  
+  <hr/>
+  
+  <article>
+  <header>
+    <h2><a href="https://creativepsyco.github.io/blog/2012/12/11/design-patterns-in-javascript-widget-based-design/">design patterns in javascript widget based design</a></h2>
+    <div class="post-meta clearfix">
+      <div class="post-date pull-left">
+        Posted on
+        <time datetime="2012-12-11T00:00:00Z">
+          Dec 11, 2012
+        </time>
+      </div>
+    </div>
+  </header>
+  <div>
+    One of the most important things people learn after doing/learning a new language or as-these-days a framework is to be able to apply one of the most sought after industrial practices in the form of design patterns. The current semester I had a course involving hefty use of Design Patterns. The course CS3213-Software Design revolved in using design patterns and applying them to the world of software in extreme detail, which I never in my dreams would have imagined.
+  </div>
+  
+  <footer>
+    <ul class="pager">
+      <li class="next"><a href="https://creativepsyco.github.io/blog/2012/12/11/design-patterns-in-javascript-widget-based-design/">Read more <span aria-hidden="true">&raquo;</span></a></li>
+    </ul>
+  </footer>
+  
+</article>
+
+  
+  
+  <hr/>
+  
+  <article>
+  <header>
+    <h2><a href="https://creativepsyco.github.io/blog/2012/12/01/a-web-service-for-multi-factor-authentication/">a web service for multi factor authentication</a></h2>
+    <div class="post-meta clearfix">
+      <div class="post-date pull-left">
+        Posted on
+        <time datetime="2012-12-01T00:00:00Z">
+          Dec 1, 2012
+        </time>
+      </div>
+    </div>
+  </header>
+  <div>
+    One of the projects done by me this semester was making Multi-Factor Authentication available for use by other websites. This required hosting our MFA web service over the internet.
+  </div>
+  
+</article>
+
+  
+</div>
+<nav class="pagination" role="navigation">
+
+  <hr />
+
+
+<a class="newer-posts" href="/page/2/"><span aria-hidden="true">&laquo;</span> Newer Posts</a>
+
+  <span class="page-number">Page 3 of 4</span>
+
+<a class="older-posts" href="/page/4/">Older Posts <span aria-hidden="true">&raquo;</span></a>
+
+</nav>
+
+  </main>
+  <footer class="container global-footer">
+    <div class="copyright-note pull-left">
+      
+    </div>
+    <div class="sns-links hidden-print">
+  
+  <a href="mailto:mohit.kanwal@gmail.com">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+  
+  
+  
+  
+  
+  <a href="https://github.com/creativepsyco" target="_blank">
+    <i class="fa fa-github"></i>
+  </a>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <script src="https://creativepsyco.github.io/js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-36037120-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+  
+</body>
+</html>
+
+
